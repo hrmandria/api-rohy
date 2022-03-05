@@ -1,27 +1,56 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService} from '../users/users.service';
 import * as bcrypt from 'bcrypt';
+import { User, UserCredential } from 'src/user/user.model';
+import {
+  CannotFindUserException,
+  PasswordMismatchException,
+} from 'src/user/user.exception';
+import { UserRepository } from 'src/user/user.repository';
+import { AuthenticationResponse } from './authentication.model';
+import { omit } from 'lodash';
 
 @Injectable()
 export class AuthenticationService {
-    constructor(private usersService: UsersService, private jwtTokenService: JwtService){};
+  constructor(
+    private userRepository: UserRepository,
+    private jwtTokenService: JwtService,
+  ) {}
 
-    async validateUser(username: string, pass: string): Promise <any> {
-        const user = await this.usersService.findOne(username);
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = bcrypt.hash(user.password, salt);
-        if (user && hashedPassword === bcrypt.hash(pass,salt)){
-            const {password, ...result} = user;
-            return result;
-        }
-        return null;
+  async validateUser(username: string, password: string): Promise<User> {
+    const user = await this.userRepository.findOneByIDNumber(username);
+
+    if (!user) {
+      throw new CannotFindUserException(username);
     }
 
-    async login(user: any) {
-        const payload = {username: user.username, sub: user.userId};
-        return {
-            access_token: this.jwtTokenService.sign(payload)
-        }
+    const match = await this.comparePassword(password, user.password);
+    if (!match) {
+      throw new PasswordMismatchException();
     }
+
+    return user;
+  }
+
+  async login(request: UserCredential): Promise<AuthenticationResponse> {
+    const { username } = request;
+    const user = await this.userRepository.findOneByIDNumber(username);
+
+    if (!user) {
+      throw new CannotFindUserException(username);
+    }
+
+    const { id, idNumber: identificationNumber } = user;
+    const payload = { username: identificationNumber, sub: id };
+
+    return {
+      user: omit(user, ['password']),
+      token: this.jwtTokenService.sign(payload),
+    };
+  }
+
+  private async comparePassword(firstPassword: string, secondPassword: string) {
+    const match = await bcrypt.compare(firstPassword, secondPassword);
+    return match;
+  }
 }
