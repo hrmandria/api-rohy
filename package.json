@@ -5,6 +5,7 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "main":"./src/main",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -35,6 +36,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
+    
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

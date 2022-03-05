@@ -4,7 +4,7 @@ import { UsersService} from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class AuthService {
+export class AuthenticationService {
     constructor(private usersService: UsersService, private jwtTokenService: JwtService){};
 
     async validateUser(username: string, pass: string): Promise <any> {
