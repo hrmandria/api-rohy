@@ -5,8 +5,6 @@ export interface UserCredential {
 
 export interface User {
   id: string;
-  lastname: string;
-  firstname: string;
   idNumber: string;
   password?: string;
 }
