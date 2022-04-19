@@ -14,4 +14,8 @@ export class UserRepository {
   async findOneByIDNumber(username: string): Promise<User | undefined> {
     return this.users.find((user) => user.idNumber === username);
   }
+
+  async findOneByEmail(email: string): Promise<User | undefined> {
+    return undefined;
+  }
 }

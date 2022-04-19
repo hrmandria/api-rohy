@@ -20,6 +20,19 @@ export class ConfigService {
     };
   }
 
+  public getJwtConfig(): { secret: string } {
+    return {
+      secret: this.getValue('JWT_SECRET'),
+    };
+  }
+
+  public getGoogleClientConfig(): { clientID: string; secret: string } {
+    return {
+      clientID: this.getValue('GOOGLE_CLIENT_ID'),
+      secret: this.getValue('GOOGLE_CLIENT_SECRET'),
+    };
+  }
+
   private getValue(key: string): string {
     const value = this.env[key];
     if (!value) {
