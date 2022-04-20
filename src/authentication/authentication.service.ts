@@ -18,7 +18,7 @@ export class AuthenticationService {
   ) {}
 
   async validateUser(username: string, password: string): Promise<User> {
-    const user = await this.userRepository.findOneByIDNumber(username);
+    const user = await this.userRepository.findBy({ idNumber: username });
 
     if (!user) {
       throw new CannotFindUserException(username);
@@ -34,7 +34,7 @@ export class AuthenticationService {
 
   async login(request: UserCredential): Promise<AuthenticationResponse> {
     const { username } = request;
-    const user = await this.userRepository.findOneByIDNumber(username);
+    const user = await this.userRepository.findBy({ idNumber: username });
 
     if (!user) {
       throw new CannotFindUserException(username);

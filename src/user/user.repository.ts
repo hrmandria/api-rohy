@@ -1,21 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.model';
+import { UserEntity } from './user.entity';
+import { Repository } from 'typeorm';
+import { UserMapper } from './user.mapper';
+
+export interface FindOptions {
+  idNumber?: string;
+  email?: string;
+}
 
 @Injectable()
 export class UserRepository {
-  private readonly users: User[] = [
-    {
-      id: '7e6373e6-5d90-47f4-9f3c-f23fc739bc00',
-      idNumber: 'swiftose',
-      password: '$2a$12$VgDZb7hYM2TC20Zu4c5zjetNBbDYCLW8l6cw1HMWAFUGq5vmx5Tru',
-    },
-  ];
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+  ) {}
 
-  async findOneByIDNumber(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.idNumber === username);
+  async findBy(options: FindOptions): Promise<User | undefined> {
+    const userEntity = await this.userRepository.findOne({ ...options });
+
+    if (!userEntity) {
+      return undefined;
+    }
+
+    return UserMapper.fromEntity(userEntity);
   }
 
-  async findOneByEmail(email: string): Promise<User | undefined> {
-    return undefined;
+  async listBy(options: FindOptions): Promise<User[]> {
+    const userEntities = await this.userRepository.find({ ...options });
+
+    return userEntities.map(UserMapper.fromEntity);
   }
 }

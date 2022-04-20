@@ -22,14 +22,14 @@ export class GoogleAuthenticationService {
   async login(token: string) {
     const tokenInfo = await this.oauthClient.getTokenInfo(token);
 
-    const user = await this.userRepository.findOneByEmail(tokenInfo.email);
+    const user = await this.userRepository.findBy({ email: tokenInfo.email });
 
     if (!user) {
       throw new CannotFindTokenUserException(token);
     }
 
-    const { id, idNumber: identificationNumber } = user;
-    const payload = { username: identificationNumber, sub: id };
+    const { id, email } = user;
+    const payload = { email, sub: id };
 
     return {
       user: omit(user, ['password']),
