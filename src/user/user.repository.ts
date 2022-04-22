@@ -15,4 +15,9 @@ export class UserRepository {
     const result = this.users.find((user) => user.idNumber === username);
     return result;
   }
+
+  async createUser(id: string, idNumber: string, password: string){
+    const newUser = {id, idNumber, password};
+    this.users.push(newUser);
+  }
 }

@@ -13,7 +13,7 @@ import { omit } from 'lodash';
 @Injectable()
 export class AuthenticationService {
   constructor(
-    public userRepository: UserRepository,
+    private userRepository: UserRepository,
     private jwtTokenService: JwtService,
   ) {}
 

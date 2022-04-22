@@ -8,3 +8,11 @@ export interface User {
   idNumber: string;
   password?: string;
 }
+
+export interface UserData {
+  id: string;
+  firstname: string;
+  lastname: string;
+  idNumber: string;
+  password: string;
+}
