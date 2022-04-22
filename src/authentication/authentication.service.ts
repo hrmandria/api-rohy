@@ -13,29 +13,27 @@ import { omit } from 'lodash';
 @Injectable()
 export class AuthenticationService {
   constructor(
-    private userRepository: UserRepository,
+    public userRepository: UserRepository,
     private jwtTokenService: JwtService,
   ) {}
 
   async validateUser(username: string, password: string): Promise<User> {
     const user = await this.userRepository.findOneByIDNumber(username);
-
     if (!user) {
       throw new CannotFindUserException(username);
     }
-
+    
     const match = await this.comparePassword(password, user.password);
     if (!match) {
       throw new PasswordMismatchException();
     }
-
     return user;
   }
 
   async login(request: UserCredential): Promise<AuthenticationResponse> {
     const { username } = request;
     const user = await this.userRepository.findOneByIDNumber(username);
-
+    
     if (!user) {
       throw new CannotFindUserException(username);
     }
@@ -53,4 +51,5 @@ export class AuthenticationService {
     const match = await bcrypt.compare(firstPassword, secondPassword);
     return match;
   }
+  
 }
