@@ -4,6 +4,7 @@ import { UserModule } from './user/user.module';
 import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/config.service';
+import { StudentModule } from './student/student.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { configService } from './shared/config/config.service';
     UserModule,
     SharedModule,
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
+    StudentModule,
   ],
 })
 export class AppModule {}

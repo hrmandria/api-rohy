@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { StudentEntity } from 'src/student/student.entity';
 import { UserEntity } from 'src/user/user.entity';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -15,7 +16,7 @@ export class ConfigService {
       password: this.getValue('TYPEORM_PASSWORD'),
       database: this.getValue('TYPEORM_DATABASE'),
       port: +this.getValue('TYPEORM_PORT'),
-      entities: [UserEntity],
+      entities: [UserEntity, StudentEntity],
       synchronize: true,
     };
   }
