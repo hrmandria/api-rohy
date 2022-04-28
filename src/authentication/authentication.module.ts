@@ -25,7 +25,7 @@ import { configService } from 'src/shared/config/config.service';
     GoogleAuthenticationService,
     LocalStrategy,
     JwtStrategy,
-    UserRepository,
+    UserModule,
   ],
   exports: [AuthenticationService],
 })
