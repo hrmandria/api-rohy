@@ -15,6 +15,7 @@ export class ConfigService {
       password: this.getValue('TYPEORM_PASSWORD'),
       database: this.getValue('TYPEORM_DATABASE'),
       port: +this.getValue('TYPEORM_PORT'),
+      entities: [UserEntity],
       synchronize: true,
     };
   }
