@@ -10,9 +10,9 @@ import { StudentModule } from './student/student.module';
   imports: [
     AuthenticationModule,
     UserModule,
+    StudentModule,
     SharedModule,
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
-    StudentModule,
   ],
 })
 export class AppModule {}
