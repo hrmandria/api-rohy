@@ -1,3 +1,4 @@
+import { AbstractModel } from 'src/shared/models/abstract.model';
 import { Nullable } from 'src/shared/utils/type';
 
 export interface GoogleCredential {
@@ -9,8 +10,7 @@ export interface UserCredential {
   password: string;
 }
 
-export interface User {
-  id: string;
+export class User extends AbstractModel {
   idNumber: Nullable<string>;
   email: Nullable<string>;
   password?: string;

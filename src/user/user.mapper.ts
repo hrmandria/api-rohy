@@ -12,10 +12,9 @@ export class UserMapper {
   }
 
   public static fromEntity(source: UserEntity): User {
-    return {
-      id: source.id,
-      idNumber: source.idNumber,
-      email: source.email,
-    };
+    const user = new User(source.id);
+    user.idNumber = source.idNumber;
+    user.email = source.email;
+    return user;
   }
 }

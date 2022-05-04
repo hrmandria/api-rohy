@@ -3,11 +3,20 @@ import { Student } from './student.model';
 
 export class StudentMapper {
   public static fromEntity(source: StudentEntity): Student {
-    return {
-      id: source.id,
-      lastname: source.lastname,
-      firstname: source.firstname,
-      status: source.status,
-    };
+    const student = new Student();
+    student.lastname = source.lastname;
+    student.firstname = source.firstname;
+    student.status = source.status;
+    student.userId = source.userId;
+    return student;
+  }
+
+  public static toEntity(source: Student): StudentEntity {
+    const studentEntity = new StudentEntity();
+    studentEntity.firstname = source.firstname;
+    studentEntity.lastname = source.lastname;
+    studentEntity.status = source.status;
+    studentEntity.userId = source.userId;
+    return studentEntity;
   }
 }

@@ -19,6 +19,9 @@ export class StudentEntity extends BaseEntity {
   })
   public status: StudentStatus;
 
+  @Column({ name: 'userId', nullable: false, type: 'text' })
+  public userId: string;
+
   @OneToOne(() => UserEntity)
   @JoinColumn()
   user: UserEntity;

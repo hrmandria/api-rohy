@@ -1,11 +1,13 @@
+import { AbstractModel } from 'src/shared/models/abstract.model';
+
 export enum StudentStatus {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
 }
 
-export interface Student {
-  id: string;
+export class Student extends AbstractModel {
   lastname: string;
   firstname: string;
   status: StudentStatus;
+  userId: string;
 }

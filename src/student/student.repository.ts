@@ -19,19 +19,35 @@ export class StudentRepository {
   async listPaginatedStudent(
     criteria: PaginationCriteria,
   ): Promise<Paginated<Student>> {
-    const { page, pageSize } = criteria;
-    const [entities, total] = await this.studentRepository.findAndCount({
-      order: {
-        createdAt: 'DESC',
-        id: 'ASC',
-      },
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    });
+    try {
+      const { page, pageSize } = criteria;
+      const [entities, total] = await this.studentRepository.findAndCount({
+        order: {
+          createdAt: 'DESC',
+          id: 'ASC',
+        },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
 
-    return {
-      items: entities.map(StudentMapper.fromEntity),
-      total,
-    };
+      return {
+        items: entities.map(StudentMapper.fromEntity),
+        total,
+      };
+    } catch (e) {
+      throw new Error('Cannot list paginated student');
+    }
+  }
+
+  async save(student: Student): Promise<Student> {
+    try {
+      const studentEntity = StudentMapper.toEntity(student);
+      const savedStudentEntity = await this.studentRepository.save(
+        studentEntity,
+      );
+      return StudentMapper.fromEntity(savedStudentEntity);
+    } catch (e) {
+      throw new Error('Cannot save student');
+    }
   }
 }

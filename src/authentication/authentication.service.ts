@@ -44,7 +44,7 @@ export class AuthenticationService {
     const payload = { username: identificationNumber, sub: id };
 
     return {
-      user: omit(user, ['password']),
+      user,
       token: this.jwtTokenService.sign(payload),
     };
   }
