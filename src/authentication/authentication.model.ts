@@ -1,6 +1,9 @@
-import { User } from 'src/user/user.model';
+import { Nullable } from 'src/shared/utils/type';
 
 export interface AuthenticationResponse {
   token: string;
-  user: User;
+  user: {
+    idNumber: Nullable<string>;
+    email: Nullable<string>;
+  };
 }

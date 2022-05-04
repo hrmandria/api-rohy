@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
+import { CreateStudentDto } from './student.dto';
 import { StudentService } from './student.service';
 
 @Controller('student')
@@ -12,7 +13,7 @@ export class StudentController {
   }
 
   @Post()
-  async createStudent(@Body() request: any) {
+  async createStudent(@Body() request: CreateStudentDto) {
     return this.studentService.createStudent(request);
   }
 }

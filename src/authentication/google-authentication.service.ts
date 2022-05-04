@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { google, Auth } from 'googleapis';
-import { omit } from 'lodash';
 import { configService } from 'src/shared/config/config.service';
 import { CannotFindTokenUserException } from 'src/user/user.exception';
 import { UserRepository } from 'src/user/user.repository';
+import { AuthenticationResponse } from './authentication.model';
 
 @Injectable()
 export class GoogleAuthenticationService {
@@ -19,7 +19,7 @@ export class GoogleAuthenticationService {
     this.oauthClient = new google.auth.OAuth2(clientID, clientSecret);
   }
 
-  async login(token: string) {
+  async login(token: string): Promise<AuthenticationResponse> {
     const tokenInfo = await this.oauthClient.getTokenInfo(token);
 
     const user = await this.userRepository.findBy({ email: tokenInfo.email });
@@ -29,10 +29,13 @@ export class GoogleAuthenticationService {
     }
 
     const { id, email } = user;
-    const payload = { email, sub: id };
+    const payload = { username: email, sub: id };
 
     return {
-      user: omit(user, ['password']),
+      user: {
+        email,
+        idNumber: null,
+      },
       token: this.jwtTokenService.sign(payload),
     };
   }

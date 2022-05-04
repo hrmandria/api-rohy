@@ -11,13 +11,11 @@ export class AuthenticationController {
     private readonly googleAuthenticationService: GoogleAuthenticationService,
   ) {}
 
-  @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(@Body() request: UserCredential) {
     return this.authenticationService.login(request);
   }
 
-  @UseGuards(AuthGuard('local'))
   @Post('google-login')
   async googleLogin(@Body() request: GoogleCredential) {
     return this.googleAuthenticationService.login(request.accessToken);

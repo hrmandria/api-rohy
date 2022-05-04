@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { User, UserCredential } from 'src/user/user.model';
+import { UserCredential } from 'src/user/user.model';
 import {
   CannotFindUserException,
   PasswordMismatchException,
 } from 'src/user/user.exception';
 import { UserRepository } from 'src/user/user.repository';
 import { AuthenticationResponse } from './authentication.model';
-import { omit } from 'lodash';
 
 @Injectable()
 export class AuthenticationService {
@@ -17,7 +16,8 @@ export class AuthenticationService {
     private jwtTokenService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<User> {
+  async login(request: UserCredential): Promise<AuthenticationResponse> {
+    const { username, password } = request;
     const user = await this.userRepository.findBy({ idNumber: username });
 
     if (!user) {
@@ -29,28 +29,22 @@ export class AuthenticationService {
       throw new PasswordMismatchException();
     }
 
-    return user;
-  }
-
-  async login(request: UserCredential): Promise<AuthenticationResponse> {
-    const { username } = request;
-    const user = await this.userRepository.findBy({ idNumber: username });
-
-    if (!user) {
-      throw new CannotFindUserException(username);
-    }
-
-    const { id, idNumber: identificationNumber } = user;
-    const payload = { username: identificationNumber, sub: id };
+    const { id, idNumber } = user;
+    const payload = { username: idNumber, sub: id };
 
     return {
-      user,
+      user: {
+        idNumber,
+        email: null,
+      },
       token: this.jwtTokenService.sign(payload),
     };
   }
 
-  private async comparePassword(firstPassword: string, secondPassword: string) {
-    const match = await bcrypt.compare(firstPassword, secondPassword);
-    return match;
+  private async comparePassword(
+    firstPassword: string,
+    secondPassword: string,
+  ): Promise<boolean> {
+    return bcrypt.compare(firstPassword, secondPassword);
   }
 }

@@ -15,6 +15,7 @@ export class UserMapper {
     const user = new User(source.id);
     user.idNumber = source.idNumber;
     user.email = source.email;
+    user.password = source.password;
     return user;
   }
 }
