@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudentEntity } from './student.entity';
-import { Student } from './student.model';
+import { Student, StudentStatus } from './student.model';
 import {
   Paginated,
   PaginationCriteria,
@@ -14,7 +14,7 @@ export class StudentRepository {
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) {}
+  ) { }
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
@@ -49,5 +49,15 @@ export class StudentRepository {
     } catch (e) {
       throw new Error('Cannot save student');
     }
+  }
+
+  async findById(userId: string) {
+    const studentEntity = await this.studentRepository.findOne({ where: { userId } }); // PROMISE 
+
+    if (!studentEntity) {
+      return undefined;
+    }
+
+    return StudentMapper.fromEntity(studentEntity);
   }
 }

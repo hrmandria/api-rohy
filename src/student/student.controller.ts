@@ -5,15 +5,20 @@ import { StudentService } from './student.service';
 
 @Controller('student')
 export class StudentController {
-  constructor(private readonly studentService: StudentService) {}
+  constructor(private readonly studentService: StudentService) { }
 
   @Get()
   async listPaginatedStudent(@Query() query: PaginationCriteria) {
     return this.studentService.listPaginatedStudent(query);
   }
 
-  @Post()
+  @Post('create')
   async createStudent(@Body() request: CreateStudentDto) {
     return this.studentService.createStudent(request);
+  }
+
+  @Post('delete')
+  async deleteStudent(@Body() request: CreateStudentDto) {
+    return this.studentService.deleteStudent(request.userId);
   }
 }
