@@ -2,19 +2,23 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudentEntity } from './student.entity';
-import { Student, StudentStatus } from './student.model';
+import { Student } from './student.model';
 import {
   Paginated,
   PaginationCriteria,
 } from 'src/shared/models/paginated.model';
 import { StudentMapper } from './student.mapper';
 
+export interface FindOptions {
+  id?: string;
+}
+
 @Injectable()
 export class StudentRepository {
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) { }
+  ) {}
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
@@ -35,7 +39,7 @@ export class StudentRepository {
         total,
       };
     } catch (e) {
-      throw new Error('Cannot list paginated student');
+      throw new Error(`Cannot listing paginated student ${e}`);
     }
   }
 
@@ -47,17 +51,33 @@ export class StudentRepository {
       );
       return StudentMapper.fromEntity(savedStudentEntity);
     } catch (e) {
-      throw new Error('Cannot save student');
+      throw new Error(`Cannot save student ${e.message}`);
     }
   }
 
-  async findById(userId: string) {
-    const studentEntity = await this.studentRepository.findOne({ where: { userId } }); // PROMISE 
+  async findBy(options: FindOptions): Promise<Student> {
+    try {
+      const studentEntity = await this.studentRepository.findOne({
+        ...options,
+      });
 
-    if (!studentEntity) {
-      return undefined;
+      if (!studentEntity) {
+        throw new Error(`Cannot find student with options ${options}`);
+      }
+
+      return StudentMapper.fromEntity(studentEntity);
+    } catch (e) {
+      throw new Error(`Cannot find student ${e.message}`);
     }
+  }
 
-    return StudentMapper.fromEntity(studentEntity);
+  async listBy(options: FindOptions): Promise<Student[]> {
+    try {
+      const userEntities = await this.studentRepository.find({ ...options });
+
+      return userEntities.map(StudentMapper.fromEntity);
+    } catch (e) {
+      throw new Error(`Cannot list student ${e.message}`);
+    }
   }
 }

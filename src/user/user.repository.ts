@@ -18,18 +18,26 @@ export class UserRepository {
   ) {}
 
   async findBy(options: FindOptions): Promise<User | undefined> {
-    const userEntity = await this.userRepository.findOne({ ...options });
+    try {
+      const userEntity = await this.userRepository.findOne({ ...options });
 
-    if (!userEntity) {
-      return undefined;
+      if (!userEntity) {
+        throw new Error(`Cannot find user with options ${options}`);
+      }
+
+      return UserMapper.fromEntity(userEntity);
+    } catch (e) {
+      new Error(`Cannot find user ${e.message}`);
     }
-
-    return UserMapper.fromEntity(userEntity);
   }
 
   async listBy(options: FindOptions): Promise<User[]> {
-    const userEntities = await this.userRepository.find({ ...options });
+    try {
+      const userEntities = await this.userRepository.find({ ...options });
 
-    return userEntities.map(UserMapper.fromEntity);
+      return userEntities.map(UserMapper.fromEntity);
+    } catch (e) {
+      throw new Error(`Cannot list user ${e.message}`);
+    }
   }
 }
