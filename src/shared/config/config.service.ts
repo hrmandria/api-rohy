@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { TicketEntity } from 'src/modules/ticket/ticket.entity';
 import { StudentEntity } from 'src/student/student.entity';
 import { UserEntity } from 'src/user/user.entity';
 
@@ -6,7 +7,7 @@ import { UserEntity } from 'src/user/user.entity';
 require('dotenv').config();
 
 export class ConfigService {
-  constructor(private env: { [k: string]: string | undefined }) {}
+  constructor(private env: { [k: string]: string | undefined }) { }
 
   public getTypeORMConfig(): TypeOrmModuleOptions {
     return {
@@ -16,7 +17,7 @@ export class ConfigService {
       password: this.getValue('TYPEORM_PASSWORD'),
       database: this.getValue('TYPEORM_DATABASE'),
       port: +this.getValue('TYPEORM_PORT'),
-      entities: [UserEntity, StudentEntity],
+      entities: [UserEntity, StudentEntity, TicketEntity],
       synchronize: true,
     };
   }

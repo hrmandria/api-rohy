@@ -11,3 +11,5 @@ export class Student extends AbstractModel {
   status: StudentStatus;
   userId: string;
 }
+
+

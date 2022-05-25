@@ -8,6 +8,6 @@ export class TicketController {
 
     @Get()
     async createTicket(@Body() request: Ticket) {
-        return this.ticketService.createTicket(request)
+        return this.ticketService.createTicket(request);
     }
 }

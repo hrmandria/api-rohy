@@ -9,6 +9,7 @@ export enum TicketType {
 }
 
 export class Ticket {
+    idNumber: null;
     from: Date;
     to: Date;
     cause: string;

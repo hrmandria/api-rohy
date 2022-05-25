@@ -9,12 +9,20 @@ import {
 } from 'src/shared/models/paginated.model';
 import { StudentMapper } from './student.mapper';
 
+export interface FindOptions {
+  internalId?: string;
+}
+export interface CriteriaOptions {
+  lastname: string;
+  firstname: string;
+}
+
 @Injectable()
 export class StudentRepository {
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) {}
+  ) { }
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
@@ -50,4 +58,12 @@ export class StudentRepository {
       throw new Error('Cannot save student');
     }
   }
+
+  async delete(firstname: string, lastname: string) {
+    await this.studentRepository.delete({
+      firstname: firstname,
+      lastname: lastname
+    })
+  }
+
 }

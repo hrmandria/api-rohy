@@ -9,7 +9,7 @@ export class AuthenticationController {
   constructor(
     private readonly authenticationService: AuthenticationService,
     private readonly googleAuthenticationService: GoogleAuthenticationService,
-  ) {}
+  ) { }
 
   @Post('login')
   async login(@Body() request: UserCredential) {
