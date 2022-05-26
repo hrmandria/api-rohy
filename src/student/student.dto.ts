@@ -3,8 +3,3 @@ export interface CreateStudentDto {
   firstname: string;
   userId: string;
 }
-
-export interface DeleteStudentDto {
-  lastname: string;
-  firstname: string;
-}

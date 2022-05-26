@@ -6,8 +6,8 @@ import { TicketRepository } from './ticket.repository';
 import { TicketService } from './ticket.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([TicketEntity])],
-    controllers: [TicketController],
-    providers: [TicketRepository, TicketService],
+  imports: [TypeOrmModule.forFeature([TicketEntity])],
+  controllers: [TicketController],
+  providers: [TicketRepository, TicketService],
 })
-export class TicketModule { }
+export class TicketModule {}

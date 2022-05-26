@@ -5,7 +5,7 @@ import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/config.service';
 import { StudentModule } from './student/student.module';
-import { TicketModule } from './modules/ticket/ticket.module';
+import { TicketModule } from './ticket/ticket.module';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { TicketModule } from './modules/ticket/ticket.module';
     StudentModule,
     TicketModule,
     SharedModule,
-    TypeOrmModule.forRoot(configService.getTypeORMConfig())
+    TypeOrmModule.forRoot(configService.getTypeORMConfig()),
   ],
 })
-export class AppModule { }
+export class AppModule {}

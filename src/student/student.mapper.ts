@@ -13,6 +13,7 @@ export class StudentMapper {
 
   public static toEntity(source: Student): StudentEntity {
     const studentEntity = new StudentEntity();
+    studentEntity.id = source.id;
     studentEntity.firstname = source.firstname;
     studentEntity.lastname = source.lastname;
     studentEntity.status = source.status;

@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { first } from 'rxjs';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
 import { CreateStudentDto } from './student.dto';
-import { StudentEntity } from './student.entity';
 import { InvalidPaginationInputException } from './student.exception';
-import { StudentMapper } from './student.mapper';
 import { Student, StudentStatus } from './student.model';
 import { StudentRepository } from './student.repository';
 
+const maxPageSize = 250;
+
 @Injectable()
 export class StudentService {
-  constructor(private readonly studentRepository: StudentRepository) { }
+  constructor(private readonly studentRepository: StudentRepository) {}
 
   async listPaginatedStudent(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
@@ -19,14 +18,14 @@ export class StudentService {
       return new InvalidPaginationInputException('page', page);
     }
 
-    if (pageSize <= 0) {
+    if (pageSize <= 0 || pageSize > maxPageSize) {
       return new InvalidPaginationInputException('pageSize', pageSize);
     }
 
     return this.studentRepository.listPaginatedStudent(criteria);
   }
 
-  async createStudent(dto: CreateStudentDto): Promise<Student> {
+  async createStudent(dto: CreateStudentDto) {
     const student = new Student();
     student.lastname = dto.lastname;
     student.firstname = dto.firstname;
@@ -36,7 +35,7 @@ export class StudentService {
     return this.studentRepository.save(student);
   }
 
-  async deleteUser(firstname: string, lastname: string) {
-    this.studentRepository.delete(firstname, lastname);
+  async deleteStudent(id: string) {
+    this.studentRepository.delete(id);
   }
 }

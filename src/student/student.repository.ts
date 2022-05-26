@@ -22,7 +22,7 @@ export class StudentRepository {
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) { }
+  ) {}
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
@@ -59,11 +59,11 @@ export class StudentRepository {
     }
   }
 
-  async delete(firstname: string, lastname: string) {
-    await this.studentRepository.delete({
-      firstname: firstname,
-      lastname: lastname
-    })
+  async delete(id: string) {
+    try {
+      await this.studentRepository.delete({ id });
+    } catch (e) {
+      throw new Error('Cannot delete student');
+    }
   }
-
 }

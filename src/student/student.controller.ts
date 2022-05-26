@@ -1,24 +1,32 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
-import { CreateStudentDto, DeleteStudentDto } from './student.dto';
+import { CreateStudentDto } from './student.dto';
 import { StudentService } from './student.service';
 
 @Controller('student')
 export class StudentController {
-  constructor(private readonly studentService: StudentService) { }
+  constructor(private readonly studentService: StudentService) {}
 
   @Get()
   async listPaginatedStudent(@Query() query: PaginationCriteria) {
     return this.studentService.listPaginatedStudent(query);
   }
 
-  @Post('createStudent')
-  async createStudent(@Body() request: CreateStudentDto) {
-    return this.studentService.createStudent(request);
+  @Post()
+  async createStudent(@Body() dto: CreateStudentDto) {
+    return this.studentService.createStudent(dto);
   }
 
-  @Post('deleteStudent')
-  async deleteStudent(@Body() request: DeleteStudentDto) {
-    return this.studentService.deleteUser(request.firstname, request.lastname);
+  @Delete(':id')
+  async deleteStudent(@Param('id') id: string) {
+    return this.studentService.deleteStudent(id);
   }
 }

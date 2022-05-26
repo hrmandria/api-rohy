@@ -8,7 +8,8 @@ export class UserMapper {
     userEntity.idNumber = source.idNumber;
     userEntity.email = source.email;
     userEntity.password = source.password;
-    return;
+
+    return userEntity;
   }
 
   public static fromEntity(source: UserEntity): User {
@@ -16,6 +17,7 @@ export class UserMapper {
     user.idNumber = source.idNumber;
     user.email = source.email;
     user.password = source.password;
+
     return user;
   }
 }

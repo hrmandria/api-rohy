@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, UserCredential } from './user.model';
+import { User } from './user.model';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { UserMapper } from './user.mapper';
-import { v4 as uuidv4 } from 'uuid';
-import { CreateUserDto } from './user.dto';
 
 export interface FindOptions {
   idNumber?: string;
@@ -17,30 +15,47 @@ export class UserRepository {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-  ) { }
+  ) {}
 
   async findBy(options: FindOptions): Promise<User | undefined> {
-    const userEntity = await this.userRepository.findOne({ ...options });
+    try {
+      const userEntity = await this.userRepository.findOne({ ...options });
 
-    if (!userEntity) {
-      return undefined;
+      if (!userEntity) {
+        return undefined;
+      }
+
+      return UserMapper.fromEntity(userEntity);
+    } catch (e) {
+      throw new Error('Cannot find user');
     }
-
-    return UserMapper.fromEntity(userEntity);
   }
 
   async listBy(options: FindOptions): Promise<User[]> {
-    const userEntities = await this.userRepository.find({ ...options });
+    try {
+      const userEntities = await this.userRepository.find({ ...options });
 
-    return userEntities.map(UserMapper.fromEntity);
+      return userEntities.map(UserMapper.fromEntity);
+    } catch (e) {
+      throw new Error('Cannot list user');
+    }
   }
 
-  async save(userDto: CreateUserDto) {
-    this.userRepository.save(userDto);
-    return this.userRepository;
+  async save(user: User) {
+    try {
+      const userEntity = UserMapper.toEntity(user);
+      const savedUserEntity = await this.userRepository.save(userEntity);
+      return UserMapper.fromEntity(savedUserEntity);
+    } catch (e) {
+      throw new Error('Cannot save user');
+    }
   }
 
-  async delete(idNumber: string) {
-    this.userRepository.delete(idNumber);
+  async delete(id: string) {
+    try {
+      this.userRepository.delete({ id });
+    } catch (e) {
+      throw new Error('Cannot delete user');
+    }
   }
 }

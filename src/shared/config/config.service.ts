@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { TicketEntity } from 'src/modules/ticket/ticket.entity';
+import { TicketEntity } from 'src/ticket/ticket.entity';
 import { StudentEntity } from 'src/student/student.entity';
 import { UserEntity } from 'src/user/user.entity';
 
@@ -7,7 +7,7 @@ import { UserEntity } from 'src/user/user.entity';
 require('dotenv').config();
 
 export class ConfigService {
-  constructor(private env: { [k: string]: string | undefined }) { }
+  constructor(private env: { [k: string]: string | undefined }) {}
 
   public getTypeORMConfig(): TypeOrmModuleOptions {
     return {
