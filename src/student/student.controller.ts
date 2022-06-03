@@ -13,7 +13,7 @@ import { StudentService } from './student.service';
 
 @Controller('student')
 export class StudentController {
-  constructor(private readonly studentService: StudentService) {}
+  constructor(private readonly studentService: StudentService) { }
 
   @Get()
   async listPaginatedStudent(@Query() query: PaginationCriteria) {
