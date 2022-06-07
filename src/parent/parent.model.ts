@@ -1,4 +1,5 @@
 import { AbstractModel } from "src/shared/models/abstract.model";
+import { StudentEntity } from "src/student/student.entity";
 
 export enum ParentStatus {
     ACTIVE = 'ACTIVE',
@@ -10,5 +11,5 @@ export class Parent extends AbstractModel {
     firstname: string;
     status: ParentStatus;
     userId: string;
-    studentIds: [string]
+    students: StudentEntity[];
 }

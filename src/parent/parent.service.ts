@@ -13,8 +13,7 @@ export class ParentService {
         parent.firstname = dto.firstname;
         parent.status = ParentStatus.ACTIVE;
         parent.userId = dto.userId;
-        parent.studentIds = dto.studentIds;
-
+        parent.students = dto.studentIds;
         return this.parentRepository.save(parent);
     }
 }

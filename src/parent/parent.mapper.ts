@@ -9,7 +9,7 @@ export class ParentMapper {
         parent.firstname = source.firstname;
         parent.status = source.status;
         parent.userId = source.userId;
-        parent.studentIds = source.studentIds;
+        parent.students = source.students;
         return parent;
     }
 
@@ -20,7 +20,7 @@ export class ParentMapper {
         parentEntity.firstname = source.firstname;
         parentEntity.status = source.status;
         parentEntity.userId = source.userId;
-        parentEntity.studentIds = source.studentIds;
+        parentEntity.students = source.students;
         return parentEntity;
     }
 }
