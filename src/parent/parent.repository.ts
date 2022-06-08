@@ -21,4 +21,12 @@ export class ParentRepository {
             throw new Error('Cannot save parent');
         }
     }
+
+    async delete(id: string) {
+        try {
+            await this.parentRepository.delete({ id });
+        } catch (e) {
+            throw new Error('Cannot delete parent');
+        }
+    }
 }

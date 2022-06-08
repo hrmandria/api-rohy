@@ -8,7 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
-import { CreateStudentDto } from './student.dto';
+import { CreateStudentDto, GetStudentDto } from './student.dto';
 import { StudentService } from './student.service';
 
 @Controller('student')
@@ -18,6 +18,11 @@ export class StudentController {
   @Get()
   async listPaginatedStudent(@Query() query: PaginationCriteria) {
     return this.studentService.listPaginatedStudent(query);
+  }
+
+  @Get('getEntity')
+  async getStudentEntity(@Body() req: GetStudentDto) {
+    return this.studentService.getStudentEntity(req);
   }
 
   @Post()

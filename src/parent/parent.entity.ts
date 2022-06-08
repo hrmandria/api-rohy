@@ -28,6 +28,6 @@ export class ParentEntity extends BaseEntity {
     user: UserEntity;
 
     @ManyToMany(() => StudentEntity, (student => student.id), { cascade: true })
-    @JoinTable({ name: 'student_Ids' })
+    @JoinTable()
     students: StudentEntity[];
 }
