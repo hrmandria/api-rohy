@@ -20,7 +20,7 @@ export class StudentController {
     return this.studentService.listPaginatedStudent(query);
   }
 
-  @Get('getEntity')
+  @Get('/getEntity')
   async getStudentEntity(@Body() req: GetStudentDto) {
     return this.studentService.getStudentEntity(req);
   }

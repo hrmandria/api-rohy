@@ -7,7 +7,7 @@ import { ParentRepository } from './parent.repository';
 
 @Injectable()
 export class ParentService {
-    constructor(private readonly parentRepository: ParentRepository, private readonly studentRepository: StudentRepository) { }
+    constructor(private readonly parentRepository: ParentRepository) { }
 
     async createParent(dto: CreateParentDto) {
         const parent = new Parent();

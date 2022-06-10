@@ -36,7 +36,7 @@ export class StudentService {
   }
 
   async getStudentEntity(dto: GetStudentDto) {
-    return this.studentRepository.findEntity(dto.id);
+    return await this.studentRepository.findEntity(dto.id);
   }
 
   async deleteStudent(id: string) {

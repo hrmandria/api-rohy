@@ -61,7 +61,10 @@ export class StudentRepository {
 
   async findEntity(id: string): Promise<StudentEntity> {
     try {
-      const student = await this.studentRepository.findOne({ id: id });
+      const student = this.studentRepository.findOne({ id: id });
+      student.then(function(result) {
+        console.log(result)
+      })
       return student;
     } catch (e) {
       throw new Error('Cannot find student.');
