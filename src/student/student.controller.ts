@@ -20,6 +20,11 @@ export class StudentController {
     return this.studentService.listPaginatedStudent(query);
   }
 
+  @Get(':id')
+  async getStudent(@Param('id') id: string) {
+    return this.studentService.getStudent(id);
+  }
+
   @Post()
   async createStudent(@Body() dto: CreateStudentDto) {
     return this.studentService.createStudent(dto);

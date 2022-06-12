@@ -35,6 +35,10 @@ export class StudentService {
     return this.studentRepository.save(student);
   }
 
+  async getStudent(id: string) {
+    return this.studentRepository.findBy({ id });
+  }
+
   async deleteStudent(id: string) {
     this.studentRepository.delete(id);
   }

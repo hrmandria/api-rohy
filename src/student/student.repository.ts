@@ -9,12 +9,8 @@ import {
 } from 'src/shared/models/paginated.model';
 import { StudentMapper } from './student.mapper';
 
-export interface FindOptions {
-  internalId?: string;
-}
-export interface CriteriaOptions {
-  lastname: string;
-  firstname: string;
+interface FindOptions {
+  id?: string;
 }
 
 @Injectable()
@@ -56,6 +52,22 @@ export class StudentRepository {
       return StudentMapper.fromEntity(savedStudentEntity);
     } catch (e) {
       throw new Error('Cannot save student');
+    }
+  }
+
+  async findBy(options: FindOptions): Promise<Student | undefined> {
+    try {
+      const studentEntity = await this.studentRepository.findOne({
+        ...options,
+      });
+
+      if (!studentEntity) {
+        return undefined;
+      }
+
+      return StudentMapper.fromEntity(studentEntity);
+    } catch (e) {
+      throw new Error('Cannot find user');
     }
   }
 
