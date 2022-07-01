@@ -8,6 +8,7 @@ export class TicketMapper {
     ticket.to = source.to;
     ticket.reason = source.reason;
     ticket.decision = source.decision;
+    ticket.anouncement = source.anouncement;
     ticket.pointsNumber = source.pointsNumber;
     ticket.managerSignature = source.managerSignature;
     ticket.parentSignature = source.parentSignature;
@@ -23,11 +24,13 @@ export class TicketMapper {
     ticketEntity.to = source.to;
     ticketEntity.reason = source.reason;
     ticketEntity.decision = source.decision;
+    ticketEntity.anouncement = source.anouncement;
     ticketEntity.pointsNumber = source.pointsNumber;
     ticketEntity.managerSignature = source.managerSignature;
     ticketEntity.parentSignature = source.parentSignature;
     ticketEntity.managerId = source.managerId;
     ticketEntity.parentId = source.parentId;
+    ticketEntity.userId = source.userId;
     ticketEntity.type = source.type;
     return ticketEntity;
   }

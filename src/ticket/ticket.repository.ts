@@ -15,14 +15,17 @@ export class TicketRepository {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
-  ) {}
+  ) { }
 
   async save(ticket: Ticket): Promise<Ticket> {
     try {
       const ticketEntity = TicketMapper.toEntity(ticket);
       const savedTicketEntity = await this.ticketRepository.save(ticketEntity);
+      console.log(savedTicketEntity)
       return TicketMapper.fromEntity(savedTicketEntity);
     } catch (e) {
+      console.log(e);
+
       throw new Error('Cannot save ticket');
     }
   }

@@ -6,6 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/config.service';
 import { StudentModule } from './student/student.module';
 import { TicketModule } from './ticket/ticket.module';
+import { SubjectModule } from './subject/subject.module';
+import { NoteModule } from './note/note.module';
+import { GradeModule } from './grade/grade.module';
 
 @Module({
   imports: [
@@ -15,6 +18,9 @@ import { TicketModule } from './ticket/ticket.module';
     TicketModule,
     SharedModule,
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
+    SubjectModule,
+    NoteModule,
+    GradeModule,
   ],
 })
 export class AppModule {}

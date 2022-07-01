@@ -16,6 +16,7 @@ export class Ticket extends AbstractModel {
   cause: string;
   reason: string;
   decision: string;
+  anouncement: string;
   pointsNumber: number;
   managerSignature: boolean;
   parentSignature: boolean;

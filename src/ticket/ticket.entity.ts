@@ -17,6 +17,9 @@ export class TicketEntity extends BaseEntity {
   @Column({ name: 'decision', nullable: true, type: 'text' })
   public decision: string;
 
+  @Column({ name: 'anouncement', nullable: true, type: 'text' })
+  public anouncement: string;
+
   @Column({ name: 'points_number', nullable: true, type: 'integer' })
   public pointsNumber: number;
 
@@ -29,7 +32,7 @@ export class TicketEntity extends BaseEntity {
   @Column({ name: 'type', nullable: false, type: 'text', enum: TicketType })
   public type: TicketType;
 
-  @Column({ name: 'user_id', nullable: false, type: 'text' })
+  @Column({ name: 'user_id', nullable: true, type: 'text' })
   public userId: string;
 
   @Column({ name: 'manager_id', nullable: false, type: 'text' })

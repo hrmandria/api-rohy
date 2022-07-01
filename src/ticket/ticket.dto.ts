@@ -3,9 +3,9 @@ import { TicketType } from './ticket.model';
 export interface CreateTicketDto {
   from: Date;
   to: Date;
-  cause: string;
   reason: string;
   decision: string;
+  anouncement: string;
   pointsNumber: number;
   managerSignature: boolean;
   parentSignature: boolean;
