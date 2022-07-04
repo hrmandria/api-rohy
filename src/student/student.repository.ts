@@ -62,7 +62,7 @@ export class StudentRepository {
   async findEntity(id: string): Promise<StudentEntity> {
     try {
       const student = this.studentRepository.findOne({ id: id });
-      student.then(function(result) {
+      student.then(function (result) {
         console.log(result)
       })
       return student;

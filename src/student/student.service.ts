@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
-import { CreateStudentDto, GetStudentDto } from './student.dto';
+import { CreateStudentDto } from './student.dto';
 import { InvalidPaginationInputException } from './student.exception';
 import { Student, StudentStatus } from './student.model';
 import { StudentRepository } from './student.repository';
@@ -35,12 +35,7 @@ export class StudentService {
     return this.studentRepository.save(student);
   }
 
-  async getStudentEntity(dto: GetStudentDto) {
-    return await this.studentRepository.findEntity(dto.id);
-  }
-
   async deleteStudent(id: string) {
     this.studentRepository.delete(id);
   }
-
 }

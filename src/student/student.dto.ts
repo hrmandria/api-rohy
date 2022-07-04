@@ -3,6 +3,3 @@ export interface CreateStudentDto {
   firstname: string;
   userId: string;
 }
-export interface GetStudentDto {
-  id: string;
-}
