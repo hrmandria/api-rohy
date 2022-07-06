@@ -8,11 +8,11 @@ export class GradeEntity extends BaseEntity {
     @Column({ name: 'name', nullable: false, type: 'text' })
     public name: string;
 
-    @OneToMany(() => StudentEntity, (student => student.id), { cascade: true })
+    @OneToMany(() => StudentEntity, (student) => student.id, { cascade: true })
     @JoinTable()
     students: StudentEntity[];
 
-    @OneToMany(() => SubjectEntity, (subject => subject.id), { cascade: true })
-    @JoinTable()
+    @OneToMany(() => SubjectEntity, (subject) => subject.id, { cascade: true })
+    @JoinTable({ name: 'grade_subject' })
     subjects: SubjectEntity[];
 }

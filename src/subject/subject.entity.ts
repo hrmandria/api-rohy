@@ -1,7 +1,7 @@
 import { GradeEntity } from "src/grade/grade.entity";
 import { BaseEntity } from "src/shared/entities/base.entity";
 import { UserEntity } from "src/user/user.entity";
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, OneToMany, OneToOne } from "typeorm";
 
 @Entity({ name: 'subject' })
 export class SubjectEntity extends BaseEntity {

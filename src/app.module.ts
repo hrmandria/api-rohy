@@ -23,4 +23,4 @@ import { GradeModule } from './grade/grade.module';
     GradeModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }
