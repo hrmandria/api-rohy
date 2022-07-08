@@ -9,10 +9,8 @@ export class GradeEntity extends BaseEntity {
     public name: string;
 
     @OneToMany(() => StudentEntity, (student) => student.id, { cascade: true })
-    @JoinTable()
     students: StudentEntity[];
 
     @OneToMany(() => SubjectEntity, (subject) => subject.id, { cascade: true })
-    @JoinTable({ name: 'grade_subject' })
     subjects: SubjectEntity[];
 }

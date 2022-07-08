@@ -8,15 +8,9 @@ export class SubjectEntity extends BaseEntity {
     @Column({ name: 'name', nullable: false, type: 'text' })
     public name: string;
 
-    @Column({ name: 'grade_id', nullable: true, type: 'text' })
-    public gradeId: string;
-
-    @Column({ name: 'teacher_id', nullable: false, type: 'text' })
-    public teacherId: string;
-
     @OneToOne(() => UserEntity)
     @JoinColumn({ name: 'teacher_id' })
-    user: UserEntity;
+    teacher: UserEntity;
 
     @OneToOne(() => GradeEntity)
     @JoinColumn({ name: 'grade_id' })
