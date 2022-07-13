@@ -4,5 +4,5 @@ export interface CreateParentDto {
     lastname: string;
     firstname: string;
     userId: string;
-    students: StudentEntity[];
+    studentIds: string[];
 } 

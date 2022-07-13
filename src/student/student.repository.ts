@@ -10,11 +10,7 @@ import {
 import { StudentMapper } from './student.mapper';
 
 export interface FindOptions {
-  internalId?: string;
-}
-export interface CriteriaOptions {
-  lastname: string;
-  firstname: string;
+  id?: string;
 }
 
 @Injectable()
@@ -59,17 +55,19 @@ export class StudentRepository {
     }
   }
 
-  async findEntity(id: string): Promise<StudentEntity> {
+  findBy(options: FindOptions): Student | undefined {
     try {
-      const student = this.studentRepository.findOne({ id: id });
-      student.then(function (result) {
-        console.log(result)
-      })
-      return student;
+      const userEntity = this.studentRepository.findOne({ ...options }).then(result => {
+        return StudentMapper.fromEntity(result);
+      });
+
+      if (!userEntity) {
+        return undefined;
+      }
     } catch (e) {
-      throw new Error('Cannot find student.');
+      throw new Error('Cannot find student');
     }
-  }
+  }    
 
   async delete(id: string) {
     try {
