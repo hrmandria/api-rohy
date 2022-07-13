@@ -12,4 +12,13 @@ export class GradeMapper {
 
         return gradeEntity;
     }
+
+    public static fromEntity(source: GradeEntity): Grade {
+        const grade = new Grade(source.id);
+        grade.name = source.name;
+        grade.students = source.students;
+        grade.subjects = source.subjects;
+
+        return grade;
+    }
 }

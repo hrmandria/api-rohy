@@ -1,5 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { result } from "lodash";
+import { Paginated, PaginationCriteria } from "src/shared/models/paginated.model";
+import { StudentMapper } from "src/student/student.mapper";
 import { Repository } from "typeorm";
 import { SubjectEntity } from "./subject.entity";
 import { SubjectMapper } from "./subject.mapper";
@@ -7,7 +10,6 @@ import { Subject } from "./subject.model";
 
 export interface FindOptions {
     id?: string;
-    name?: string;
 }
 
 @Injectable()
@@ -17,19 +19,41 @@ export class SubjectRepository {
         private readonly subjectRepository: Repository<SubjectEntity>
     ){}
 
-    async findBy(options: FindOptions): Promise<Subject | undefined> {
+    findBy(options: FindOptions): Subject | undefined {
         try {
-            const subjectEntity = await this.subjectRepository.findOne({ ...options });
+            const subjectEntity = this.subjectRepository.findOne({ ...options }).then(result => {
+              return SubjectMapper.fromEntity(result);
+            });
 
             if (!subjectEntity) {
                 return undefined
             }
 
-            return SubjectMapper.fromEntity(subjectEntity);
         } catch(e) {
             throw new Error('Cannot find subject');
         }
     }
+
+    async listPaginatedGrade(criteria: PaginationCriteria): Promise<Paginated<Subject>> {
+        try {
+          const { page, pageSize } = criteria;
+          const [entities, total] = await this.subjectRepository.findAndCount({
+            order: {
+              createdAt: 'DESC',
+              id: 'ASC',
+            },
+            skip: (page - 1) * pageSize,
+            take: pageSize,
+          });
+    
+          return {
+            items: entities.map(SubjectMapper.fromEntity),
+            total,
+          };
+        } catch (e) {
+          throw new Error('Cannot list paginated subject');
+        }
+      }
 
     async save(subject: Subject) {
         try {
