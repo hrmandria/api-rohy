@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/config.service';
 import { StudentModule } from './student/student.module';
 import { TicketModule } from './ticket/ticket.module';
+import { ParentModule } from './parent/parent.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { TicketModule } from './ticket/ticket.module';
     StudentModule,
     TicketModule,
     SharedModule,
+    ParentModule,
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
   ],
 })
-export class AppModule {}
+export class AppModule { }

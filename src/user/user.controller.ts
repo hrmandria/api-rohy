@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 import { CreateUserDto } from './user.dto';
+import { AuthenticationToken } from './user.model';
 import { UserService } from './user.service';
 
 @Controller()
@@ -9,6 +10,11 @@ export class UserController {
   @Post('createUser')
   async createUser(@Body() request: CreateUserDto) {
     return this.userService.createUser(request);
+  }
+
+  @Get('getUser')
+  async getUser(@Body() request: AuthenticationToken) {
+    return this.userService.getUser(request)
   }
 
   @Delete(':id')

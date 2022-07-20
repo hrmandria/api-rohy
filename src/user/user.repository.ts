@@ -4,10 +4,16 @@ import { User } from './user.model';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { UserMapper } from './user.mapper';
+import { JwtService } from '@nestjs/jwt';
 
 export interface FindOptions {
   idNumber?: string;
   email?: string;
+}
+
+export interface PayloadType {
+  username: string;
+  sub: string;
 }
 
 @Injectable()
@@ -15,7 +21,8 @@ export class UserRepository {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-  ) {}
+    private readonly jwtTokenService: JwtService,
+  ) { }
 
   async findBy(options: FindOptions): Promise<User | undefined> {
     try {
@@ -28,6 +35,21 @@ export class UserRepository {
       return UserMapper.fromEntity(userEntity);
     } catch (e) {
       throw new Error('Cannot find user');
+    }
+  }
+
+  async getUser(token: string) {
+    try {
+      const decodedToken = this.jwtTokenService.decode(token) as PayloadType;
+      const options = { idNumber: decodedToken.username }
+      let user = {};
+      await this.findBy(options).then(result => {
+        user = result;
+      })
+      return user;
+    } catch (e) {
+      console.log(e)
+      throw new Error ('Cannot get user');
     }
   }
 
