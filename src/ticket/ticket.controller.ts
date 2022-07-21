@@ -4,7 +4,7 @@ import { TicketService } from './ticket.service';
 
 @Controller('ticket')
 export class TicketController {
-  constructor(private readonly ticketService: TicketService) {}
+  constructor(private readonly ticketService: TicketService) { }
 
   @Post()
   async createTicket(@Body() dto: CreateTicketDto) {

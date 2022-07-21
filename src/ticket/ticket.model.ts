@@ -13,7 +13,6 @@ export enum TicketType {
 export class Ticket extends AbstractModel {
   from: Date;
   to: Date;
-  cause: string;
   reason: string;
   decision: string;
   pointsNumber: number;
