@@ -3,7 +3,7 @@ import { Student } from './student.model';
 
 export class StudentMapper {
   public static fromEntity(source: StudentEntity): Student {
-    const student = new Student();
+    const student = new Student(source.id);
     student.lastname = source.lastname;
     student.firstname = source.firstname;
     student.status = source.status;

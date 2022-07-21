@@ -8,7 +8,6 @@ export class ParentMapper {
         parent.lastname = source.lastname;
         parent.firstname = source.firstname;
         parent.status = source.status;
-        parent.userId = source.userId;
         parent.students = source.students;
         return parent;
     }

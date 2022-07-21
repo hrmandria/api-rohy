@@ -12,7 +12,7 @@ export class ParentController {
     }
 
     @Delete(':id')
-    async deleteStudent(@Param('id') id: string) {
+    async deleteParent(@Param('id') id: string) {
         return this.parentService.deleteParent(id);
     }
 }

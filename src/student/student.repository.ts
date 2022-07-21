@@ -2,15 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudentEntity } from './student.entity';
-import { Student } from './student.model';
+import { Student, StudentStatus } from './student.model';
 import {
   Paginated,
   PaginationCriteria,
 } from 'src/shared/models/paginated.model';
 import { StudentMapper } from './student.mapper';
+import { result } from 'lodash';
 
 export interface FindOptions {
-  id?: string;
+  id?: string,
 }
 
 @Injectable()
@@ -55,19 +56,18 @@ export class StudentRepository {
     }
   }
 
-  findBy(options: FindOptions): Student | undefined {
+  async findBy(options: FindOptions): Promise<Student | undefined> {
     try {
-      const userEntity = this.studentRepository.findOne({ ...options }).then(result => {
-        return StudentMapper.fromEntity(result);
-      });
-
-      if (!userEntity) {
+      const student = await this.studentRepository.findByIds([options.id])
+      if (!student) {
         return undefined;
       }
+      const map = StudentMapper.fromEntity(student[0])
+      return map;
     } catch (e) {
       throw new Error('Cannot find student');
     }
-  }    
+  }
 
   async delete(id: string) {
     try {

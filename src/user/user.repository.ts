@@ -38,9 +38,23 @@ export class UserRepository {
     }
   }
 
+  async generateIdNumber() {
+    let value = ""
+    for (let i = 0; i < 6; i++) {
+      value += Math.floor(Math.random() * 9);
+    }
+    const match = await this.findBy({ idNumber: value })
+    if (match == undefined) {
+      return value
+    } else {
+      await this.generateIdNumber();
+    }
+  }
+
   async getUser(token: string) {
     try {
       const decodedToken = this.jwtTokenService.decode(token) as PayloadType;
+      console.log(decodedToken);
       const options = { idNumber: decodedToken.username }
       let user = {};
       await this.findBy(options).then(result => {
@@ -49,7 +63,7 @@ export class UserRepository {
       return user;
     } catch (e) {
       console.log(e)
-      throw new Error ('Cannot get user');
+      //throw new Error('Cannot get user');
     }
   }
 
@@ -69,6 +83,7 @@ export class UserRepository {
       const savedUserEntity = await this.userRepository.save(userEntity);
       return UserMapper.fromEntity(savedUserEntity);
     } catch (e) {
+      console.log(e)
       throw new Error('Cannot save user');
     }
   }

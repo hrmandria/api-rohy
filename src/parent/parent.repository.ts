@@ -18,7 +18,7 @@ export class ParentRepository {
             const savedParentEntity = await this.parentRepository.save(parentEntity);
             return ParentMapper.fromEntity(savedParentEntity);
         } catch (e) {
-            throw new Error('Cannot save parent');
+            console.log(e);
         }
     }
 
