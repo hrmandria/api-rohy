@@ -19,7 +19,7 @@ export class TicketService {
     ticket.type = dto.type;
     ticket.managerId = dto.managerId;
     ticket.parentId = dto.parentId;
-    ticket.userId = dto.userId;
+    ticket.studentId = dto.studentId;
     return this.ticketRepository.save(ticket);
   }
 }

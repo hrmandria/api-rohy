@@ -11,5 +11,5 @@ export interface CreateTicketDto {
   type: TicketType;
   managerId: string;
   parentId: string;
-  userId: string;
+  studentId: string;
 }

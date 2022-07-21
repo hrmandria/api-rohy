@@ -29,7 +29,7 @@ export class TicketMapper {
     ticketEntity.managerId = source.managerId;
     ticketEntity.parentId = source.parentId;
     ticketEntity.type = source.type;
-    ticketEntity.userId = source.userId;
+    ticketEntity.studentId = source.studentId;
     return ticketEntity;
   }
 }

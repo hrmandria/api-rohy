@@ -21,5 +21,5 @@ export class Ticket extends AbstractModel {
   type: TicketType;
   managerId: string;
   parentId: string;
-  userId: string;
+  studentId: string;
 }
