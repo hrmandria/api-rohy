@@ -11,45 +11,47 @@ import { ParentRepository } from './parent.repository';
 
 @Injectable()
 export class ParentService {
-    constructor(
-        private readonly parentRepository: ParentRepository,
-        private readonly studentRepository: StudentRepository,
-        private readonly userService: UserService
-    ) { }
+  constructor(
+    private readonly parentRepository: ParentRepository,
+    private readonly studentRepository: StudentRepository,
+    private readonly userService: UserService,
+  ) {}
 
-    async toEntities(studentIds: string[], students: StudentEntity[]) {
-        studentIds.forEach(async element => {
-            const options: FindOptions = { id: element }
-            try {
-                const student = await this.studentRepository.findBy(options);
-                console.log(student);
-                const entity = StudentMapper.toEntity(student);
-                students.push(entity);
-            } catch (e) {
-                console.log(e);
-            }
-        });
-    }
+  async toEntities(studentIds: string[], students: StudentEntity[]) {
+    studentIds.forEach(async (element) => {
+      const options: FindOptions = { id: element };
+      try {
+        const student = await this.studentRepository.findBy(options);
+        console.log(student);
+        const entity = StudentMapper.toEntity(student);
+        students.push(entity);
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  }
 
-    async createParent(dto: CreateParentDto) {
-        const parent = new Parent();
-        parent.lastname = dto.lastname;
-        parent.firstname = dto.firstname;
-        parent.status = ParentStatus.ACTIVE;
-        const idNumber = await this.userService.generateIdNumber();
-        const createUserDto: CreateUserDto = {
-            idNumber: idNumber,
-            email: dto.email,
-            password: dto.password
-        }
-        const user = UserMapper.toEntity(await this.userService.createUser(createUserDto))
-        parent.userId = user.id;
-        const studentIds = dto.studentIds;
-        let students: StudentEntity[] = [];
-        await this.toEntities(studentIds, students);
-        parent.students = students;
-        return this.parentRepository.save(parent);
-    }
+  async createParent(dto: CreateParentDto) {
+    const parent = new Parent();
+    parent.lastname = dto.lastname;
+    parent.firstname = dto.firstname;
+    parent.status = ParentStatus.ACTIVE;
+    const idNumber = await this.userService.generateIdNumber();
+    const createUserDto: CreateUserDto = {
+      idNumber: idNumber,
+      email: dto.email,
+      password: dto.password,
+    };
+    const user = UserMapper.toEntity(
+      await this.userService.createUser(createUserDto),
+    );
+    parent.userId = user.id;
+    const studentIds = dto.studentIds;
+    const students: StudentEntity[] = [];
+    await this.toEntities(studentIds, students);
+    parent.students = students;
+    return this.parentRepository.save(parent);
+  }
 
   async deleteParent(id: string) {
     this.parentRepository.delete(id);
