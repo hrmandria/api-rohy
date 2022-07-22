@@ -22,7 +22,7 @@ export class UserRepository {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     private readonly jwtTokenService: JwtService,
-  ) { }
+  ) {}
 
   async findBy(options: FindOptions): Promise<User | undefined> {
     try {
@@ -41,15 +41,15 @@ export class UserRepository {
   async getUser(token: string) {
     try {
       const decodedToken = this.jwtTokenService.decode(token) as PayloadType;
-      const options = { idNumber: decodedToken.username }
+      const options = { idNumber: decodedToken.username };
       let user = {};
-      await this.findBy(options).then(result => {
+      await this.findBy(options).then((result) => {
         user = result;
-      })
+      });
       return user;
     } catch (e) {
-      console.log(e)
-      throw new Error ('Cannot get user');
+      console.log(e);
+      throw new Error('Cannot get user');
     }
   }
 

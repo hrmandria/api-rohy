@@ -7,26 +7,26 @@ import { Parent } from './parent.model';
 
 @Injectable()
 export class ParentRepository {
-    constructor(
-        @InjectRepository(ParentEntity)
-        private readonly parentRepository: Repository<ParentEntity>,
-    ) { }
+  constructor(
+    @InjectRepository(ParentEntity)
+    private readonly parentRepository: Repository<ParentEntity>,
+  ) {}
 
-    async save(parent: Parent): Promise<Parent> {
-        try {
-            const parentEntity = ParentMapper.toEntity(parent);
-            const savedParentEntity = await this.parentRepository.save(parentEntity);
-            return ParentMapper.fromEntity(savedParentEntity);
-        } catch (e) {
-            throw new Error('Cannot save parent');
-        }
+  async save(parent: Parent): Promise<Parent> {
+    try {
+      const parentEntity = ParentMapper.toEntity(parent);
+      const savedParentEntity = await this.parentRepository.save(parentEntity);
+      return ParentMapper.fromEntity(savedParentEntity);
+    } catch (e) {
+      throw new Error('Cannot save parent');
     }
+  }
 
-    async delete(id: string) {
-        try {
-            await this.parentRepository.delete({ id });
-        } catch (e) {
-            throw new Error('Cannot delete parent');
-        }
+  async delete(id: string) {
+    try {
+      await this.parentRepository.delete({ id });
+    } catch (e) {
+      throw new Error('Cannot delete parent');
     }
+  }
 }

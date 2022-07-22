@@ -8,35 +8,35 @@ import { ParentRepository } from './parent.repository';
 
 @Injectable()
 export class ParentService {
-    constructor(
-        private readonly parentRepository: ParentRepository,
-        private readonly studentRepository: StudentRepository
-    ) { }
+  constructor(
+    private readonly parentRepository: ParentRepository,
+    private readonly studentRepository: StudentRepository,
+  ) {}
 
-    async createParent(dto: CreateParentDto) {
-        const parent = new Parent();
-        parent.lastname = dto.lastname;
-        parent.firstname = dto.firstname;
-        parent.status = ParentStatus.ACTIVE;
-        parent.userId = dto.userId;
-        const students : StudentEntity[] = [];
-        const studentIds = dto.studentIds;
-        studentIds.forEach(element => {
-            const options : FindOptions = { id: element }
-            try {
-                const student = this.studentRepository.findBy(options);
-                const entity = StudentMapper.toEntity(student);
-                students.push(entity);
-            } catch (e) {
-                console.log(e);
-                throw new Error('Cannot find student with '+ element +' id.')
-            }
-        });
-        parent.students = students;
-        return this.parentRepository.save(parent);
-    }
+  async createParent(dto: CreateParentDto) {
+    const parent = new Parent();
+    parent.lastname = dto.lastname;
+    parent.firstname = dto.firstname;
+    parent.status = ParentStatus.ACTIVE;
+    parent.userId = dto.userId;
+    const students: StudentEntity[] = [];
+    const studentIds = dto.studentIds;
+    studentIds.forEach(async (element) => {
+      const options: FindOptions = { id: element };
+      try {
+        const student = this.studentRepository.findBy(options);
+        const entity = StudentMapper.toEntity(await student);
+        students.push(entity);
+      } catch (e) {
+        console.log(e);
+        throw new Error('Cannot find student with ' + element + ' id.');
+      }
+    });
+    parent.students = students;
+    return this.parentRepository.save(parent);
+  }
 
-    async deleteParent(id: string) {
-        this.parentRepository.delete(id);
-    }
+  async deleteParent(id: string) {
+    this.parentRepository.delete(id);
+  }
 }

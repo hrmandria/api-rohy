@@ -19,4 +19,4 @@ import { ParentModule } from './parent/parent.module';
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
   ],
 })
-export class AppModule { }
+export class AppModule {}

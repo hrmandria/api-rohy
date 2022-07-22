@@ -14,7 +14,7 @@ export class UserController {
 
   @Get('getUser')
   async getUser(@Body() request: AuthenticationToken) {
-    return this.userService.getUser(request)
+    return this.userService.getUser(request);
   }
 
   @Delete(':id')

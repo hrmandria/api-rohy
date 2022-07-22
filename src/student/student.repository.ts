@@ -18,7 +18,7 @@ export class StudentRepository {
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) { }
+  ) {}
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
@@ -55,7 +55,6 @@ export class StudentRepository {
     }
   }
 
-<<<<<<< HEAD
   async findBy(options: FindOptions): Promise<Student | undefined> {
     try {
       const studentEntity = await this.studentRepository.findOne({
@@ -71,21 +70,6 @@ export class StudentRepository {
       throw new Error('Cannot find user');
     }
   }
-=======
-  findBy(options: FindOptions): Student | undefined {
-    try {
-      const userEntity = this.studentRepository.findOne({ ...options }).then(result => {
-        return StudentMapper.fromEntity(result);
-      });
-
-      if (!userEntity) {
-        return undefined;
-      }
-    } catch (e) {
-      throw new Error('Cannot find student');
-    }
-  }    
->>>>>>> bec34238313d565487aaf47ee06eaa6f5da32010
 
   async delete(id: string) {
     try {

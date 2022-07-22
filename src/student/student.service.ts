@@ -9,7 +9,7 @@ const maxPageSize = 250;
 
 @Injectable()
 export class StudentService {
-  constructor(private readonly studentRepository: StudentRepository) { }
+  constructor(private readonly studentRepository: StudentRepository) {}
 
   async listPaginatedStudent(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
