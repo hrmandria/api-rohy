@@ -22,11 +22,15 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async getUser(authenticationToken: AuthenticationToken) {
-    return this.userRepository.getUser(authenticationToken.token);
+  async getUser(authenticationToken: string) {
+    return this.userRepository.getUser(authenticationToken);
   }
 
   async deleteUser(id: string) {
     this.userRepository.delete(id);
+  }
+
+  async generateIdNumber() {
+    return await this.userRepository.generateIdNumber();
   }
 }

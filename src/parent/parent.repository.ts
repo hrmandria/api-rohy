@@ -12,13 +12,14 @@ export class ParentRepository {
     private readonly parentRepository: Repository<ParentEntity>,
   ) {}
 
-  async save(parent: Parent): Promise<Parent> {
-    try {
-      const parentEntity = ParentMapper.toEntity(parent);
-      const savedParentEntity = await this.parentRepository.save(parentEntity);
-      return ParentMapper.fromEntity(savedParentEntity);
-    } catch (e) {
-      throw new Error('Cannot save parent');
+    async save(parent: Parent): Promise<Parent> {
+        try {
+            const parentEntity = ParentMapper.toEntity(parent);
+            const savedParentEntity = await this.parentRepository.save(parentEntity);
+            return ParentMapper.fromEntity(savedParentEntity);
+        } catch (e) {
+            console.log(e);
+        }
     }
   }
 

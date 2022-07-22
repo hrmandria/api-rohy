@@ -3,7 +3,7 @@ import { PaginationCriteria } from 'src/shared/models/paginated.model';
 import { CreateStudentDto } from './student.dto';
 import { InvalidPaginationInputException } from './student.exception';
 import { Student, StudentStatus } from './student.model';
-import { StudentRepository } from './student.repository';
+import { FindOptions, StudentRepository } from './student.repository';
 
 const maxPageSize = 250;
 
@@ -25,13 +25,16 @@ export class StudentService {
     return this.studentRepository.listPaginatedStudent(criteria);
   }
 
+  async findStudent(options: FindOptions) {
+    return await this.studentRepository.findBy(options);
+  }
+
   async createStudent(dto: CreateStudentDto) {
     const student = new Student();
     student.lastname = dto.lastname;
     student.firstname = dto.firstname;
     student.userId = dto.userId;
     student.status = StudentStatus.ACTIVE;
-
     return this.studentRepository.save(student);
   }
 

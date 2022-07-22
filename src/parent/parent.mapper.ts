@@ -2,15 +2,14 @@ import { ParentEntity } from './parent.entity';
 import { Parent } from './parent.model';
 
 export class ParentMapper {
-  public static fromEntity(source: ParentEntity): Parent {
-    const parent = new Parent();
-    parent.lastname = source.lastname;
-    parent.firstname = source.firstname;
-    parent.status = source.status;
-    parent.userId = source.userId;
-    parent.students = source.students;
-    return parent;
-  }
+    public static fromEntity(source: ParentEntity): Parent {
+        const parent = new Parent();
+        parent.lastname = source.lastname;
+        parent.firstname = source.firstname;
+        parent.status = source.status;
+        parent.students = source.students;
+        return parent;
+    }
 
   public static toEntity(source: Parent): ParentEntity {
     const parentEntity = new ParentEntity();
