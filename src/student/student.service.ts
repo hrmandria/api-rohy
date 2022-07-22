@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
+import { CreateUserDto } from 'src/user/user.dto';
+import { UserMapper } from 'src/user/user.mapper';
+import { UserService } from 'src/user/user.service';
 import { CreateStudentDto } from './student.dto';
 import { InvalidPaginationInputException } from './student.exception';
 import { Student, StudentStatus } from './student.model';
@@ -9,7 +12,9 @@ const maxPageSize = 250;
 
 @Injectable()
 export class StudentService {
-  constructor(private readonly studentRepository: StudentRepository) { }
+  constructor(
+    private readonly studentRepository: StudentRepository,
+    private readonly userService: UserService) { }
 
   async listPaginatedStudent(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
@@ -33,7 +38,14 @@ export class StudentService {
     const student = new Student();
     student.lastname = dto.lastname;
     student.firstname = dto.firstname;
-    student.userId = dto.userId;
+    const idNumber = await this.userService.generateIdNumber();
+    const createUserDto: CreateUserDto = {
+      idNumber: idNumber,
+      email: dto.email,
+      password: dto.password
+    }
+    const user = UserMapper.toEntity(await this.userService.createUser(createUserDto))
+    student.userId = user.id;
     student.status = StudentStatus.ACTIVE;
     return this.studentRepository.save(student);
   }

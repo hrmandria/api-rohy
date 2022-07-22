@@ -4,7 +4,7 @@ import { Parent } from './parent.model';
 
 export class ParentMapper {
     public static fromEntity(source: ParentEntity): Parent {
-        const parent = new Parent();
+        const parent = new Parent(source.id);
         parent.lastname = source.lastname;
         parent.firstname = source.firstname;
         parent.status = source.status;
