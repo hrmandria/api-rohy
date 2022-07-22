@@ -12,4 +12,5 @@ export class Student extends AbstractModel {
   email: string;
   password: string;
   userId: string;
+  idNumber: string;
 }

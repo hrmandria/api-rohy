@@ -23,6 +23,9 @@ export class ParentEntity extends BaseEntity {
     @Column({ name: 'user_id', nullable: false, type: 'text' })
     public userId: string;
 
+    @Column({ name: 'id_number', nullable: false, type: 'text' })
+    public idNumber: string;
+
     @OneToOne(() => UserEntity)
     @JoinColumn({ name: 'user_id' })
     user: UserEntity;

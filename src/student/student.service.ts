@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ParentService } from 'src/parent/parent.service';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
 import { CreateUserDto } from 'src/user/user.dto';
 import { UserMapper } from 'src/user/user.mapper';
@@ -39,6 +40,7 @@ export class StudentService {
     student.lastname = dto.lastname;
     student.firstname = dto.firstname;
     const idNumber = await this.userService.generateIdNumber();
+    student.idNumber = idNumber;
     const createUserDto: CreateUserDto = {
       idNumber: idNumber,
       email: dto.email,

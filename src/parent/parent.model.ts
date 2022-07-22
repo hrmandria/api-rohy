@@ -11,5 +11,6 @@ export class Parent extends AbstractModel {
     firstname: string;
     status: ParentStatus;
     userId: string;
+    idNumber: string;
     students: StudentEntity[];
 }

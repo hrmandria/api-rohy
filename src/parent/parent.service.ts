@@ -37,6 +37,7 @@ export class ParentService {
         parent.firstname = dto.firstname;
         parent.status = ParentStatus.ACTIVE;
         const idNumber = await this.userService.generateIdNumber();
+        parent.idNumber = idNumber;
         const createUserDto: CreateUserDto = {
             idNumber: idNumber,
             email: dto.email,

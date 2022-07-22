@@ -52,6 +52,7 @@ export class StudentRepository {
       );
       return StudentMapper.fromEntity(savedStudentEntity);
     } catch (e) {
+      console.log(e);
       throw new Error('Cannot save student');
     }
   }

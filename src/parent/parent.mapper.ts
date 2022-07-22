@@ -9,6 +9,7 @@ export class ParentMapper {
         parent.firstname = source.firstname;
         parent.status = source.status;
         parent.students = source.students;
+        parent.idNumber = source.idNumber;
         return parent;
     }
 
@@ -20,6 +21,7 @@ export class ParentMapper {
         parentEntity.status = source.status;
         parentEntity.userId = source.userId;
         parentEntity.students = source.students;
+        parentEntity.idNumber = source.idNumber;
         return parentEntity;
     }
 }
