@@ -1,3 +1,4 @@
+import DatabaseFileEntity from 'src/files/file.entity';
 import { BaseEntity } from 'src/shared/entities/base.entity';
 import { StudentEntity } from 'src/student/student.entity';
 import { UserEntity } from 'src/user/user.entity';
@@ -25,6 +26,16 @@ export class ParentEntity extends BaseEntity {
 
     @Column({ name: 'id_number', nullable: false, type: 'text' })
     public idNumber: string;
+
+    @Column({ name: 'phone', nullable: true, type: 'text' })
+    public phone: string;
+
+    @Column({ name: 'avatar_id', nullable: true, type: 'text' })
+    public avatarId?: string;
+
+    @OneToOne(() => DatabaseFileEntity, { nullable: true })
+    @JoinColumn({ name: 'avatar_id' })
+    public avatar?: DatabaseFileEntity;
 
     @OneToOne(() => UserEntity)
     @JoinColumn({ name: 'user_id' })

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { DatabaseFileService } from 'src/files/file.service';
 import { StudentEntity } from 'src/student/student.entity';
 import { StudentMapper } from 'src/student/student.mapper';
 import { FindOptions, StudentRepository } from 'src/student/student.repository';
@@ -14,7 +15,8 @@ export class ParentService {
     constructor(
         private readonly parentRepository: ParentRepository,
         private readonly studentRepository: StudentRepository,
-        private readonly userService: UserService
+        private readonly userService: UserService,
+        private readonly databaseFileService: DatabaseFileService
     ) { }
 
     async toEntities(studentIds: string[], students: StudentEntity[]) {
@@ -50,6 +52,17 @@ export class ParentService {
         await this.toEntities(studentIds, students);
         parent.students = students;
         return this.parentRepository.save(parent);
+    }
+
+    async addAvatar(imageBuffer: Buffer, filename: string, id: string) {
+        const avatar = await this.databaseFileService.uploadDatabaseFile(imageBuffer, filename);
+        const options = {
+            firstname: "",
+            lastname: "",
+            avatarId: avatar.id,
+            students: []
+        }
+        await this.parentRepository.update(options, id);
     }
 
     async deleteParent(id: string) {

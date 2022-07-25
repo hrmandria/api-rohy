@@ -1,5 +1,8 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import DatabaseFileEntity from "src/files/file.entity";
+import DatabaseFile from "src/files/file.entity";
+import { DatabaseFileService } from "src/files/file.service";
 import { StudentController } from "src/student/student.controller";
 import { StudentEntity } from "src/student/student.entity";
 import { StudentModule } from "src/student/student.module";
@@ -15,11 +18,11 @@ import { ParentService } from "./parent.service";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([ParentEntity, StudentEntity]),
+        TypeOrmModule.forFeature([ParentEntity, StudentEntity, DatabaseFileEntity]),
         UserModule,
         StudentModule
     ],
     controllers: [ParentController],
-    providers: [ParentRepository, StudentRepository, ParentService, UserService],
+    providers: [ParentRepository, StudentRepository, ParentService, UserService, DatabaseFileService],
 })
 export class ParentModule { }
