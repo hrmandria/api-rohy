@@ -1,4 +1,5 @@
 import { BaseEntity } from 'src/shared/entities/base.entity';
+import { TicketEntity } from 'src/ticket/ticket.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { StudentStatus } from './student.model';
@@ -18,6 +19,9 @@ export class StudentEntity extends BaseEntity {
     enum: StudentStatus,
   })
   public status: StudentStatus;
+
+  @Column({ name: 'tickets', nullable: true })
+  public tickets: TicketEntity[];
 
   @Column({ name: 'user_id', nullable: false, type: 'text' })
   public userId: string;

@@ -1,4 +1,5 @@
 import { AbstractModel } from 'src/shared/models/abstract.model';
+import { TicketEntity } from 'src/ticket/ticket.entity';
 
 export enum StudentStatus {
   ACTIVE = 'ACTIVE',
@@ -10,4 +11,5 @@ export class Student extends AbstractModel {
   firstname: string;
   status: StudentStatus;
   userId: string;
+  tickets: TicketEntity[];
 }

@@ -10,8 +10,10 @@ import {
 import { StudentMapper } from './student.mapper';
 
 export interface FindOptions {
-  internalId?: string;
+  idNumber?: string;
+  email?: string;
 }
+
 export interface CriteriaOptions {
   lastname: string;
   firstname: string;
@@ -22,7 +24,7 @@ export class StudentRepository {
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) {}
+  ) { }
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
@@ -44,6 +46,20 @@ export class StudentRepository {
       };
     } catch (e) {
       throw new Error('Cannot list paginated student');
+    }
+  }
+
+  async findBy(options: FindOptions): Promise<Student | undefined> {
+    try {
+      const studentEntity = await this.studentRepository.findOne({ ...options });
+
+      if (!studentEntity) {
+        return undefined;
+      }
+
+      return StudentMapper.fromEntity(studentEntity);
+    } catch (e) {
+      throw new Error('Cannot find user');
     }
   }
 
