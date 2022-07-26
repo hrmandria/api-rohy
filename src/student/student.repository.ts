@@ -18,7 +18,7 @@ export class StudentRepository {
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) {}
+  ) { }
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
@@ -39,7 +39,21 @@ export class StudentRepository {
         total,
       };
     } catch (e) {
-      throw new Error(`Cannot listing paginated student ${e}`);
+      throw new Error('Cannot list paginated student');
+    }
+  }
+
+  async findBy(options: FindOptions): Promise<Student | undefined> {
+    try {
+      const studentEntity = await this.studentRepository.findOne({ ...options });
+
+      if (!studentEntity) {
+        return undefined;
+      }
+
+      return StudentMapper.fromEntity(studentEntity);
+    } catch (e) {
+      throw new Error('Cannot find user');
     }
   }
 
@@ -51,33 +65,15 @@ export class StudentRepository {
       );
       return StudentMapper.fromEntity(savedStudentEntity);
     } catch (e) {
-      throw new Error(`Cannot save student ${e.message}`);
+      throw new Error('Cannot save student');
     }
   }
 
-  async findBy(options: FindOptions): Promise<Student> {
+  async delete(id: string) {
     try {
-      const studentEntity = await this.studentRepository.findOne({
-        ...options,
-      });
-
-      if (!studentEntity) {
-        throw new Error(`Cannot find student with options ${options}`);
-      }
-
-      return StudentMapper.fromEntity(studentEntity);
+      await this.studentRepository.delete({ id });
     } catch (e) {
-      throw new Error(`Cannot find student ${e.message}`);
-    }
-  }
-
-  async listBy(options: FindOptions): Promise<Student[]> {
-    try {
-      const userEntities = await this.studentRepository.find({ ...options });
-
-      return userEntities.map(StudentMapper.fromEntity);
-    } catch (e) {
-      throw new Error(`Cannot list student ${e.message}`);
+      throw new Error('Cannot delete student');
     }
   }
 }
