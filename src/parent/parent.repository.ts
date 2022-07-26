@@ -20,28 +20,28 @@ export interface avatar {
 
 @Injectable()
 export class ParentRepository {
-    constructor(
-        @InjectRepository(ParentEntity)
-        private readonly parentRepository: Repository<ParentEntity>,
-    ) { }
+  constructor(
+    @InjectRepository(ParentEntity)
+    private readonly parentRepository: Repository<ParentEntity>,
+  ) {}
 
-    async save(parent: Parent): Promise<Parent> {
-        try {
-            const parentEntity = ParentMapper.toEntity(parent);
-            const savedParentEntity = await this.parentRepository.save(parentEntity);
-            return ParentMapper.fromEntity(savedParentEntity);
-        } catch (e) {
-            console.log(e);
-        }
+  async save(parent: Parent): Promise<Parent> {
+    try {
+      const parentEntity = ParentMapper.toEntity(parent);
+      const savedParentEntity = await this.parentRepository.save(parentEntity);
+      return ParentMapper.fromEntity(savedParentEntity);
+    } catch (e) {
+      console.log(e);
     }
+  }
 
-    async delete(id: string) {
-        try {
-            await this.parentRepository.delete({ id });
-        } catch (e) {
-            throw new Error('Cannot delete parent');
-        }
+  async delete(id: string) {
+    try {
+      await this.parentRepository.delete({ id });
+    } catch (e) {
+      throw new Error('Cannot delete parent');
     }
+<<<<<<< HEAD
 
     async update(options: ChangeOptions, id: string): Promise<Parent> {
         await this.parentRepository.update({ id }, { ...options });
@@ -67,4 +67,7 @@ export class ParentRepository {
         options.avatarId = avatarId;
         await this.parentRepository.update({ id }, { ...options })
     }
+=======
+  }
+>>>>>>> a83093cc848116165534dc252b2580efb11f2276
 }

@@ -5,5 +5,4 @@ export interface CreateStudentDto {
   firstname: string;
   email: string;
   password: string;
-  parents: string[];
 }

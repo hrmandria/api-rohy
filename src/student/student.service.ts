@@ -18,8 +18,13 @@ const maxPageSize = 250;
 export class StudentService {
   constructor(
     private readonly studentRepository: StudentRepository,
+<<<<<<< HEAD
     private readonly parentRepository: ParentRepository,
     private readonly userService: UserService) { }
+=======
+    private readonly userService: UserService,
+  ) {}
+>>>>>>> a83093cc848116165534dc252b2580efb11f2276
 
   async listPaginatedStudent(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
@@ -36,7 +41,7 @@ export class StudentService {
   }
 
   async findStudent(options: FindOptions) {
-    return await this.studentRepository.findBy(options)
+    return await this.studentRepository.findBy(options);
   }
 
   async createStudent(dto: CreateStudentDto) {
@@ -44,6 +49,7 @@ export class StudentService {
     student.lastname = dto.lastname;
     student.firstname = dto.firstname;
     const idNumber = await this.userService.generateIdNumber();
+<<<<<<< HEAD
     student.idNumber = idNumber;
     const parentIds = dto.parents;
     let parentEntities: ParentEntity[] = []
@@ -64,6 +70,16 @@ export class StudentService {
       password: dto.password
     }
     const user = UserMapper.toEntity(await this.userService.createUser(createUserDto))
+=======
+    const createUserDto: CreateUserDto = {
+      idNumber: idNumber,
+      email: dto.email,
+      password: dto.password,
+    };
+    const user = UserMapper.toEntity(
+      await this.userService.createUser(createUserDto),
+    );
+>>>>>>> a83093cc848116165534dc252b2580efb11f2276
     student.userId = user.id;
     student.status = StudentStatus.ACTIVE;
     return this.studentRepository.save(student);

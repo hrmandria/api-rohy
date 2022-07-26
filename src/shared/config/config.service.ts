@@ -9,7 +9,7 @@ import { DatabaseFileEntity } from 'src/files/file.entity';
 require('dotenv').config();
 
 export class ConfigService {
-  constructor(private env: { [k: string]: string | undefined }) { }
+  constructor(private env: { [k: string]: string | undefined }) {}
 
   public getTypeORMConfig(): TypeOrmModuleOptions {
     return {

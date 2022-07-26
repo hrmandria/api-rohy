@@ -7,4 +7,3 @@ export interface AuthenticationResponse {
     email: Nullable<string>;
   };
 }
-
