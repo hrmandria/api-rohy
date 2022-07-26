@@ -1,16 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DatabaseFile } from 'src/files/file.model';
 import { StudentEntity } from 'src/student/student.entity';
 import { Repository } from 'typeorm';
 import { ParentEntity } from './parent.entity';
 import { ParentMapper } from './parent.mapper';
 import { Parent } from './parent.model';
 
-export interface FindOptions {
-    firstname: string;
-    lastname: string;
-    avatarId: string;
-    students: StudentEntity[];
+export interface ChangeOptions {
+    firstname: string,
+    lastname: string,
+    phone: string,
+}
+
+export interface avatar {
+    avatar: DatabaseFile,
+    avatarId: string
 }
 
 @Injectable()
@@ -38,7 +43,28 @@ export class ParentRepository {
         }
     }
 
-    async update(options: FindOptions, id: string) {
-        this.parentRepository.update({ id }, { ...options });
+    async update(options: ChangeOptions, id: string): Promise<Parent> {
+        await this.parentRepository.update({ id }, { ...options });
+        const parent = await this.findBy(id)
+        return parent;
+    }
+
+    async findBy(id: string): Promise<Parent | undefined> {
+        try {
+            const parent = await this.parentRepository.findOne(id)
+            if (!parent) {
+                return undefined;
+            }
+            const map = ParentMapper.fromEntity(parent)
+            return map;
+        } catch (e) {
+            throw new Error('Cannot find parent');
+        }
+    }
+
+    async updateAvatar(options: avatar, id: string) {
+        const avatarId = options.avatar.id;
+        options.avatarId = avatarId;
+        await this.parentRepository.update({ id }, { ...options })
     }
 }

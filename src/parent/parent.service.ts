@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { DatabaseFile } from 'src/files/file.model';
 import { DatabaseFileService } from 'src/files/file.service';
 import { StudentEntity } from 'src/student/student.entity';
 import { StudentMapper } from 'src/student/student.mapper';
@@ -7,8 +8,9 @@ import { CreateUserDto } from 'src/user/user.dto';
 import { UserMapper } from 'src/user/user.mapper';
 import { UserService } from 'src/user/user.service';
 import { CreateParentDto } from './parent.dto';
+import { ParentMapper } from './parent.mapper';
 import { Parent, ParentStatus } from './parent.model';
-import { ParentRepository } from './parent.repository';
+import { ChangeOptions, ParentRepository } from './parent.repository';
 
 @Injectable()
 export class ParentService {
@@ -24,7 +26,6 @@ export class ParentService {
             const options: FindOptions = { id: element }
             try {
                 const student = await this.studentRepository.findBy(options);
-                console.log(student);
                 const entity = StudentMapper.toEntity(student);
                 students.push(entity);
             } catch (e) {
@@ -38,6 +39,7 @@ export class ParentService {
         parent.lastname = dto.lastname;
         parent.firstname = dto.firstname;
         parent.status = ParentStatus.ACTIVE;
+        parent.gender = dto.gender;
         const idNumber = await this.userService.generateIdNumber();
         parent.idNumber = idNumber;
         const createUserDto: CreateUserDto = {
@@ -51,18 +53,27 @@ export class ParentService {
         let students: StudentEntity[] = [];
         await this.toEntities(studentIds, students);
         parent.students = students;
-        return this.parentRepository.save(parent);
+        return await this.parentRepository.save(parent);
     }
 
-    async addAvatar(imageBuffer: Buffer, filename: string, id: string) {
+    async modify(changeOpt: ChangeOptions, id: string): Promise<Parent> {
+        const options = {
+            firstname: changeOpt.firstname,
+            lastname: changeOpt.lastname,
+            phone: changeOpt.phone,
+        }
+        return await this.parentRepository.update(options, id)
+    }
+
+    async addAvatar(imageBuffer: Buffer, filename: string, id: string): Promise<Parent> {
         const avatar = await this.databaseFileService.uploadDatabaseFile(imageBuffer, filename);
         const options = {
-            firstname: "",
-            lastname: "",
-            avatarId: avatar.id,
-            students: []
+            avatar: avatar,
+            avatarId: ""
         }
-        await this.parentRepository.update(options, id);
+        await this.parentRepository.updateAvatar(options, id);
+        const parent = await this.parentRepository.findBy(id);
+        return parent;
     }
 
     async deleteParent(id: string) {

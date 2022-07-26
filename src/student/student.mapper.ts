@@ -9,6 +9,7 @@ export class StudentMapper {
     student.status = source.status;
     student.userId = source.userId;
     student.idNumber = source.idNumber;
+    student.parents = source.parents;
     return student;
   }
 
@@ -20,6 +21,7 @@ export class StudentMapper {
     studentEntity.status = source.status;
     studentEntity.userId = source.userId;
     studentEntity.idNumber = source.idNumber;
+    studentEntity.parents = source.parents;
     return studentEntity;
   }
 }

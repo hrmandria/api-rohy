@@ -8,10 +8,14 @@ import {
   PaginationCriteria,
 } from 'src/shared/models/paginated.model';
 import { StudentMapper } from './student.mapper';
-import { result } from 'lodash';
+import { ParentEntity } from 'src/parent/parent.entity';
 
 export interface FindOptions {
   id?: string,
+}
+
+export interface AddParent {
+  parents: ParentEntity[];
 }
 
 @Injectable()
@@ -50,6 +54,7 @@ export class StudentRepository {
       const savedStudentEntity = await this.studentRepository.save(
         studentEntity,
       );
+      console.log(studentEntity.parents);
       return StudentMapper.fromEntity(savedStudentEntity);
     } catch (e) {
       console.log(e);
@@ -68,6 +73,19 @@ export class StudentRepository {
     } catch (e) {
       throw new Error('Cannot find student');
     }
+  }
+
+  async updateParents(parent: ParentEntity, id: string) {
+    const opt = { id: id }
+    const student = await this.findBy(opt);
+    student.parents = [];
+    console.log(student.parents)
+    student.parents.push(parent)
+    const change = {
+      parents: student.parents
+    }
+    console.log(change);
+    await this.studentRepository.update({ id }, { ...change })
   }
 
   async delete(id: string) {

@@ -1,15 +1,13 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import DatabaseFileEntity from "src/files/file.entity";
-import DatabaseFile from "src/files/file.entity";
+import { DatabaseFileEntity } from "src/files/file.entity";
+import { DatabaseFileModule } from "src/files/file.module";
+import { DatabaseFileRepository } from "src/files/file.repository";
 import { DatabaseFileService } from "src/files/file.service";
-import { StudentController } from "src/student/student.controller";
 import { StudentEntity } from "src/student/student.entity";
 import { StudentModule } from "src/student/student.module";
 import { StudentRepository } from "src/student/student.repository";
-import { UserEntity } from "src/user/user.entity";
 import { UserModule } from "src/user/user.module";
-import { UserRepository } from "src/user/user.repository";
 import { UserService } from "src/user/user.service";
 import { ParentController } from "./parent.controller";
 import { ParentEntity } from "./parent.entity";
@@ -20,9 +18,10 @@ import { ParentService } from "./parent.service";
     imports: [
         TypeOrmModule.forFeature([ParentEntity, StudentEntity, DatabaseFileEntity]),
         UserModule,
-        StudentModule
+        StudentModule,
+        DatabaseFileModule
     ],
     controllers: [ParentController],
-    providers: [ParentRepository, StudentRepository, ParentService, UserService, DatabaseFileService],
+    providers: [DatabaseFileRepository, ParentRepository, StudentRepository, ParentService, UserService, DatabaseFileService],
 })
 export class ParentModule { }

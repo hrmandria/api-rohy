@@ -1,9 +1,9 @@
-import DatabaseFileEntity from 'src/files/file.entity';
+import { DatabaseFileEntity } from 'src/files/file.entity';
 import { BaseEntity } from 'src/shared/entities/base.entity';
 import { StudentEntity } from 'src/student/student.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from 'typeorm';
-import { ParentStatus } from './parent.model';
+import { ParentGender, ParentStatus } from './parent.model';
 
 @Entity({ name: 'parent' })
 export class ParentEntity extends BaseEntity {
@@ -30,12 +30,15 @@ export class ParentEntity extends BaseEntity {
     @Column({ name: 'phone', nullable: true, type: 'text' })
     public phone: string;
 
+    @Column({ name: 'gender', nullable: false, type: 'text', enum: ParentGender })
+    public gender: ParentGender;
+
     @Column({ name: 'avatar_id', nullable: true, type: 'text' })
     public avatarId?: string;
 
-    @OneToOne(() => DatabaseFileEntity, { nullable: true })
-    @JoinColumn({ name: 'avatar_id' })
-    public avatar?: DatabaseFileEntity;
+    @OneToOne(() => DatabaseFileEntity)
+    @JoinColumn({ name: 'avatar' })
+    public avatar: DatabaseFileEntity;
 
     @OneToOne(() => UserEntity)
     @JoinColumn({ name: 'user_id' })

@@ -1,3 +1,4 @@
+import { ParentEntity } from 'src/parent/parent.entity';
 import { AbstractModel } from 'src/shared/models/abstract.model';
 
 export enum StudentStatus {
@@ -13,4 +14,5 @@ export class Student extends AbstractModel {
   password: string;
   userId: string;
   idNumber: string;
+  parents: ParentEntity[];
 }
