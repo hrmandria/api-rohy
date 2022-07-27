@@ -2,10 +2,27 @@ import { Injectable } from '@nestjs/common';
 import { CreateTicketDto } from './ticket.dto';
 import { Ticket } from './ticket.model';
 import { TicketRepository } from './ticket.repository';
+import { PaginationCriteria } from 'src/shared/models/paginated.model';
+import { InvalidPaginationInputException } from '../student/student.exception';
+
+const maxPageSize = 250;
 
 @Injectable()
 export class TicketService {
   constructor(private readonly ticketRepository: TicketRepository) {}
+
+  async listPaginatedTicket(criteria: PaginationCriteria) {
+    const { page, pageSize } = criteria;
+
+    if (page <= 0) {
+      return new InvalidPaginationInputException('page', page);
+    }
+    if (pageSize <= 0 || pageSize > maxPageSize) {
+      return new InvalidPaginationInputException('pageSize', pageSize);
+    }
+
+    return this.ticketRepository.listPaginatedTicket(criteria);
+  }
 
   async createTicket(dto: CreateTicketDto): Promise<Ticket> {
     const ticket = new Ticket();

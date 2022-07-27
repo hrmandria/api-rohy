@@ -14,6 +14,7 @@ export class TicketMapper {
     ticket.managerId = source.managerId;
     ticket.parentId = source.parentId;
     ticket.type = source.type;
+    ticket.userId = source.userId;
     return ticket;
   }
 
@@ -29,6 +30,7 @@ export class TicketMapper {
     ticketEntity.managerId = source.managerId;
     ticketEntity.parentId = source.parentId;
     ticketEntity.type = source.type;
+    ticketEntity.userId = source.userId;
     return ticketEntity;
   }
 }
