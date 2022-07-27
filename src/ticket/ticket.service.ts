@@ -29,4 +29,15 @@ export class TicketService {
     this.studentRepository.findBy(options);
     return this.ticketRepository.save(ticket);
   }
+
+  async deleteTicket(id: string) {
+    return await this.ticketRepository.deleteTicket(id);
+  }
+
+  async confirm(parentId: string, ticketId: string) {
+    const options: FindOptions = {
+      id: ticketId
+    }
+    await this.ticketRepository.confirmTicket(parentId, options)
+  }
 }
