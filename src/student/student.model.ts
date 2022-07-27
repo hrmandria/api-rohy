@@ -11,5 +11,4 @@ export class Student extends AbstractModel {
   firstname: string;
   status: StudentStatus;
   userId: string;
-  tickets: TicketEntity[];
 }

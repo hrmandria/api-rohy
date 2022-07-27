@@ -20,9 +20,6 @@ export class StudentEntity extends BaseEntity {
   })
   public status: StudentStatus;
 
-  @Column({ name: 'tickets', nullable: true })
-  public tickets: TicketEntity[];
-
   @Column({ name: 'user_id', nullable: false, type: 'text' })
   public userId: string;
 

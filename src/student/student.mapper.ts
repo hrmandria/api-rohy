@@ -8,7 +8,6 @@ export class StudentMapper {
     student.firstname = source.firstname;
     student.status = source.status;
     student.userId = source.userId;
-    student.tickets = source.tickets;
     return student;
   }
 
@@ -19,7 +18,6 @@ export class StudentMapper {
     studentEntity.lastname = source.lastname;
     studentEntity.status = source.status;
     studentEntity.userId = source.userId;
-    studentEntity.tickets = source.tickets;
     return studentEntity;
   }
 }

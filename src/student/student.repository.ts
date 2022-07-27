@@ -10,7 +10,7 @@ import {
 import { StudentMapper } from './student.mapper';
 
 export interface FindOptions {
-  idNumber?: string;
+  id?: string;
   email?: string;
 }
 

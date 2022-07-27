@@ -14,6 +14,7 @@ export class TicketMapper {
     ticket.managerId = source.managerId;
     ticket.parentId = source.parentId;
     ticket.type = source.type;
+    ticket.studentId = source.studentId;
     return ticket;
   }
 
