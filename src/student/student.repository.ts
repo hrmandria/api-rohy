@@ -75,19 +75,6 @@ export class StudentRepository {
     }
   }
 
-  async updateParents(parent: ParentEntity, id: string) {
-    const opt = { id: id }
-    const student = await this.findBy(opt);
-    student.parents = [];
-    console.log(student.parents)
-    student.parents.push(parent)
-    const change = {
-      parents: student.parents
-    }
-    console.log(change);
-    await this.studentRepository.update({ id }, { ...change })
-  }
-
   async delete(id: string) {
     try {
       await this.studentRepository.delete({ id });
