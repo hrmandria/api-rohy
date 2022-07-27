@@ -10,8 +10,7 @@ import {
 import { StudentMapper } from './student.mapper';
 
 export interface FindOptions {
-  id?: string;
-  email?: string;
+  id: string;
 }
 
 export interface CriteriaOptions {
@@ -51,15 +50,14 @@ export class StudentRepository {
 
   async findBy(options: FindOptions): Promise<Student | undefined> {
     try {
-      const studentEntity = await this.studentRepository.findOne({ ...options });
-
-      if (!studentEntity) {
+      const student = await this.studentRepository.findByIds([options.id])
+      if (!student) {
         return undefined;
       }
-
-      return StudentMapper.fromEntity(studentEntity);
+      const map = StudentMapper.fromEntity(student[0])
+      return map;
     } catch (e) {
-      throw new Error('Cannot find user');
+      throw new Error('Cannot find student');
     }
   }
 

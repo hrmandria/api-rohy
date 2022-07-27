@@ -24,8 +24,7 @@ export class TicketService {
     ticket.parentId = dto.parentId;
     ticket.studentId = dto.studentId;
     const options: FindOptions = {
-      id: ticket.studentId,
-      email: ""
+      id: ticket.studentId
     }
     this.studentRepository.findBy(options);
     return this.ticketRepository.save(ticket);
