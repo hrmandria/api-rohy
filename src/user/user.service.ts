@@ -6,7 +6,7 @@ import { User } from './user.model';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) { }
 
   async createUser(dto: CreateUserDto) {
     const user = new User();

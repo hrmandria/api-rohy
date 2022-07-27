@@ -9,6 +9,7 @@ import { TicketModule } from './ticket/ticket.module';
 import { SubjectModule } from './subject/subject.module';
 import { NoteModule } from './note/note.module';
 import { GradeModule } from './grade/grade.module';
+import { TimetableModule } from './timetable/timetable.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { GradeModule } from './grade/grade.module';
     SubjectModule,
     NoteModule,
     GradeModule,
+    TimetableModule
   ],
 })
 export class AppModule { }

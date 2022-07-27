@@ -4,6 +4,10 @@ import { StudentEntity } from 'src/student/student.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { SubjectEntity } from 'src/subject/subject.entity';
 import { GradeEntity } from 'src/grade/grade.entity';
+import { NoteEntity } from 'src/note/note.entity';
+import { TeacherEntity } from 'src/teacher/teacher.entity';
+import { CourseEntity } from 'src/course/course.entity';
+import { TimetableEntity } from 'src/timetable/timetable.entity';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -19,7 +23,7 @@ export class ConfigService {
       password: this.getValue('TYPEORM_PASSWORD'),
       database: this.getValue('TYPEORM_DATABASE'),
       port: +this.getValue('TYPEORM_PORT'),
-      entities: [UserEntity, StudentEntity, TicketEntity, SubjectEntity, GradeEntity],
+      entities: [UserEntity, StudentEntity, TicketEntity, SubjectEntity, GradeEntity, NoteEntity, TeacherEntity, CourseEntity, TimetableEntity],
       synchronize: true,
     };
   }
