@@ -19,7 +19,7 @@ export class TicketRepository {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
-  ) {}
+  ) { }
 
   async listPaginatedTicket(
     criteria: PaginationCriteria,

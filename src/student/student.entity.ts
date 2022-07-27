@@ -1,4 +1,5 @@
 import { BaseEntity } from 'src/shared/entities/base.entity';
+import { TicketEntity } from 'src/ticket/ticket.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { StudentStatus } from './student.model';

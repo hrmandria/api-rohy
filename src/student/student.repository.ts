@@ -10,7 +10,12 @@ import {
 import { StudentMapper } from './student.mapper';
 
 export interface FindOptions {
-  id?: string;
+  id: string;
+}
+
+export interface CriteriaOptions {
+  lastname: string;
+  firstname: string;
 }
 
 @Injectable()
@@ -43,18 +48,6 @@ export class StudentRepository {
     }
   }
 
-  async save(student: Student): Promise<Student> {
-    try {
-      const studentEntity = StudentMapper.toEntity(student);
-      const savedStudentEntity = await this.studentRepository.save(
-        studentEntity,
-      );
-      return StudentMapper.fromEntity(savedStudentEntity);
-    } catch (e) {
-      throw new Error('Cannot save student');
-    }
-  }
-
   async findBy(options: FindOptions): Promise<Student | undefined> {
     try {
       const student = await this.studentRepository.findByIds([options.id]);
@@ -65,6 +58,18 @@ export class StudentRepository {
       return map;
     } catch (e) {
       throw new Error('Cannot find student');
+    }
+  }
+
+  async save(student: Student): Promise<Student> {
+    try {
+      const studentEntity = StudentMapper.toEntity(student);
+      const savedStudentEntity = await this.studentRepository.save(
+        studentEntity,
+      );
+      return StudentMapper.fromEntity(savedStudentEntity);
+    } catch (e) {
+      throw new Error('Cannot save student');
     }
   }
 

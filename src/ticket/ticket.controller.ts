@@ -5,7 +5,7 @@ import { PaginationCriteria } from 'src/shared/models/paginated.model';
 
 @Controller('ticket')
 export class TicketController {
-  constructor(private readonly ticketService: TicketService) {}
+  constructor(private readonly ticketService: TicketService) { }
 
   @Post()
   async createTicket(@Body() dto: CreateTicketDto) {
