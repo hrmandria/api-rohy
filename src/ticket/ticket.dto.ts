@@ -13,3 +13,8 @@ export interface CreateTicketDto {
   parentId: string;
   studentId: string;
 }
+
+export class TicketFilterDto {
+  id: string;
+  type: TicketType;
+}

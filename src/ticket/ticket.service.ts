@@ -1,18 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { FindOptions, StudentRepository } from 'src/student/student.repository';
 import { CreateTicketDto } from './ticket.dto';
 import { Ticket } from './ticket.model';
-import { TicketRepository } from './ticket.repository';
+import { FindOptions, TicketRepository } from './ticket.repository';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
 import { InvalidPaginationInputException } from '../student/student.exception';
+import { TicketMapper } from './ticket.mapper';
 
 const maxPageSize = 250;
 
 @Injectable()
 export class TicketService {
-  constructor(
-    private readonly ticketRepository: TicketRepository,
-    private readonly studentRepository: StudentRepository) { }
+  constructor(private readonly ticketRepository: TicketRepository) {}
 
   async listPaginatedTicket(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
@@ -25,6 +23,19 @@ export class TicketService {
     }
 
     return this.ticketRepository.listPaginatedTicket(criteria);
+  }
+
+  async findBy(options: FindOptions): Promise<Ticket | undefined> {
+    try {
+      const student = await this.ticketRepository.find({ ...optio });
+      if (!student) {
+        return undefined;
+      }
+      const map = TicketMapper.fromEntity(student[0]);
+      return map;
+    } catch (e) {
+      throw new Error('Cannot find student');
+    }
   }
 
   async createTicket(dto: CreateTicketDto): Promise<Ticket> {
@@ -40,10 +51,6 @@ export class TicketService {
     ticket.managerId = dto.managerId;
     ticket.parentId = dto.parentId;
     ticket.studentId = dto.studentId;
-    const options: FindOptions = {
-      id: ticket.studentId
-    }
-    this.studentRepository.findBy(options);
     return this.ticketRepository.save(ticket);
   }
 }

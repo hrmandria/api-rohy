@@ -4,14 +4,14 @@ import { Repository } from 'typeorm';
 import { TicketEntity } from './ticket.entity';
 import { TicketMapper } from './ticket.mapper';
 import { Ticket } from './ticket.model';
+import { TicketType } from './ticket.model';
 import {
   Paginated,
   PaginationCriteria,
 } from 'src/shared/models/paginated.model';
 
 export interface FindOptions {
-  id?: string;
-  from?: Date;
+  type?: TicketType;
 }
 
 @Injectable()
@@ -19,7 +19,7 @@ export class TicketRepository {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
-  ) { }
+  ) {}
 
   async listPaginatedTicket(
     criteria: PaginationCriteria,
@@ -52,20 +52,6 @@ export class TicketRepository {
     } catch (e) {
       console.log(e);
       throw new Error('Cannot save ticket');
-    }
-  }
-
-  async findBy(options: FindOptions): Promise<Ticket | undefined> {
-    try {
-      const ticketEntity = await this.ticketRepository.findOne({ ...options });
-
-      if (!ticketEntity) {
-        return undefined;
-      }
-
-      return TicketMapper.fromEntity(ticketEntity);
-    } catch (e) {
-      throw new Error('Cannot find ticket');
     }
   }
 }

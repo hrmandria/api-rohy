@@ -10,12 +10,7 @@ import {
 import { StudentMapper } from './student.mapper';
 
 export interface FindOptions {
-  id: string;
-}
-
-export interface CriteriaOptions {
-  lastname: string;
-  firstname: string;
+  id?: string;
 }
 
 @Injectable()

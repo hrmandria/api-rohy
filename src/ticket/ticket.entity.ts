@@ -1,7 +1,7 @@
 import { BaseEntity } from 'src/shared/entities/base.entity';
 import { StudentEntity } from 'src/student/student.entity';
 import { UserEntity } from 'src/user/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { TicketType } from './ticket.model';
 
 @Entity({ name: 'ticket' })
