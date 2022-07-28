@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 import { CreateTicketDto } from './ticket.dto';
 import { TicketService } from './ticket.service';
+import { PaginationCriteria } from '../shared/models/paginated.model';
 
 @Controller('ticket')
 export class TicketController {
@@ -9,6 +10,11 @@ export class TicketController {
   @Post()
   async createTicket(@Body() dto: CreateTicketDto) {
     return this.ticketService.createTicket(dto);
+  }
+
+  @Get()
+  async listpaginatedTicket(@Query() query: PaginationCriteria) {
+    return this.ticketService.listPaginatedTicket(query);
   }
 
   @Delete()

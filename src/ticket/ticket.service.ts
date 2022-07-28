@@ -4,7 +4,6 @@ import { Ticket } from './ticket.model';
 import { FindOptions, TicketRepository } from './ticket.repository';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
 import { InvalidPaginationInputException } from '../student/student.exception';
-import { TicketMapper } from './ticket.mapper';
 
 const maxPageSize = 250;
 
@@ -25,17 +24,8 @@ export class TicketService {
     return this.ticketRepository.listPaginatedTicket(criteria);
   }
 
-  async findBy(options: FindOptions): Promise<Ticket | undefined> {
-    try {
-      const student = await this.ticketRepository.find({ ...optio });
-      if (!student) {
-        return undefined;
-      }
-      const map = TicketMapper.fromEntity(student[0]);
-      return map;
-    } catch (e) {
-      throw new Error('Cannot find student');
-    }
+  async findTicket(options: FindOptions) {
+    return await this.ticketRepository.findBy(options);
   }
 
   async createTicket(dto: CreateTicketDto): Promise<Ticket> {

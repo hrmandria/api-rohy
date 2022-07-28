@@ -11,6 +11,7 @@ import {
 } from 'src/shared/models/paginated.model';
 
 export interface FindOptions {
+  id?: string;
   type?: TicketType;
 }
 
