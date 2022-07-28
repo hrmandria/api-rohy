@@ -1,18 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
+import { CreateUserDto } from 'src/user/user.dto';
+import { UserMapper } from 'src/user/user.mapper';
+import { UserService } from 'src/user/user.service';
 import { CreateStudentDto } from './student.dto';
 import {
-  CannotCreateStudentException,
-  CannotDeleteStudentException,
-  CannotGetStudentException,
   InvalidPaginationInputException,
 } from './student.exception';
 import { Student, StudentStatus } from './student.model';
-import { StudentRepository } from './student.repository';
+import { FindOptions, StudentRepository } from './student.repository';
+
+const maxPageSize = 250;
 
 @Injectable()
 export class StudentService {
-  constructor(private readonly studentRepository: StudentRepository) {}
+  constructor(
+    private readonly studentRepository: StudentRepository,
+    private readonly userService: UserService,
+  ) { }
 
   async listPaginatedStudent(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
@@ -21,55 +26,36 @@ export class StudentService {
       return new InvalidPaginationInputException('page', page);
     }
 
-    if (pageSize <= 0) {
+    if (pageSize <= 0 || pageSize > maxPageSize) {
       return new InvalidPaginationInputException('pageSize', pageSize);
     }
 
     return this.studentRepository.listPaginatedStudent(criteria);
   }
 
-  async createStudent(dto: CreateStudentDto): Promise<Student> {
-    try {
-      const student = new Student();
-      student.lastname = dto.lastname;
-      student.firstname = dto.firstname;
-      student.userId = dto.userId;
-      student.status = StudentStatus.ACTIVE;
-
-      return this.studentRepository.save(student);
-    } catch (e) {
-      throw new CannotCreateStudentException(e);
-    }
+  async findStudent(options: FindOptions) {
+    return await this.studentRepository.findBy(options);
   }
 
-  async getStudent(id: string): Promise<Student> {
-    try {
-      const student = await this.studentRepository.findBy({ id });
-      if (!student) {
-        throw new CannotGetStudentException(
-          `Student with id ${id} was not found`,
-        );
-      }
-
-      return student;
-    } catch (e) {
-      throw new CannotGetStudentException(e);
-    }
+  async createStudent(dto: CreateStudentDto) {
+    const student = new Student();
+    student.lastname = dto.lastname;
+    student.firstname = dto.firstname;
+    const idNumber = await this.userService.generateIdNumber();
+    const createUserDto: CreateUserDto = {
+      idNumber: idNumber,
+      email: dto.email,
+      password: dto.password,
+    };
+    const user = UserMapper.toEntity(
+      await this.userService.createUser(createUserDto),
+    );
+    student.userId = user.id;
+    student.status = StudentStatus.ACTIVE;
+    return this.studentRepository.save(student);
   }
 
   async deleteStudent(id: string) {
-    try {
-      const student = await this.studentRepository.findBy({ id });
-      if (!student) {
-        throw new CannotDeleteStudentException(
-          `Student with id ${id} was not found`,
-        );
-      }
-
-      student.status = StudentStatus.INACTIVE;
-      return this.studentRepository.save(student);
-    } catch (e) {
-      throw new CannotDeleteStudentException(e);
-    }
+    this.studentRepository.delete(id);
   }
 }
