@@ -3,22 +3,22 @@ import { AbstractModel } from "src/shared/models/abstract.model";
 import { StudentEntity } from "src/student/student.entity";
 
 export enum ParentStatus {
-    ACTIVE = 'ACTIVE',
-    INACTIVE = 'INACTIVE',
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
 }
 
 export enum ParentGender {
-    MALE = 'MALE',
-    FEMALE = 'FEMALE'
+  MALE = 'MALE',
+  FEMALE = 'FEMALE'
 }
 
 export class Parent extends AbstractModel {
-    lastname: string;
-    firstname: string;
-    status: ParentStatus;
-    gender: ParentGender;
-    userId: string;
-    idNumber: string;
-    students: StudentEntity[];
-    avatar: DatabaseFileEntity;
+  lastname: string;
+  firstname: string;
+  status: ParentStatus;
+  gender: ParentGender;
+  userId: string;
+  idNumber: string;
+  students: StudentEntity[];
+  avatar: DatabaseFileEntity;
 }

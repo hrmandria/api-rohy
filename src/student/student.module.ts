@@ -1,8 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TicketEntity } from 'src/ticket/ticket.entity';
-import { ParentEntity } from 'src/parent/parent.entity';
-import { ParentRepository } from 'src/parent/parent.repository';
 import { UserModule } from 'src/user/user.module';
 import { UserService } from 'src/user/user.service';
 import { StudentController } from './student.controller';
@@ -11,11 +8,8 @@ import { StudentRepository } from './student.repository';
 import { StudentService } from './student.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([StudentEntity, TicketEntity, ParentEntity]),
-    UserModule
-  ],
+  imports: [TypeOrmModule.forFeature([StudentEntity]), UserModule],
   controllers: [StudentController],
-  providers: [StudentRepository, ParentRepository, StudentService, UserService],
+  providers: [StudentRepository, StudentService, UserService],
 })
 export class StudentModule { }

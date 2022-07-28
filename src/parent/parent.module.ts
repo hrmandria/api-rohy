@@ -15,13 +15,13 @@ import { ParentRepository } from "./parent.repository";
 import { ParentService } from "./parent.service";
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([ParentEntity, StudentEntity, DatabaseFileEntity]),
-        UserModule,
-        StudentModule,
-        DatabaseFileModule
-    ],
-    controllers: [ParentController],
-    providers: [DatabaseFileRepository, ParentRepository, StudentRepository, ParentService, UserService, DatabaseFileService],
+  imports: [
+    TypeOrmModule.forFeature([ParentEntity, StudentEntity, DatabaseFileEntity]),
+    UserModule,
+    StudentModule,
+    DatabaseFileModule
+  ],
+  controllers: [ParentController],
+  providers: [DatabaseFileRepository, ParentRepository, StudentRepository, ParentService, UserService, DatabaseFileService],
 })
 export class ParentModule { }

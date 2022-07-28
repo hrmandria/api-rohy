@@ -14,83 +14,83 @@ import { ChangeOptions, ParentRepository } from './parent.repository';
 
 @Injectable()
 export class ParentService {
-    constructor(
-        private readonly parentRepository: ParentRepository,
-        private readonly studentRepository: StudentRepository,
-        private readonly userService: UserService,
-        private readonly databaseFileService: DatabaseFileService
-    ) { }
+  constructor(
+    private readonly parentRepository: ParentRepository,
+    private readonly studentRepository: StudentRepository,
+    private readonly userService: UserService,
+    private readonly databaseFileService: DatabaseFileService
+  ) { }
 
-    async toEntities(studentIds: string[], students: StudentEntity[]) {
-        studentIds.forEach(async element => {
-            const options: FindOptions = { id: element }
-            try {
-                const student = await this.studentRepository.findBy(options);
-                const entity = StudentMapper.toEntity(student);
-                students.push(entity);
-            } catch (e) {
-                console.log(e);
-            }
-        });
-    }
+  async toEntities(studentIds: string[], students: StudentEntity[]) {
+    studentIds.forEach(async element => {
+      const options: FindOptions = { id: element }
+      try {
+        const student = await this.studentRepository.findBy(options);
+        const entity = StudentMapper.toEntity(student);
+        students.push(entity);
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  }
 
-    async createParent(dto: CreateParentDto) {
-        const parent = new Parent();
-        parent.lastname = dto.lastname;
-        parent.firstname = dto.firstname;
-        parent.status = ParentStatus.ACTIVE;
-        parent.gender = dto.gender;
-        const idNumber = await this.userService.generateIdNumber();
-        parent.idNumber = idNumber;
-        const createUserDto: CreateUserDto = {
-            idNumber: idNumber,
-            email: dto.email,
-            password: dto.password
-        }
-        const user = UserMapper.toEntity(await this.userService.createUser(createUserDto))
-        parent.userId = user.id;
-        const studentIds = dto.studentIds;
-        let students: StudentEntity[] = [];
-        await this.toEntities(studentIds, students);
-        parent.students = students;
-        return await this.parentRepository.save(parent);
+  async createParent(dto: CreateParentDto) {
+    const parent = new Parent();
+    parent.lastname = dto.lastname;
+    parent.firstname = dto.firstname;
+    parent.status = ParentStatus.ACTIVE;
+    parent.gender = dto.gender;
+    const idNumber = await this.userService.generateIdNumber();
+    parent.idNumber = idNumber;
+    const createUserDto: CreateUserDto = {
+      idNumber: idNumber,
+      email: dto.email,
+      password: dto.password
     }
+    const user = UserMapper.toEntity(await this.userService.createUser(createUserDto))
+    parent.userId = user.id;
+    const studentIds = dto.studentIds;
+    let students: StudentEntity[] = [];
+    await this.toEntities(studentIds, students);
+    parent.students = students;
+    return await this.parentRepository.save(parent);
+  }
 
-    async modify(changeOpt: ChangeOptions, id: string): Promise<Parent> {
-        const options = {
-            firstname: changeOpt.firstname,
-            lastname: changeOpt.lastname,
-            phone: changeOpt.phone,
-        }
-        return await this.parentRepository.update(options, id)
+  async modify(changeOpt: ChangeOptions, id: string): Promise<Parent> {
+    const options = {
+      firstname: changeOpt.firstname,
+      lastname: changeOpt.lastname,
+      phone: changeOpt.phone,
     }
+    return await this.parentRepository.update(options, id)
+  }
 
-    async addAvatar(imageBuffer: Buffer, filename: string, id: string): Promise<Parent> {
-        const avatar = await this.databaseFileService.uploadDatabaseFile(imageBuffer, filename);
-        const options = {
-            avatar: avatar,
-            avatarId: ""
-        }
-        await this.parentRepository.updateAvatar(options, id);
-        const parent = await this.parentRepository.findBy(id);
-        return parent;
+  async addAvatar(imageBuffer: Buffer, filename: string, id: string): Promise<Parent> {
+    const avatar = await this.databaseFileService.uploadDatabaseFile(imageBuffer, filename);
+    const options = {
+      avatar: avatar,
+      avatarId: ""
     }
+    await this.parentRepository.updateAvatar(options, id);
+    const parent = await this.parentRepository.findBy(id);
+    return parent;
+  }
 
-    async deleteParent(id: string) {
-        this.parentRepository.delete(id);
-    }
+  async deleteParent(id: string) {
+    this.parentRepository.delete(id);
+  }
 
-    async findChildren(id: string) {
-        return await this.parentRepository.findChildren(id);
-    }
+  async findChildren(id: string) {
+    return await this.parentRepository.findChildren(id);
+  }
 
-    async addChild(studentId: string, parentId: string) {
-        const options = {
-            id: studentId
-        }
-        const childToAdd = StudentMapper.toEntity(await this.studentRepository.findBy(options));
-        const childrenArray = await this.parentRepository.findChildren(parentId);
-        childrenArray.push(childToAdd);
-        return await this.parentRepository.addChild(parentId, childrenArray);
+  async addChild(studentId: string, parentId: string) {
+    const options = {
+      id: studentId
     }
+    const childToAdd = StudentMapper.toEntity(await this.studentRepository.findBy(options));
+    const childrenArray = await this.parentRepository.findChildren(parentId);
+    childrenArray.push(childToAdd);
+    return await this.parentRepository.addChild(parentId, childrenArray);
+  }
 }

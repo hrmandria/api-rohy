@@ -19,4 +19,4 @@ import { DatabaseFileModule } from './files/file.module';
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
   ],
 })
-export class AppModule { }
+export class AppModule {}

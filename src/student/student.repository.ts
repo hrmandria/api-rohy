@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudentEntity } from './student.entity';
-import { Student, StudentStatus } from './student.model';
+import { Student } from './student.model';
 import {
   Paginated,
   PaginationCriteria,
@@ -10,12 +10,7 @@ import {
 import { StudentMapper } from './student.mapper';
 
 export interface FindOptions {
-  id: string;
-}
-
-export interface CriteriaOptions {
-  lastname: string;
-  firstname: string;
+  id?: string;
 }
 
 @Injectable()
@@ -64,11 +59,11 @@ export class StudentRepository {
 
   async findBy(options: FindOptions): Promise<Student | undefined> {
     try {
-      const student = await this.studentRepository.findByIds([options.id])
+      const student = await this.studentRepository.findByIds([options.id]);
       if (!student) {
         return undefined;
       }
-      const map = StudentMapper.fromEntity(student[0])
+      const map = StudentMapper.fromEntity(student[0]);
       return map;
     } catch (e) {
       throw new Error('Cannot find student');
