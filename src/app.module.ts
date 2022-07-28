@@ -7,6 +7,7 @@ import { configService } from './shared/config/config.service';
 import { StudentModule } from './student/student.module';
 import { ParentModule } from './parent/parent.module';
 import { DatabaseFileModule } from './files/file.module';
+import { TicketModule } from './ticket/ticket.module';
 
 @Module({
   imports: [
@@ -15,8 +16,9 @@ import { DatabaseFileModule } from './files/file.module';
     StudentModule,
     SharedModule,
     ParentModule,
+    TicketModule,
     DatabaseFileModule,
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
   ],
 })
-export class AppModule {}
+export class AppModule { }

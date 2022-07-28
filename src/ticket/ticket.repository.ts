@@ -45,6 +45,13 @@ export class TicketRepository {
     }
   }
 
+  async getTickets(studentId: string) {
+    const tickets = await this.ticketRepository.findAndCount({
+      where: { studentId: studentId }
+    })
+    return tickets;
+  }
+
   async save(ticket: Ticket): Promise<Ticket> {
     try {
       const ticketEntity = TicketMapper.toEntity(ticket);

@@ -5,11 +5,16 @@ import { PaginationCriteria } from '../shared/models/paginated.model';
 
 @Controller('ticket')
 export class TicketController {
-  constructor(private readonly ticketService: TicketService) {}
+  constructor(private readonly ticketService: TicketService) { }
 
   @Post()
   async createTicket(@Body() dto: CreateTicketDto) {
     return this.ticketService.createTicket(dto);
+  }
+
+  @Get('studentTickets')
+  async getTickets(@Query() studentId: any) {
+    return await this.ticketService.getTickets(studentId.studentId);
   }
 
   @Get()

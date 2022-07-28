@@ -1,6 +1,8 @@
+import { ParentEntity } from 'src/parent/parent.entity';
 import { BaseEntity } from 'src/shared/entities/base.entity';
+import { TicketEntity } from 'src/ticket/ticket.entity';
 import { UserEntity } from 'src/user/user.entity';
-import { Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from 'typeorm';
 import { StudentStatus } from './student.model';
 
 @Entity({ name: 'student' })
@@ -21,6 +23,14 @@ export class StudentEntity extends BaseEntity {
 
   @Column({ name: 'userId', nullable: false, type: 'text' })
   public userId: string;
+
+  @OneToMany(() => TicketEntity, (ticket) => ticket.id, { cascade: true })
+  @JoinColumn()
+  tickets: TicketEntity[];
+
+  @ManyToMany(() => ParentEntity, (parent) => parent.id)
+  @JoinTable()
+  parents: ParentEntity[]
 
   @OneToOne(() => UserEntity)
   @JoinColumn()

@@ -24,6 +24,10 @@ export class TicketService {
     return this.ticketRepository.listPaginatedTicket(criteria);
   }
 
+  async getTickets(id: string) {
+    return await this.ticketRepository.getTickets(id);
+  }
+
   async findTicket(options: FindOptions) {
     return await this.ticketRepository.findBy(options);
   }
