@@ -4,7 +4,9 @@ import { CreateUserDto } from 'src/user/user.dto';
 import { UserMapper } from 'src/user/user.mapper';
 import { UserService } from 'src/user/user.service';
 import { CreateStudentDto } from './student.dto';
-import { InvalidPaginationInputException } from './student.exception';
+import {
+  InvalidPaginationInputException,
+} from './student.exception';
 import { Student, StudentStatus } from './student.model';
 import { FindOptions, StudentRepository } from './student.repository';
 
@@ -15,7 +17,7 @@ export class StudentService {
   constructor(
     private readonly studentRepository: StudentRepository,
     private readonly userService: UserService,
-  ) {}
+  ) { }
 
   async listPaginatedStudent(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
