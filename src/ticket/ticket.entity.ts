@@ -1,3 +1,4 @@
+import { ParentEntity } from 'src/parent/parent.entity';
 import { BaseEntity } from 'src/shared/entities/base.entity';
 import { StudentEntity } from 'src/student/student.entity';
 import { UserEntity } from 'src/user/user.entity';
@@ -43,9 +44,9 @@ export class TicketEntity extends BaseEntity {
   @JoinColumn({ name: 'student_id' })
   student: StudentEntity;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => ParentEntity)
   @JoinColumn({ name: 'parent_id' })
-  parent: UserEntity;
+  parent: ParentEntity;
 
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'manager_id' })

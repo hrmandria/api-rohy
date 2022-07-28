@@ -54,4 +54,30 @@ export class TicketRepository {
       throw new Error('Cannot save ticket');
     }
   }
+
+  async findBy(options: FindOptions): Promise<Ticket | undefined> {
+    try {
+      const ticketEntity = await this.ticketRepository.findOne({ ...options });
+
+      if (!ticketEntity) {
+        return undefined;
+      }
+
+      return TicketMapper.fromEntity(ticketEntity);
+    } catch (e) {
+      throw new Error('Cannot find ticket');
+    }
+  }
+
+  async deleteTicket(id: string) {
+    await this.ticketRepository.delete(id);
+  }
+
+  async confirmTicket(parentId: string, options: FindOptions) {
+    const ticket = await this.findBy(options);
+    ticket.parentId = parentId;
+    ticket.parentSignature = true;
+    const savedTicket = await this.ticketRepository.save(ticket);
+    return TicketMapper.fromEntity(savedTicket);
+  }
 }

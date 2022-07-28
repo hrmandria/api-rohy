@@ -1,3 +1,4 @@
+import { ParentEntity } from 'src/parent/parent.entity';
 import { AbstractModel } from 'src/shared/models/abstract.model';
 import { TicketEntity } from 'src/ticket/ticket.entity';
 
@@ -13,4 +14,6 @@ export class Student extends AbstractModel {
   email: string;
   password: string;
   userId: string;
+  idNumber: string;
+  parents: ParentEntity[];
 }

@@ -62,8 +62,10 @@ export class StudentRepository {
       const savedStudentEntity = await this.studentRepository.save(
         studentEntity,
       );
+      console.log(studentEntity.parents);
       return StudentMapper.fromEntity(savedStudentEntity);
     } catch (e) {
+      console.log(e);
       throw new Error('Cannot save student');
     }
   }

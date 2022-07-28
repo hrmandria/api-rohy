@@ -53,4 +53,15 @@ export class TicketService {
     ticket.studentId = dto.studentId;
     return this.ticketRepository.save(ticket);
   }
+
+  async deleteTicket(id: string) {
+    return await this.ticketRepository.deleteTicket(id);
+  }
+
+  async confirm(parentId: string, ticketId: string) {
+    const options: FindOptions = {
+      id: ticketId,
+    };
+    await this.ticketRepository.confirmTicket(parentId, options);
+  }
 }
