@@ -44,7 +44,6 @@ export class StudentService {
     student.lastname = dto.lastname;
     student.firstname = dto.firstname;
     const idNumber = await this.userService.generateIdNumber();
-    student.idNumber = idNumber;
     const parentIds = dto.parents;
     let parentEntities: ParentEntity[] = []
     parentIds.forEach(async element => {

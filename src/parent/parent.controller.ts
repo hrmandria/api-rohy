@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post, Query, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateParentDto } from './parent.dto';
 import { ChangeOptions } from './parent.repository';
@@ -27,5 +27,15 @@ export class ParentController {
     @Delete(':id')
     async deleteParent(@Param('id') id: string) {
         return this.parentService.deleteParent(id);
+    }
+
+    @Get()
+    async findChildren(@Query() id: any) {
+        return await this.parentService.findChildren(id.id)
+    }
+
+    @Post('addChild')
+    async addChildren(@Query() parentId: any, @Query() studentId: any) {
+        return await this.parentService.addChild(studentId.studentId, parentId.parentId);
     }
 }

@@ -62,6 +62,19 @@ export class ParentRepository {
         }
     }
 
+    async findChildren(id: string) {
+        const children = await this.parentRepository.findAndCount({
+            relations: ["students"], where: { id }
+        })
+        return children[0][0].students;
+    }
+
+    async addChild(parentId: string, studentsArray: StudentEntity[]) {
+        const parent = ParentMapper.toEntity(await this.findBy(parentId));
+        parent.students = studentsArray;
+        return await this.parentRepository.save(parent);
+    }
+
     async updateAvatar(options: avatar, id: string) {
         const avatarId = options.avatar.id;
         options.avatarId = avatarId;

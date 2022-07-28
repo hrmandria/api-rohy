@@ -79,4 +79,18 @@ export class ParentService {
     async deleteParent(id: string) {
         this.parentRepository.delete(id);
     }
+
+    async findChildren(id: string) {
+        return await this.parentRepository.findChildren(id);
+    }
+
+    async addChild(studentId: string, parentId: string) {
+        const options = {
+            id: studentId
+        }
+        const childToAdd = StudentMapper.toEntity(await this.studentRepository.findBy(options));
+        const childrenArray = await this.parentRepository.findChildren(parentId);
+        childrenArray.push(childToAdd);
+        return await this.parentRepository.addChild(parentId, childrenArray);
+    }
 }

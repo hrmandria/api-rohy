@@ -1,5 +1,4 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { TicketEntity } from 'src/ticket/ticket.entity';
 import { StudentEntity } from 'src/student/student.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { ParentEntity } from 'src/parent/parent.entity';
@@ -19,7 +18,7 @@ export class ConfigService {
       password: this.getValue('TYPEORM_PASSWORD'),
       database: this.getValue('TYPEORM_DATABASE'),
       port: +this.getValue('TYPEORM_PORT'),
-      entities: [UserEntity, StudentEntity, TicketEntity, ParentEntity, DatabaseFileEntity],
+      entities: [UserEntity, StudentEntity, ParentEntity, DatabaseFileEntity],
       synchronize: true,
     };
   }

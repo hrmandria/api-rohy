@@ -24,9 +24,6 @@ export class StudentEntity extends BaseEntity {
   @Column({ name: 'user_id', nullable: false, type: 'text' })
   public userId: string;
 
-  @Column({ name: 'id_number', nullable: false, type: 'text' })
-  public idNumber: string;
-
   @ManyToMany(() => ParentEntity, (parent => parent.id), { cascade: true, nullable: true })
   @JoinTable()
   parents: ParentEntity[];
