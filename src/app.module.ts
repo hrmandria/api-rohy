@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/config.service';
 import { StudentModule } from './student/student.module';
 import { ParentModule } from './parent/parent.module';
+import { TicketModule } from './ticket/ticket.module';
 import { DatabaseFileModule } from './files/file.module';
 
 @Module({
@@ -13,6 +14,7 @@ import { DatabaseFileModule } from './files/file.module';
     AuthenticationModule,
     UserModule,
     StudentModule,
+    TicketModule,
     SharedModule,
     ParentModule,
     DatabaseFileModule,

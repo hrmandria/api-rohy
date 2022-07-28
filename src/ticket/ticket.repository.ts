@@ -1,18 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { TicketEntity } from './ticket.entity';
-import { TicketMapper } from './ticket.mapper';
-import { Ticket } from './ticket.model';
-import { TicketType } from './ticket.model';
 import {
   Paginated,
   PaginationCriteria,
 } from 'src/shared/models/paginated.model';
+import { Repository } from 'typeorm';
+import { TicketEntity } from './ticket.entity';
+import { TicketMapper } from './ticket.mapper';
+import { Ticket } from './ticket.model';
 
 export interface FindOptions {
   id?: string;
-  type?: TicketType;
+  from?: Date;
 }
 
 @Injectable()
@@ -41,7 +40,7 @@ export class TicketRepository {
         total,
       };
     } catch (e) {
-      throw new Error('Cannot list paginated Ticket');
+      throw new Error('Cannot list paginated ticket');
     }
   }
 
