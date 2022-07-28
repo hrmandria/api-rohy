@@ -3,7 +3,7 @@ import { SubjectEntity } from 'src/subject/subject.entity';
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { Schedule } from './course.model';
 
-@Entity()
+@Entity('course')
 export class CourseEntity extends BaseEntity {
   @Column({ name: 'subject', nullable: false, type: 'text' })
   public subjectName: string;

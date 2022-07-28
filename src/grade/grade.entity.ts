@@ -8,9 +8,9 @@ export class GradeEntity extends BaseEntity {
   @Column({ name: 'name', nullable: false, type: 'text' })
   public name: string;
 
-  @OneToMany(() => StudentEntity, (student) => student.id, { cascade: true })
+  @OneToMany(() => StudentEntity, (student) => student.id, { cascade: true, nullable: true })
   students: StudentEntity[];
 
-  @OneToMany(() => SubjectEntity, (subject) => subject.id, { cascade: true })
+  @OneToMany(() => SubjectEntity, (subject) => subject.id, { cascade: true, nullable: true })
   subjects: SubjectEntity[];
 }
