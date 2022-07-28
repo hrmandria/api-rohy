@@ -3,11 +3,12 @@ import { Student } from './student.model';
 
 export class StudentMapper {
   public static fromEntity(source: StudentEntity): Student {
-    const student = new Student();
+    const student = new Student(source.id);
     student.lastname = source.lastname;
     student.firstname = source.firstname;
     student.status = source.status;
     student.userId = source.userId;
+    student.parents = source.parents;
     return student;
   }
 
@@ -18,6 +19,7 @@ export class StudentMapper {
     studentEntity.lastname = source.lastname;
     studentEntity.status = source.status;
     studentEntity.userId = source.userId;
+    studentEntity.parents = source.parents;
     return studentEntity;
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudentEntity } from './student.entity';
-import { Student } from './student.model';
+import { Student, StudentStatus } from './student.model';
 import {
   Paginated,
   PaginationCriteria,
@@ -48,6 +48,20 @@ export class StudentRepository {
     }
   }
 
+  async save(student: Student): Promise<Student> {
+    try {
+      const studentEntity = StudentMapper.toEntity(student);
+      const savedStudentEntity = await this.studentRepository.save(
+        studentEntity,
+      );
+      console.log(studentEntity.parents);
+      return StudentMapper.fromEntity(savedStudentEntity);
+    } catch (e) {
+      console.log(e);
+      throw new Error('Cannot save student');
+    }
+  }
+
   async findBy(options: FindOptions): Promise<Student | undefined> {
     try {
       const student = await this.studentRepository.findByIds([options.id])
@@ -58,18 +72,6 @@ export class StudentRepository {
       return map;
     } catch (e) {
       throw new Error('Cannot find student');
-    }
-  }
-
-  async save(student: Student): Promise<Student> {
-    try {
-      const studentEntity = StudentMapper.toEntity(student);
-      const savedStudentEntity = await this.studentRepository.save(
-        studentEntity,
-      );
-      return StudentMapper.fromEntity(savedStudentEntity);
-    } catch (e) {
-      throw new Error('Cannot save student');
     }
   }
 
