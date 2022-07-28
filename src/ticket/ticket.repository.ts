@@ -19,7 +19,7 @@ export class TicketRepository {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
-  ) {}
+  ) { }
 
   async listPaginatedTicket(
     criteria: PaginationCriteria,
@@ -53,6 +53,12 @@ export class TicketRepository {
       console.log(e);
       throw new Error('Cannot save ticket');
     }
+  }
+
+  async findByType(typeName: string) {
+    return await this.ticketRepository.findAndCount({
+      where: { type: typeName }
+    })
   }
 
   async findBy(options: FindOptions): Promise<Ticket | undefined> {
