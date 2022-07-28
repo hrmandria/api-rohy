@@ -1,4 +1,4 @@
 export type Schedule = {
-    from: Date;
-    to: Date;
-}
+  from: Date;
+  to: Date;
+};

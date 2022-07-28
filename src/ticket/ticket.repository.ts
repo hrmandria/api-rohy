@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Paginated, PaginationCriteria } from 'src/shared/models/paginated.model';
+import {
+  Paginated,
+  PaginationCriteria,
+} from 'src/shared/models/paginated.model';
 import { Repository } from 'typeorm';
 import { TicketEntity } from './ticket.entity';
 import { TicketMapper } from './ticket.mapper';
@@ -16,7 +19,7 @@ export class TicketRepository {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
-  ) { }
+  ) {}
 
   async save(ticket: Ticket): Promise<Ticket> {
     try {
@@ -29,7 +32,9 @@ export class TicketRepository {
     }
   }
 
-  async listPaginatedGrade(criteria: PaginationCriteria): Promise<Paginated<Ticket>> {
+  async listPaginatedGrade(
+    criteria: PaginationCriteria,
+  ): Promise<Paginated<Ticket>> {
     try {
       const { page, pageSize } = criteria;
       const [entities, total] = await this.ticketRepository.findAndCount({

@@ -3,8 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GradeEntity } from './grade.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([GradeEntity])],
-    controllers: [],
-    providers: []
+  imports: [TypeOrmModule.forFeature([GradeEntity])],
+  controllers: [],
+  providers: [],
 })
-export class GradeModule { }
+export class GradeModule {}

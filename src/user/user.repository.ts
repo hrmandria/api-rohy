@@ -15,7 +15,7 @@ export class UserRepository {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-  ) { }
+  ) {}
 
   async findBy(options: FindOptions): Promise<User | undefined> {
     try {

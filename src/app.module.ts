@@ -22,7 +22,7 @@ import { TimetableModule } from './timetable/timetable.module';
     SubjectModule,
     NoteModule,
     GradeModule,
-    TimetableModule
+    TimetableModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

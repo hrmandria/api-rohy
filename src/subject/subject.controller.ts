@@ -1,13 +1,13 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { CreateSubjectDto } from "./subject.dto";
-import { SubjectService } from "./subject.service";
+import { Body, Controller, Post } from '@nestjs/common';
+import { CreateSubjectDto } from './subject.dto';
+import { SubjectService } from './subject.service';
 
-@Controller()
+@Controller('subject')
 export class SubjectController {
-    constructor(private readonly subjectService: SubjectService) {}
+  constructor(private readonly subjectService: SubjectService) {}
 
-    @Post('createSubject')
-    async createSubject(@Body() request: CreateSubjectDto) {
-        return this.subjectService.createSubject(request);
-    }
+  @Post('createSubject')
+  async createSubject(@Body() request: CreateSubjectDto) {
+    return this.subjectService.createSubject(request);
+  }
 }

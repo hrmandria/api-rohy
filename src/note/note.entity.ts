@@ -1,32 +1,32 @@
-import { BaseEntity } from "src/shared/entities/base.entity";
-import { StudentEntity } from "src/student/student.entity";
-import { SubjectEntity } from "src/subject/subject.entity";
-import { TeacherEntity } from "src/teacher/teacher.entity";
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { BaseEntity } from 'src/shared/entities/base.entity';
+import { StudentEntity } from 'src/student/student.entity';
+import { SubjectEntity } from 'src/subject/subject.entity';
+import { TeacherEntity } from 'src/teacher/teacher.entity';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 
 @Entity({ name: 'note' })
 export class NoteEntity extends BaseEntity {
-    @Column({ name: 'student_id', nullable: false, type: 'text' })
-    public studentId: string;
+  @Column({ name: 'student_id', nullable: false, type: 'text' })
+  public studentId: string;
 
-    @Column({ name: 'subject_id', nullable: false, type: 'text' })
-    public subjectId: string;
+  @Column({ name: 'subject_id', nullable: false, type: 'text' })
+  public subjectId: string;
 
-    @Column({ name: 'value', nullable: false, type: "integer" })
-    public value: number;
+  @Column({ name: 'value', nullable: false, type: 'integer' })
+  public value: number;
 
-    @Column({ name: 'teacher_id', nullable: false, type: 'text' })
-    public teacherId: string;
+  @Column({ name: 'teacher_id', nullable: false, type: 'text' })
+  public teacherId: string;
 
-    @OneToOne(() => StudentEntity)
-    @JoinColumn()
-    student: StudentEntity;
+  @OneToOne(() => StudentEntity)
+  @JoinColumn()
+  student: StudentEntity;
 
-    @OneToOne(() => SubjectEntity)
-    @JoinColumn()
-    subject: SubjectEntity;
+  @OneToOne(() => SubjectEntity)
+  @JoinColumn()
+  subject: SubjectEntity;
 
-    @OneToOne(() => TeacherEntity)
-    @JoinColumn()
-    teacher: TeacherEntity;
+  @OneToOne(() => TeacherEntity)
+  @JoinColumn()
+  teacher: TeacherEntity;
 }

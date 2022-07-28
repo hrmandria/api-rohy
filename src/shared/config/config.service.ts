@@ -13,7 +13,7 @@ import { TimetableEntity } from 'src/timetable/timetable.entity';
 require('dotenv').config();
 
 export class ConfigService {
-  constructor(private env: { [k: string]: string | undefined }) { }
+  constructor(private env: { [k: string]: string | undefined }) {}
 
   public getTypeORMConfig(): TypeOrmModuleOptions {
     return {
@@ -23,7 +23,17 @@ export class ConfigService {
       password: this.getValue('TYPEORM_PASSWORD'),
       database: this.getValue('TYPEORM_DATABASE'),
       port: +this.getValue('TYPEORM_PORT'),
-      entities: [UserEntity, StudentEntity, TicketEntity, SubjectEntity, GradeEntity, NoteEntity, TeacherEntity, CourseEntity, TimetableEntity],
+      entities: [
+        UserEntity,
+        StudentEntity,
+        TicketEntity,
+        SubjectEntity,
+        GradeEntity,
+        NoteEntity,
+        TeacherEntity,
+        CourseEntity,
+        TimetableEntity,
+      ],
       synchronize: true,
     };
   }

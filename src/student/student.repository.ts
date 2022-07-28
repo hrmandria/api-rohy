@@ -20,7 +20,9 @@ export class StudentRepository {
     private readonly studentRepository: Repository<StudentEntity>,
   ) {}
 
-  async listPaginatedStudent(criteria: PaginationCriteria): Promise<Paginated<Student>> {
+  async listPaginatedStudent(
+    criteria: PaginationCriteria,
+  ): Promise<Paginated<Student>> {
     try {
       const { page, pageSize } = criteria;
       const [entities, total] = await this.studentRepository.findAndCount({

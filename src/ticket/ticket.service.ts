@@ -5,7 +5,7 @@ import { TicketRepository } from './ticket.repository';
 
 @Injectable()
 export class TicketService {
-  constructor(private readonly ticketRepository: TicketRepository) { }
+  constructor(private readonly ticketRepository: TicketRepository) {}
 
   async createTicket(dto: CreateTicketDto): Promise<Ticket> {
     const ticket = new Ticket();
