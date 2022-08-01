@@ -1,6 +1,7 @@
 import { BaseEntity } from 'src/shared/entities/base.entity';
+import { StudentEntity } from 'src/student/student.entity';
 import { UserEntity } from 'src/user/user.entity';
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { TicketType } from './ticket.model';
 
 @Entity({ name: 'ticket' })
@@ -29,8 +30,8 @@ export class TicketEntity extends BaseEntity {
   @Column({ name: 'type', nullable: false, type: 'text', enum: TicketType })
   public type: TicketType;
 
-  @Column({ name: 'user_id', nullable: false, type: 'text' })
-  public userId: string;
+  @Column({ name: 'student_id', nullable: false, type: 'text' })
+  public studentId: string;
 
   @Column({ name: 'manager_id', nullable: false, type: 'text' })
   public managerId: string;
@@ -38,15 +39,15 @@ export class TicketEntity extends BaseEntity {
   @Column({ name: 'parent_id', nullable: false, type: 'text' })
   public parentId: string;
 
-  @OneToOne(() => UserEntity)
-  @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
+  @ManyToOne(() => StudentEntity)
+  @JoinColumn({ name: 'student_id' })
+  student: StudentEntity;
 
-  @OneToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'parent_id' })
   parent: UserEntity;
 
-  @OneToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'manager_id' })
   manager: UserEntity;
 }

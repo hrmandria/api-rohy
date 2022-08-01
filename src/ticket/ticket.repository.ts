@@ -15,7 +15,7 @@ export class TicketRepository {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
-  ) {}
+  ) { }
 
   async save(ticket: Ticket): Promise<Ticket> {
     try {
@@ -23,6 +23,7 @@ export class TicketRepository {
       const savedTicketEntity = await this.ticketRepository.save(ticketEntity);
       return TicketMapper.fromEntity(savedTicketEntity);
     } catch (e) {
+      console.log(e);
       throw new Error('Cannot save ticket');
     }
   }
@@ -39,5 +40,17 @@ export class TicketRepository {
     } catch (e) {
       throw new Error('Cannot find ticket');
     }
+  }
+
+  async deleteTicket(id: string) {
+    await this.ticketRepository.delete(id);
+  }
+
+  async confirmTicket(parentId: string, options: FindOptions) {
+    const ticket = await this.findBy(options);
+    ticket.parentId = parentId;
+    ticket.parentSignature = true;
+    const savedTicket = await this.ticketRepository.save(ticket);
+    return TicketMapper.fromEntity(savedTicket);
   }
 }

@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { FindOptions, StudentRepository } from 'src/student/student.repository';
 import { CreateTicketDto } from './ticket.dto';
 import { Ticket } from './ticket.model';
 import { TicketRepository } from './ticket.repository';
 
 @Injectable()
 export class TicketService {
-  constructor(private readonly ticketRepository: TicketRepository) {}
+  constructor(
+    private readonly ticketRepository: TicketRepository,
+    private readonly studentRepository: StudentRepository) { }
 
   async createTicket(dto: CreateTicketDto): Promise<Ticket> {
     const ticket = new Ticket();
@@ -19,8 +22,22 @@ export class TicketService {
     ticket.type = dto.type;
     ticket.managerId = dto.managerId;
     ticket.parentId = dto.parentId;
-    ticket.userId = dto.userId;
-
+    ticket.studentId = dto.studentId;
+    const options: FindOptions = {
+      id: ticket.studentId
+    }
+    this.studentRepository.findBy(options);
     return this.ticketRepository.save(ticket);
+  }
+
+  async deleteTicket(id: string) {
+    return await this.ticketRepository.deleteTicket(id);
+  }
+
+  async confirm(parentId: string, ticketId: string) {
+    const options: FindOptions = {
+      id: ticketId
+    }
+    await this.ticketRepository.confirmTicket(parentId, options)
   }
 }

@@ -12,4 +12,4 @@ import { StudentService } from './student.service';
   controllers: [StudentController],
   providers: [StudentRepository, StudentService, UserService],
 })
-export class StudentModule {}
+export class StudentModule { }

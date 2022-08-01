@@ -3,7 +3,7 @@ import { Ticket } from './ticket.model';
 
 export class TicketMapper {
   public static fromEntity(source: TicketEntity): Ticket {
-    const ticket = new Ticket();
+    const ticket = new Ticket(source.id);
     ticket.from = source.from;
     ticket.to = source.to;
     ticket.reason = source.reason;
@@ -14,6 +14,7 @@ export class TicketMapper {
     ticket.managerId = source.managerId;
     ticket.parentId = source.parentId;
     ticket.type = source.type;
+    ticket.studentId = source.studentId;
     return ticket;
   }
 
@@ -29,6 +30,7 @@ export class TicketMapper {
     ticketEntity.managerId = source.managerId;
     ticketEntity.parentId = source.parentId;
     ticketEntity.type = source.type;
+    ticketEntity.studentId = source.studentId;
     return ticketEntity;
   }
 }
