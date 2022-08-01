@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TicketMapper } from 'src/ticket/ticket.mapper';
 import { Repository } from 'typeorm';
 import { TeacherEntity } from './teacher.entity';
 import { TeacherMapper } from './teacher.mapper';
@@ -8,7 +7,7 @@ import { Teacher } from './teacher.model';
 
 export interface FindOptions {
   id?: string;
-  lastname?: string;
+  name: string;
 }
 
 @Injectable()
@@ -16,7 +15,7 @@ export class TeacherRepository {
   constructor(
     @InjectRepository(TeacherEntity)
     private readonly teacherRepository: Repository<TeacherEntity>,
-  ) {}
+  ) { }
 
   async save(teacher: Teacher): Promise<Teacher> {
     try {

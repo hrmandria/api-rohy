@@ -4,7 +4,7 @@ import { UserEntity } from 'src/user/user.entity';
 export interface CreateSubjectDto {
   name: string;
   teacherId: string;
-  gradeId: string;
+  gradeName: string;
 }
 
 export interface CreateSubjectModel {

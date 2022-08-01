@@ -20,23 +20,22 @@ export class SubjectRepository {
   constructor(
     @InjectRepository(SubjectEntity)
     private readonly subjectRepository: Repository<SubjectEntity>,
-  ) {}
+  ) { }
 
-  findBy(options: FindOptions): Subject | undefined {
+  async findBy(options: FindOptions): Promise<Subject | undefined> {
     try {
-      const subjectEntity = this.subjectRepository
-        .findOne({ ...options })
-        .then((result) => {
-          return SubjectMapper.fromEntity(result);
-        });
+      const subjectEntity = await this.subjectRepository.findOne({ ...options });
 
       if (!subjectEntity) {
         return undefined;
       }
+
+      return SubjectMapper.fromEntity(subjectEntity);
     } catch (e) {
-      throw new Error('Cannot find subject');
+      throw new Error('Cannot find ticket');
     }
   }
+
 
   async listPaginatedGrade(
     criteria: PaginationCriteria,

@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { NoteMapper } from 'src/note/note.mapper';
-import { Note } from 'src/note/note.model';
 import {
   Paginated,
   PaginationCriteria,
@@ -13,7 +11,7 @@ import { Grade } from './grade.model';
 
 export interface FindOptions {
   id?: string;
-  name?: string;
+  name: string;
 }
 
 @Injectable()
@@ -21,7 +19,7 @@ export class GradeRepository {
   constructor(
     @InjectRepository(GradeEntity)
     private readonly gradeRepository: Repository<GradeEntity>,
-  ) {}
+  ) { }
 
   async listPaginatedGrade(
     criteria: PaginationCriteria,
@@ -54,8 +52,24 @@ export class GradeRepository {
       }
       return GradeMapper.fromEntity(gradeEntity);
     } catch (e) {
-      throw new Error('Cannot find grade');
+      console.log(e);
     }
+  }
+
+  async getStudentsList(name: string) {
+    const students = await this.gradeRepository.find({
+      relations: ["students"],
+      where: { name }
+    })
+    return students;
+  }
+
+  async getSubjectsList(name: string) {
+    const subjects = await this.gradeRepository.find({
+      relations: ["subjects"],
+      where: { name }
+    })
+    return subjects;
   }
 
   async save(grade: Grade): Promise<Grade> {

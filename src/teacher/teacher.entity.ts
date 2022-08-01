@@ -10,6 +10,6 @@ export class TeacherEntity extends BaseEntity {
   @Column({ name: 'lastname', nullable: false, type: 'text' })
   public lastname: string;
 
-  @OneToMany(() => SubjectEntity, (subject) => subject.id)
+  @OneToMany(() => SubjectEntity, (subject) => subject.teacher)
   subjects: SubjectEntity[];
 }
