@@ -18,7 +18,7 @@ export class StudentRepository {
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) { }
+  ) {}
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
