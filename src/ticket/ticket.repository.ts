@@ -57,6 +57,19 @@ export class TicketRepository {
     }
   }
 
+  async findByStudent(id: string, type: string) {
+    try {
+      return await this.ticketRepository.findAndCount({
+        where: {
+          studentId: id,
+          type: type,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async findBy(options: FindOptions): Promise<Ticket | undefined> {
     try {
       const ticketEntity = await this.ticketRepository.findOne({ ...options });

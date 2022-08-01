@@ -8,6 +8,7 @@ import { StudentModule } from './student/student.module';
 import { ParentModule } from './parent/parent.module';
 import { TicketModule } from './ticket/ticket.module';
 import { DatabaseFileModule } from './files/file.module';
+import { SmsModule } from './sms/sms.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { DatabaseFileModule } from './files/file.module';
     TicketModule,
     SharedModule,
     ParentModule,
+    SmsModule,
     DatabaseFileModule,
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
   ],

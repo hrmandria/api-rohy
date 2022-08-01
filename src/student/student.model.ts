@@ -1,6 +1,5 @@
 import { ParentEntity } from 'src/parent/parent.entity';
 import { AbstractModel } from 'src/shared/models/abstract.model';
-import { TicketEntity } from 'src/ticket/ticket.entity';
 
 export enum StudentStatus {
   ACTIVE = 'ACTIVE',
