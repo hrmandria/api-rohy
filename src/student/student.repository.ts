@@ -68,19 +68,6 @@ export class StudentRepository {
     }
   }
 
-  async findBy(options: FindOptions): Promise<Student | undefined> {
-    try {
-      const student = await this.studentRepository.findByIds([options.id]);
-      if (!student) {
-        return undefined;
-      }
-      const map = StudentMapper.fromEntity(student[0]);
-      return map;
-    } catch (e) {
-      throw new Error('Cannot find student');
-    }
-  }
-
   async delete(id: string) {
     try {
       await this.studentRepository.delete({ id });
