@@ -22,6 +22,11 @@ export class TicketController {
     return await this.ticketService.findByType(type.type);
   }
 
+  @Get('student/type')
+  async findByStudent(@Query() id: any, @Query() type: any) {
+    return await this.ticketService.findByStudent(id.id, type.type);
+  }
+
   @Delete()
   async deleteTicket(@Query() id: any) {
     return await this.ticketService.deleteTicket(id.id);

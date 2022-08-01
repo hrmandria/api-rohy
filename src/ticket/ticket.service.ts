@@ -50,6 +50,10 @@ export class TicketService {
     return await this.ticketRepository.findByType(type);
   }
 
+  async findByStudent(id: string, type: string) {
+    return await this.ticketRepository.findByStudent(id, type);
+  }
+
   async confirm(parentId: string, ticketId: string) {
     const options: FindOptions = {
       id: ticketId,
