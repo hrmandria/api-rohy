@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  Paginated,
+  PaginationCriteria,
+} from 'src/shared/models/paginated.model';
 import { Repository } from 'typeorm';
 import { TicketEntity } from './ticket.entity';
 import { TicketMapper } from './ticket.mapper';
@@ -15,7 +19,7 @@ export class TicketRepository {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
-  ) { }
+  ) {}
 
   async save(ticket: Ticket): Promise<Ticket> {
     try {
@@ -25,6 +29,44 @@ export class TicketRepository {
     } catch (e) {
       console.log(e);
       throw new Error('Cannot save ticket');
+    }
+  }
+
+  async listPaginatedTicket(
+    criteria: PaginationCriteria,
+    typeName: string,
+  ): Promise<Paginated<Ticket>> {
+    try {
+      const { page, pageSize } = criteria;
+      const [entities, total] = await this.ticketRepository.findAndCount({
+        where: { type: typeName },
+        order: {
+          createdAt: 'DESC',
+          id: 'ASC',
+        },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
+
+      return {
+        items: entities.map(TicketMapper.fromEntity),
+        total,
+      };
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async findByStudent(id: string, type: string) {
+    try {
+      return await this.ticketRepository.findAndCount({
+        where: {
+          studentId: id,
+          type: type,
+        },
+      });
+    } catch (e) {
+      console.log(e);
     }
   }
 

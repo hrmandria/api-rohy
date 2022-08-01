@@ -18,7 +18,7 @@ export class StudentRepository {
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) { }
+  ) {}
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
@@ -45,11 +45,11 @@ export class StudentRepository {
 
   async findBy(options: FindOptions): Promise<Student | undefined> {
     try {
-      const student = await this.studentRepository.findByIds([options.id])
+      const student = await this.studentRepository.findByIds([options.id]);
       if (!student) {
         return undefined;
       }
-      const map = StudentMapper.fromEntity(student[0])
+      const map = StudentMapper.fromEntity(student[0]);
       return map;
     } catch (e) {
       throw new Error('Cannot find student');
@@ -64,6 +64,7 @@ export class StudentRepository {
       );
       return StudentMapper.fromEntity(savedStudentEntity);
     } catch (e) {
+      console.log(e);
       throw new Error('Cannot save student');
     }
   }
