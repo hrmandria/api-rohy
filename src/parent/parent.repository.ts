@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DatabaseFile } from 'src/files/file.model';
 import { StudentEntity } from 'src/student/student.entity';
+import { StudentService } from 'src/student/student.service';
 import { Repository } from 'typeorm';
 import { ParentEntity } from './parent.entity';
 import { ParentMapper } from './parent.mapper';
@@ -23,7 +24,8 @@ export class ParentRepository {
   constructor(
     @InjectRepository(ParentEntity)
     private readonly parentRepository: Repository<ParentEntity>,
-  ) {}
+    private readonly studentService: StudentService
+  ) { }
 
   async save(parent: Parent): Promise<Parent> {
     try {
@@ -67,6 +69,13 @@ export class ParentRepository {
       where: { id },
     });
     return children[0][0].students;
+  }
+
+  async findParents() {
+    const parents = await this.parentRepository.findAndCount({
+      relations: ["students"]
+    })
+    return parents;
   }
 
   async addChild(parentId: string, studentsArray: StudentEntity[]) {

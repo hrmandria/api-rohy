@@ -8,7 +8,10 @@ import { Twilio } from 'twilio'
     imports: [
         ConfigModule.forRoot({
             validationSchema: Joi.object({
-                TWILIO_SENDER_PHONE_NUMBER: Joi.string().required(),
+                TWILIO_ACCOUNT_SID: Joi.string().required(),
+                TWILIO_AUTH_TOKEN: Joi.string().required(),
+                TWILIO_VERIFICATION_SERVICE_SID: Joi.string().required(),
+                TWILIO_SENDER_PHONE_NUMBER: Joi.string().required()
             })
         }),
         Twilio

@@ -56,6 +56,14 @@ export class StudentRepository {
     }
   }
 
+  async findParent(id: string) {
+    const parents = await this.studentRepository.findAndCount({
+      relations: ['parents'],
+      where: { id },
+    });
+    return parents[0][0].parents;
+  }
+
   async save(student: Student): Promise<Student> {
     try {
       const studentEntity = StudentMapper.toEntity(student);

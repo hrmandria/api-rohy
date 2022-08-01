@@ -55,6 +55,10 @@ export class StudentService {
     return this.studentRepository.save(student);
   }
 
+  async findParents(id: string) {
+    return await this.studentRepository.findParent(id);
+  }
+
   async deleteStudent(id: string) {
     this.studentRepository.delete(id);
   }

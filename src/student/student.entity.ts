@@ -32,11 +32,8 @@ export class StudentEntity extends BaseEntity {
   @Column({ name: 'user_id', nullable: false, type: 'text' })
   public userId: string;
 
-  @ManyToMany(() => ParentEntity, (parent) => parent.id, {
-    cascade: true,
-    nullable: true,
-  })
-  @JoinTable()
+  @ManyToMany(() => ParentEntity, (parent) => parent.id, { cascade: true })
+  @JoinTable({ name: 'parent_student' })
   parents: ParentEntity[];
 
   @OneToOne(() => UserEntity)
