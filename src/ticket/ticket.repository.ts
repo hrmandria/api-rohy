@@ -19,14 +19,27 @@ export class TicketRepository {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
-  ) { }
+  ) {}
+
+  async save(ticket: Ticket): Promise<Ticket> {
+    try {
+      const ticketEntity = TicketMapper.toEntity(ticket);
+      const savedTicketEntity = await this.ticketRepository.save(ticketEntity);
+      return TicketMapper.fromEntity(savedTicketEntity);
+    } catch (e) {
+      console.log(e);
+      throw new Error('Cannot save ticket');
+    }
+  }
 
   async listPaginatedTicket(
     criteria: PaginationCriteria,
+    typeName: string,
   ): Promise<Paginated<Ticket>> {
     try {
       const { page, pageSize } = criteria;
       const [entities, total] = await this.ticketRepository.findAndCount({
+        where: { type: typeName },
         order: {
           createdAt: 'DESC',
           id: 'ASC',
@@ -40,25 +53,8 @@ export class TicketRepository {
         total,
       };
     } catch (e) {
-      throw new Error('Cannot list paginated ticket');
-    }
-  }
-
-  async save(ticket: Ticket): Promise<Ticket> {
-    try {
-      const ticketEntity = TicketMapper.toEntity(ticket);
-      const savedTicketEntity = await this.ticketRepository.save(ticketEntity);
-      return TicketMapper.fromEntity(savedTicketEntity);
-    } catch (e) {
       console.log(e);
-      throw new Error('Cannot save ticket');
     }
-  }
-
-  async findByType(typeName: string) {
-    return await this.ticketRepository.findAndCount({
-      where: { type: typeName }
-    })
   }
 
   async findBy(options: FindOptions): Promise<Ticket | undefined> {
