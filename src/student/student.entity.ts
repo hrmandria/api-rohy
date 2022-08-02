@@ -3,15 +3,9 @@ import { BaseEntity } from 'src/shared/entities/base.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { ParentEntity } from 'src/parent/parent.entity';
-import { BaseEntity } from 'src/shared/entities/base.entity';
-import { UserEntity } from 'src/user/user.entity';
 import {
-  Column,
-  Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
-  OneToOne,
 } from 'typeorm';
 import { StudentStatus } from './student.model';
 

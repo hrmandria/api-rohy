@@ -31,7 +31,7 @@ export class StudentService {
     return this.studentRepository.listPaginatedStudent(criteria);
   }
 
-  async findById(studentId: string) {
+  async findStudent(studentId: string) {
     const options = { id: studentId }
     return await this.studentRepository.findBy(options);
   }

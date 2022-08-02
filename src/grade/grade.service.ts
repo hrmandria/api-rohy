@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { StudentEntity } from 'src/student/student.entity';
+import { StudentMapper } from 'src/student/student.mapper';
 import { StudentService } from 'src/student/student.service';
 import { SubjectEntity } from 'src/subject/subject.entity';
 import { SubjectService } from 'src/subject/subject.service';
@@ -22,7 +23,7 @@ export class GradeService {
     let students: StudentEntity[] = [];
     try {
       studentIds.forEach(async element => {
-        const temp = await this.studentService.findById(element);
+        const temp = StudentMapper.toEntity(await this.studentService.findStudent(element));
         students.push(temp);
       })
       grade.students = students;
