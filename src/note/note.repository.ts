@@ -10,7 +10,7 @@ export class NoteRepository {
   constructor(
     @InjectRepository(NoteEntity)
     private readonly noteRepository: Repository<NoteEntity>,
-  ) {}
+  ) { }
 
   async save(note: Note): Promise<Note> {
     try {
@@ -18,7 +18,21 @@ export class NoteRepository {
       const savedNoteEntity = await this.noteRepository.save(noteEntity);
       return NoteMapper.fromEntity(savedNoteEntity);
     } catch (e) {
+      console.log(e);
       throw new Error('Cannot save note');
     }
+  }
+
+  async findNotesByStudent(studentId: string) {
+    const notes = await this.noteRepository.findAndCount({
+      relations: ["studentEntity"],
+    })
+    let studentsNotes: NoteEntity[] = []
+    notes[0].forEach(noteEntity => {
+      if (noteEntity.student == studentId) {
+        studentsNotes.push(noteEntity);
+      }
+    })
+    return studentsNotes;
   }
 }

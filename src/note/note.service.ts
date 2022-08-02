@@ -5,15 +5,20 @@ import { NoteRepository } from './note.repository';
 
 @Injectable()
 export class NoteService {
-  constructor(private readonly noteRepository: NoteRepository) {}
+  constructor(
+    private readonly noteRepository: NoteRepository) { }
 
   async createNote(dto: CreateNoteDto) {
     const note = new Note();
-    note.studentId = dto.studentId;
-    note.subjectId = dto.subjectId;
+    note.student = dto.studentId;
+    note.subject = dto.subjectId;
     note.value = dto.value;
-    note.teacherId = dto.teacherId;
+    note.teacher = dto.teacherId
 
     return this.noteRepository.save(note);
+  }
+
+  async getNotesByStudent(studentId: string) {
+    return await this.noteRepository.findNotesByStudent(studentId);
   }
 }

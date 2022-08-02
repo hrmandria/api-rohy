@@ -13,7 +13,7 @@ import { Subject } from './subject.model';
 
 export interface FindOptions {
   id?: string;
-  name: string;
+  name?: string;
 }
 
 @Injectable()
@@ -23,7 +23,7 @@ export class SubjectRepository {
     private readonly subjectRepository: Repository<SubjectEntity>,
   ) { }
 
-  async findBy(options: FindOptions): Promise<SubjectEntity | undefined> {
+  async findBy(options: FindOptions): Promise<Subject | undefined> {
     try {
       const subjectEntity = await this.subjectRepository.findOne({ ...options });
 
@@ -31,7 +31,7 @@ export class SubjectRepository {
         return undefined;
       }
 
-      return subjectEntity;
+      return SubjectMapper.fromEntity(subjectEntity);
     } catch (e) {
       throw new Error('Cannot find subject');
     }
@@ -68,6 +68,7 @@ export class SubjectRepository {
       );
       return SubjectMapper.fromEntity(savedSubjectEntity);
     } catch (e) {
+      console.log(e);
       throw new Error('Cannot save subject.');
     }
   }

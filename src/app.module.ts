@@ -12,6 +12,7 @@ import { TimetableModule } from './timetable/timetable.module';
 import { ParentModule } from './parent/parent.module';
 import { DatabaseFileModule } from './files/file.module';
 import { SmsModule } from './sms/sms.module';
+import { TeacherModule } from './teacher/teacher.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SmsModule } from './sms/sms.module';
     SharedModule,
     ParentModule,
     SmsModule,
+    TeacherModule,
     DatabaseFileModule,
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
     SubjectModule,

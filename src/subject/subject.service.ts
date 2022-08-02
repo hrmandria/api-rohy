@@ -19,7 +19,7 @@ export class SubjectService {
     const subject = new Subject();
     subject.name = dto.name;
     try {
-      const options = { id: dto.teacherId, name: dto.name }
+      const options = { id: dto.teacherId }
       const teacher = await this.teacherRepository.findBy(options);
       subject.teacher = TeacherMapper.toEntity(teacher);
     } catch (e) {

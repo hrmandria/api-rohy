@@ -4,9 +4,9 @@ import { SubjectService } from './subject.service';
 
 @Controller('subject')
 export class SubjectController {
-  constructor(private readonly subjectService: SubjectService) {}
+  constructor(private readonly subjectService: SubjectService) { }
 
-  @Post('createSubject')
+  @Post()
   async createSubject(@Body() request: CreateSubjectDto) {
     return this.subjectService.createSubject(request);
   }

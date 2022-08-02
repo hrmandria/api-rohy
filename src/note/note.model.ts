@@ -1,8 +1,11 @@
 import { AbstractModel } from 'src/shared/models/abstract.model';
+import { StudentEntity } from 'src/student/student.entity';
+import { SubjectEntity } from 'src/subject/subject.entity';
+import { TeacherEntity } from 'src/teacher/teacher.entity';
 
 export class Note extends AbstractModel {
-  studentId: string;
-  subjectId: string;
+  student: string;
+  subject: string;
   value: number;
-  teacherId: string;
+  teacher: string;
 }

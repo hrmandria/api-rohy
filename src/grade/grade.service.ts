@@ -3,6 +3,7 @@ import { StudentEntity } from 'src/student/student.entity';
 import { StudentMapper } from 'src/student/student.mapper';
 import { StudentService } from 'src/student/student.service';
 import { SubjectEntity } from 'src/subject/subject.entity';
+import { SubjectMapper } from 'src/subject/subject.mapper';
 import { SubjectService } from 'src/subject/subject.service';
 import { CreateGradeDto } from './grade.dto';
 import { Grade } from './grade.model';
@@ -35,7 +36,7 @@ export class GradeService {
     let subjects: SubjectEntity[] = [];
     try {
       subjectNames.forEach(async element => {
-        const temp = await this.subjectService.findBy(element);
+        const temp = SubjectMapper.toEntity(await this.subjectService.findBy(element));
         subjects.push(temp);
       })
       grade.subjects = subjects;

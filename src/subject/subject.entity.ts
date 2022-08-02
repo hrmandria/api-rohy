@@ -6,6 +6,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
 } from 'typeorm';
 
@@ -14,11 +15,11 @@ export class SubjectEntity extends BaseEntity {
   @Column({ name: 'name', nullable: false, type: 'text' })
   public name: string;
 
-  @OneToOne(() => TeacherEntity, teacher => teacher.subjects)
+  @ManyToOne(() => TeacherEntity, teacher => teacher.subjects)
   @JoinColumn({ name: 'teacher_id' })
   teacher: TeacherEntity;
 
-  @OneToOne(() => GradeEntity)
+  @ManyToOne(() => GradeEntity)
   @JoinColumn({ name: 'grade_id' })
   grade: GradeEntity;
 }

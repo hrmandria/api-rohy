@@ -28,7 +28,7 @@ export class TeacherService {
     let subjects: SubjectEntity[] = []
     subjectNames.forEach(async (element) => {
       try {
-        const subjectEntity = await this.subjectService.findBy(element);
+        const subjectEntity = SubjectMapper.toEntity(await this.subjectService.findBy(element));
         subjects.push(subjectEntity)
       } catch (e) {
         console.log(e);

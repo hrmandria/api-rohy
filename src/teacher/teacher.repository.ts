@@ -7,7 +7,6 @@ import { Teacher } from './teacher.model';
 
 export interface FindOptions {
   id?: string;
-  name: string;
 }
 
 @Injectable()
@@ -41,6 +40,7 @@ export class TeacherRepository {
 
       return TeacherMapper.fromEntity(teacherEntity);
     } catch (e) {
+      console.log(e);
       throw new Error('Cannot find teacher');
     }
   }
