@@ -7,3 +7,8 @@ export class Grade extends AbstractModel {
   students: StudentEntity[];
   subjects: SubjectEntity[];
 }
+
+export enum SectionType {
+  SECTION_1 = "SECTION 1",
+  SECTION_2 = "SECTION 2"
+}

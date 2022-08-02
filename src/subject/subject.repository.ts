@@ -13,6 +13,7 @@ import { Subject } from './subject.model';
 
 export interface FindOptions {
   id?: string;
+  name: string;
 }
 
 @Injectable()
@@ -22,7 +23,7 @@ export class SubjectRepository {
     private readonly subjectRepository: Repository<SubjectEntity>,
   ) { }
 
-  async findBy(options: FindOptions): Promise<Subject | undefined> {
+  async findBy(options: FindOptions): Promise<SubjectEntity | undefined> {
     try {
       const subjectEntity = await this.subjectRepository.findOne({ ...options });
 
@@ -30,12 +31,11 @@ export class SubjectRepository {
         return undefined;
       }
 
-      return SubjectMapper.fromEntity(subjectEntity);
+      return subjectEntity;
     } catch (e) {
-      throw new Error('Cannot find ticket');
+      throw new Error('Cannot find subject');
     }
   }
-
 
   async listPaginatedGrade(
     criteria: PaginationCriteria,

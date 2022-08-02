@@ -3,6 +3,7 @@ import { StudentMapper } from 'src/student/student.mapper';
 import { SubjectEntity } from 'src/subject/subject.entity';
 import { SubjectMapper } from 'src/subject/subject.mapper';
 import { SubjectRepository } from 'src/subject/subject.repository';
+import { SubjectService } from 'src/subject/subject.service';
 import { CreateTeacherDto } from './teacher.dto';
 import { Teacher } from './teacher.model';
 import { TeacherRepository } from './teacher.repository';
@@ -11,7 +12,7 @@ import { TeacherRepository } from './teacher.repository';
 export class TeacherService {
   constructor(
     private readonly teacherRepository: TeacherRepository,
-    private readonly subjectRepository: SubjectRepository,
+    private readonly subjectService: SubjectService,
   ) { }
 
   async createTeacher(dto: CreateTeacherDto): Promise<Teacher> {
@@ -19,12 +20,11 @@ export class TeacherService {
     teacher.firstname = dto.firstname;
     teacher.lastname = dto.lastname;
     teacher.subjects = [];
-    const subjectIds = dto.subjectIds;
+    const subjectNames = dto.subjectNames;
     let subjects: SubjectEntity[] = []
-    subjectIds.forEach(async (element) => {
+    subjectNames.forEach(async (element) => {
       try {
-        const options = { id: element };
-        const subjectEntity = SubjectMapper.toEntity(await this.subjectRepository.findBy(options));
+        const subjectEntity = await this.subjectService.findBy(element);
         subjects.push(subjectEntity)
       } catch (e) {
         console.log(e);

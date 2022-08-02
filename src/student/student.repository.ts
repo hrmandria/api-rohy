@@ -18,7 +18,7 @@ export class StudentRepository {
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) {}
+  ) { }
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
@@ -43,6 +43,16 @@ export class StudentRepository {
     }
   }
 
+  async findBy(id: string): Promise<StudentEntity | undefined> {
+    const studentEntity = await this.studentRepository.findOne(id);
+
+    if (!studentEntity) {
+      return undefined;
+    }
+
+    return studentEntity;
+  }
+
   async save(student: Student): Promise<Student> {
     try {
       const studentEntity = StudentMapper.toEntity(student);
@@ -51,6 +61,7 @@ export class StudentRepository {
       );
       return StudentMapper.fromEntity(savedStudentEntity);
     } catch (e) {
+      console.log(e);
       throw new Error('Cannot save student');
     }
   }

@@ -3,35 +3,42 @@ import { Subject } from './subject.model';
 import { CreateSubjectDto } from './subject.dto';
 import { SubjectRepository } from './subject.repository';
 import { TeacherMapper } from 'src/teacher/teacher.mapper';
-import { GradeService } from 'src/grade/grade.service';
 import { GradeMapper } from 'src/grade/grade.mapper';
-import { TeacherService } from 'src/teacher/teacher.service';
+import { GradeRepository } from 'src/grade/grade.repository';
+import { TeacherRepository } from 'src/teacher/teacher.repository';
 
 @Injectable()
 export class SubjectService {
   constructor(
     private readonly subjectRepository: SubjectRepository,
-    private readonly teacherService: TeacherService,
-    private readonly gradeService: GradeService
+    private readonly teacherRepository: TeacherRepository,
+    private readonly gradeRepository: GradeRepository
   ) { }
 
   async createSubject(dto: CreateSubjectDto) {
     const subject = new Subject();
     subject.name = dto.name;
     try {
-      const teacher = await this.teacherService.findTeacher(dto.teacherId);
+      const options = { id: dto.teacherId, name: dto.name }
+      const teacher = await this.teacherRepository.findBy(options);
       subject.teacher = TeacherMapper.toEntity(teacher);
     } catch (e) {
       console.log(e);
     }
 
     try {
-      const grade = await this.gradeService.findGrade(dto.gradeName)
+      const options = { name: dto.gradeName }
+      const grade = await this.gradeRepository.findBy(options);
       subject.grade = GradeMapper.toEntity(grade)
     } catch (e) {
       console.log(e);
     }
 
     return await this.subjectRepository.save(subject);
+  }
+
+  async findBy(name: string) {
+    const options = { name };
+    return await this.subjectRepository.findBy(options);
   }
 }

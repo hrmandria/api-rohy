@@ -56,6 +56,10 @@ export class GradeRepository {
     }
   }
 
+  async addStudents(studentId: string) {
+
+  }
+
   async getStudentsList(name: string) {
     const students = await this.gradeRepository.find({
       relations: ["students"],
