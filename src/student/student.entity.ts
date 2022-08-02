@@ -1,7 +1,5 @@
 import { ParentEntity } from 'src/parent/parent.entity';
-import { Parent } from 'src/parent/parent.model';
 import { BaseEntity } from 'src/shared/entities/base.entity';
-import { TicketEntity } from 'src/ticket/ticket.entity';
 import { UserEntity } from 'src/user/user.entity';
 import {
   Column,

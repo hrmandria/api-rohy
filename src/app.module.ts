@@ -23,4 +23,4 @@ import { SmsModule } from './sms/sms.module';
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
   ],
 })
-export class AppModule { }
+export class AppModule {}

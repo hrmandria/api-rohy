@@ -5,7 +5,7 @@ import { PaginationCriteria } from '../shared/models/paginated.model';
 
 @Controller('ticket')
 export class TicketController {
-  constructor(private readonly ticketService: TicketService) { }
+  constructor(private readonly ticketService: TicketService) {}
 
   @Post()
   async createTicket(@Body() dto: CreateTicketDto) {
@@ -13,13 +13,11 @@ export class TicketController {
   }
 
   @Get()
-  async listpaginatedTicket(@Query() query: PaginationCriteria) {
-    return this.ticketService.listPaginatedTicket(query);
-  }
-
-  @Get('type')
-  async findByType(@Query() type: any) {
-    return await this.ticketService.findByType(type.type);
+  async listPaginatedTicket(
+    @Query() type: any,
+    @Query() query: PaginationCriteria,
+  ) {
+    return await this.ticketService.listPaginatedTicket(type.type, query);
   }
 
   @Get('student/type')

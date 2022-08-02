@@ -10,7 +10,7 @@ const maxPageSize = 250;
 
 @Injectable()
 export class TicketService {
-  constructor(private readonly ticketRepository: TicketRepository) { }
+  constructor(private readonly ticketRepository: TicketRepository) {}
 
   async createTicket(dto: CreateTicketDto): Promise<Ticket> {
     const ticket = new Ticket();
@@ -28,7 +28,11 @@ export class TicketService {
     return this.ticketRepository.save(ticket);
   }
 
-  async listPaginatedTicket(criteria: PaginationCriteria) {
+  async deleteTicket(id: string) {
+    return await this.ticketRepository.deleteTicket(id);
+  }
+
+  async listPaginatedTicket(type: string, criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
 
     if (page <= 0) {
@@ -38,16 +42,7 @@ export class TicketService {
     if (pageSize <= 0 || pageSize > maxPageSize) {
       return new InvalidPaginationInputException('pageSize', pageSize);
     }
-
-    return this.ticketRepository.listPaginatedTicket(criteria);
-  }
-
-  async deleteTicket(id: string) {
-    return await this.ticketRepository.deleteTicket(id);
-  }
-
-  async findByType(type: string) {
-    return await this.ticketRepository.findByType(type);
+    return await this.ticketRepository.listPaginatedTicket(criteria, type);
   }
 
   async findByStudent(id: string, type: string) {
