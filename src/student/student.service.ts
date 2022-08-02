@@ -14,12 +14,8 @@ const maxPageSize = 250;
 export class StudentService {
   constructor(
     private readonly studentRepository: StudentRepository,
-<<<<<<< HEAD
-    private readonly userService: UserService) { }
-=======
     private readonly userService: UserService,
-  ) {}
->>>>>>> 4f7c0795b2d88d75a6d565e1e6f8098bb07c761e
+  ) { }
 
   async listPaginatedStudent(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
