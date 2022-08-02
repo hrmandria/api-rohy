@@ -82,6 +82,7 @@ export class GradeRepository {
       const savedGradeEntity = await this.gradeRepository.save(gradeEntity);
       return GradeMapper.fromEntity(savedGradeEntity);
     } catch (e) {
+      console.log(e);
       throw new Error('Cannot save grade');
     }
   }

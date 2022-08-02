@@ -4,6 +4,7 @@ import { SubjectEntity } from 'src/subject/subject.entity';
 
 export class Grade extends AbstractModel {
   name: string;
+  section: SectionType;
   students: StudentEntity[];
   subjects: SubjectEntity[];
 }

@@ -9,7 +9,7 @@ export class GradeEntity extends BaseEntity {
   @Column({ name: 'name', nullable: false, type: 'text' })
   public name: string;
 
-  @Column({ name: 'name', nullable: false, type: 'text' })
+  @Column({ name: 'section', nullable: false, type: 'text' })
   public section: SectionType;
 
   @OneToMany(() => StudentEntity, (student) => student.grade, { cascade: false, nullable: true })

@@ -9,7 +9,7 @@ export class GradeMapper {
     gradeEntity.name = source.name;
     gradeEntity.students = source.students;
     gradeEntity.subjects = source.subjects;
-
+    gradeEntity.section = source.section;
     return gradeEntity;
   }
 
@@ -18,7 +18,7 @@ export class GradeMapper {
     grade.name = source.name;
     grade.students = source.students;
     grade.subjects = source.subjects;
-
+    grade.section = source.section;
     return grade;
   }
 }

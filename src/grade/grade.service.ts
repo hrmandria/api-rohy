@@ -17,7 +17,7 @@ export class GradeService {
   async createGrade(dto: CreateGradeDto) {
     const grade = new Grade();
     grade.name = dto.name;
-
+    grade.section = dto.section;
     const studentIds = dto.studentIds;
     let students: StudentEntity[] = [];
     try {
@@ -42,7 +42,7 @@ export class GradeService {
       console.log(e);
     }
 
-    return this.gradeRepository.save(grade);
+    return await this.gradeRepository.save(grade);
   }
 
   async findGrade(name: string) {
