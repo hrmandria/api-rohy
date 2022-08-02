@@ -10,6 +10,12 @@ export class TeacherEntity extends BaseEntity {
   @Column({ name: 'lastname', nullable: false, type: 'text' })
   public lastname: string;
 
+  @Column({ name: 'user_id', nullable: false, type: 'text' })
+  public userId: string;
+
+  @Column({ name: 'id_number', nullable: false, type: 'text' })
+  public idNumber: string;
+
   @OneToMany(() => SubjectEntity, (subject) => subject.teacher)
   subjects: SubjectEntity[];
 }

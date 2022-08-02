@@ -4,6 +4,9 @@ import { SubjectEntity } from 'src/subject/subject.entity';
 import { SubjectMapper } from 'src/subject/subject.mapper';
 import { SubjectRepository } from 'src/subject/subject.repository';
 import { SubjectService } from 'src/subject/subject.service';
+import { CreateUserDto } from 'src/user/user.dto';
+import { UserMapper } from 'src/user/user.mapper';
+import { UserService } from 'src/user/user.service';
 import { CreateTeacherDto } from './teacher.dto';
 import { Teacher } from './teacher.model';
 import { TeacherRepository } from './teacher.repository';
@@ -13,6 +16,7 @@ export class TeacherService {
   constructor(
     private readonly teacherRepository: TeacherRepository,
     private readonly subjectService: SubjectService,
+    private readonly userService: UserService
   ) { }
 
   async createTeacher(dto: CreateTeacherDto): Promise<Teacher> {
@@ -32,6 +36,19 @@ export class TeacherService {
       }
     });
     teacher.subjects = subjects;
+
+    const idNumber = await this.userService.generateIdNumber();
+    const createUserDto: CreateUserDto = {
+      idNumber: idNumber,
+      email: dto.email,
+      password: dto.password,
+    };
+    const user = UserMapper.toEntity(
+      await this.userService.createUser(createUserDto),
+    );
+    teacher.userId = user.id;
+    teacher.idNumber = user.idNumber;
+
     return this.teacherRepository.save(teacher);
   }
 

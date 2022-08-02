@@ -41,7 +41,7 @@ export class TeacherRepository {
 
       return TeacherMapper.fromEntity(teacherEntity);
     } catch (e) {
-      throw new Error('Cannot find ticket');
+      throw new Error('Cannot find teacher');
     }
   }
 }
