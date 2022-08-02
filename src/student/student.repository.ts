@@ -10,7 +10,7 @@ import {
 import { StudentMapper } from './student.mapper';
 
 export interface FindOptions {
-  internalId?: string;
+  id?: string;
 }
 
 @Injectable()
@@ -43,14 +43,17 @@ export class StudentRepository {
     }
   }
 
-  async findBy(id: string): Promise<StudentEntity | undefined> {
-    const studentEntity = await this.studentRepository.findOne(id);
-
-    if (!studentEntity) {
-      return undefined;
+  async findBy(options: FindOptions): Promise<Student | undefined> {
+    try {
+      const student = await this.studentRepository.findByIds([options.id]);
+      if (!student) {
+        return undefined;
+      }
+      const map = StudentMapper.fromEntity(student[0]);
+      return map;
+    } catch (e) {
+      throw new Error('Cannot find student');
     }
-
-    return studentEntity;
   }
 
   async save(student: Student): Promise<Student> {

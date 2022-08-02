@@ -6,7 +6,7 @@ import { UserService } from 'src/user/user.service';
 import { CreateStudentDto } from './student.dto';
 import { InvalidPaginationInputException } from './student.exception';
 import { Student, StudentStatus } from './student.model';
-import { StudentRepository } from './student.repository';
+import { FindOptions, StudentRepository } from './student.repository';
 
 const maxPageSize = 250;
 
@@ -14,7 +14,12 @@ const maxPageSize = 250;
 export class StudentService {
   constructor(
     private readonly studentRepository: StudentRepository,
+<<<<<<< HEAD
     private readonly userService: UserService) { }
+=======
+    private readonly userService: UserService,
+  ) {}
+>>>>>>> 4f7c0795b2d88d75a6d565e1e6f8098bb07c761e
 
   async listPaginatedStudent(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
@@ -50,7 +55,6 @@ export class StudentService {
     );
     student.userId = user.id;
     student.status = StudentStatus.ACTIVE;
-
     return this.studentRepository.save(student);
   }
 

@@ -10,6 +10,10 @@ export interface UserCredential {
   password: string;
 }
 
+export interface AuthenticationToken {
+  token: string;
+}
+
 export class User extends AbstractModel {
   idNumber: Nullable<string>;
   email: Nullable<string>;

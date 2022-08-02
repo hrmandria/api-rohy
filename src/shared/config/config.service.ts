@@ -7,6 +7,9 @@ import { NoteEntity } from 'src/note/note.entity';
 import { TeacherEntity } from 'src/teacher/teacher.entity';
 import { CourseEntity } from 'src/course/course.entity';
 import { TimetableEntity } from 'src/timetable/timetable.entity';
+import { TicketEntity } from 'src/ticket/ticket.entity';
+import { ParentEntity } from 'src/parent/parent.entity';
+import { DatabaseFileEntity } from 'src/files/file.entity';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -31,6 +34,9 @@ export class ConfigService {
         TeacherEntity,
         CourseEntity,
         TimetableEntity,
+        ParentEntity,
+        DatabaseFileEntity,
+        TicketEntity,
       ],
       synchronize: true,
     };

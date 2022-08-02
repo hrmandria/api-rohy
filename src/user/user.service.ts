@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './user.dto';
 import { UserRepository } from './user.repository';
 import * as bcrypt from 'bcrypt';
-import { User } from './user.model';
+import { AuthenticationToken, User } from './user.model';
 
 @Injectable()
 export class UserService {
@@ -22,7 +22,15 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
+  async getUser(authenticationToken: string) {
+    return this.userRepository.getUser(authenticationToken);
+  }
+
   async deleteUser(id: string) {
     this.userRepository.delete(id);
+  }
+
+  async generateIdNumber() {
+    return await this.userRepository.generateIdNumber();
   }
 }
