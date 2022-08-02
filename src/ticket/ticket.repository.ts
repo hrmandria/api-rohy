@@ -71,7 +71,6 @@ export class TicketRepository {
       })
     } catch (e) {
       console.log(e);
-
     }
   }
 
