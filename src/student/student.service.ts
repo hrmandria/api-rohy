@@ -27,7 +27,6 @@ export class StudentService {
     if (pageSize <= 0 || pageSize > maxPageSize) {
       return new InvalidPaginationInputException('pageSize', pageSize);
     }
-
     return this.studentRepository.listPaginatedStudent(criteria);
   }
 

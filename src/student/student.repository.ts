@@ -33,7 +33,6 @@ export class StudentRepository {
         skip: (page - 1) * pageSize,
         take: pageSize,
       });
-
       return {
         items: entities.map(StudentMapper.fromEntity),
         total,

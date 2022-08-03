@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DatabaseFile } from 'src/files/file.model';
+import {
+  Paginated,
+  PaginationCriteria,
+} from 'src/shared/models/paginated.model';
 import { StudentEntity } from 'src/student/student.entity';
 import { Repository } from 'typeorm';
 import { ParentEntity } from './parent.entity';
@@ -32,6 +36,28 @@ export class ParentRepository {
       return ParentMapper.fromEntity(savedParentEntity);
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  async listPaginatedParent(
+    criteria: PaginationCriteria,
+  ): Promise<Paginated<Parent>> {
+    try {
+      const { page, pageSize } = criteria;
+      const [entities, total] = await this.parentRepository.findAndCount({
+        order: {
+          createdAt: 'DESC',
+          id: 'ASC',
+        },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
+      return {
+        items: entities.map(ParentMapper.fromEntity),
+        total,
+      };
+    } catch (e) {
+      throw new Error('Cannot list paginated parent');
     }
   }
 
