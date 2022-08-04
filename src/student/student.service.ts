@@ -15,7 +15,7 @@ export class StudentService {
   constructor(
     private readonly studentRepository: StudentRepository,
     private readonly userService: UserService,
-  ) {}
+  ) { }
 
   async listPaginatedStudent(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
@@ -30,7 +30,8 @@ export class StudentService {
     return this.studentRepository.listPaginatedStudent(criteria);
   }
 
-  async findStudent(options: FindOptions) {
+  async findStudent(studentId: string) {
+    const options = { id: studentId }
     return await this.studentRepository.findBy(options);
   }
 

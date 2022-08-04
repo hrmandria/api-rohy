@@ -10,7 +10,7 @@ const maxPageSize = 250;
 
 @Injectable()
 export class TicketService {
-  constructor(private readonly ticketRepository: TicketRepository) {}
+  constructor(private readonly ticketRepository: TicketRepository) { }
 
   async createTicket(dto: CreateTicketDto): Promise<Ticket> {
     const ticket = new Ticket();
@@ -18,6 +18,7 @@ export class TicketService {
     ticket.to = dto.to;
     ticket.reason = dto.reason;
     ticket.decision = dto.decision;
+    ticket.text = dto.text;
     ticket.pointsNumber = dto.pointsNumber;
     ticket.managerSignature = dto.managerSignature;
     ticket.parentSignature = dto.parentSignature;
