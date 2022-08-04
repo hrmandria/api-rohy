@@ -56,6 +56,16 @@ export class StudentRepository {
     }
   }
 
+  async getStudentByIdNumber(idNumber: string) {
+    try {
+      return await this.studentRepository.find({
+        where: { idNumber: idNumber }
+      })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async save(student: Student): Promise<Student> {
     try {
       const studentEntity = StudentMapper.toEntity(student);

@@ -50,6 +50,7 @@ export class StudentService {
     const user = UserMapper.toEntity(
       await this.userService.createUser(createUserDto),
     );
+    student.idNumber = idNumber;
     student.userId = user.id;
     student.status = StudentStatus.ACTIVE;
     return this.studentRepository.save(student);
@@ -57,5 +58,9 @@ export class StudentService {
 
   async deleteStudent(id: string) {
     this.studentRepository.delete(id);
+  }
+
+  async getStudentByIdNumber(idNumber: string) {
+    return await this.studentRepository.getStudentByIdNumber(idNumber);
   }
 }

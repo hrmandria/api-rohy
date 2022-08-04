@@ -24,6 +24,9 @@ export class StudentEntity extends BaseEntity {
   @Column({ name: 'userId', nullable: false, type: 'text' })
   public userId: string;
 
+  @Column({ name: 'id_number', nullable: false, type: 'text' })
+  public idNumber: string;
+
   @OneToMany(() => TicketEntity, (ticket) => ticket.id, { cascade: true })
   @JoinColumn()
   tickets: TicketEntity[];
