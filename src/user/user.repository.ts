@@ -22,7 +22,7 @@ export class UserRepository {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     private readonly jwtTokenService: JwtService,
-  ) {}
+  ) { }
 
   async findBy(options: FindOptions): Promise<User | undefined> {
     try {

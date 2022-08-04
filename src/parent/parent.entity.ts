@@ -8,7 +8,6 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
-  OneToMany,
   OneToOne,
 } from 'typeorm';
 import { ParentGender, ParentStatus } from './parent.model';

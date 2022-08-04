@@ -4,12 +4,13 @@ import { UserEntity } from 'src/user/user.entity';
 import { TicketEntity } from 'src/ticket/ticket.entity';
 import { ParentEntity } from 'src/parent/parent.entity';
 import { DatabaseFileEntity } from 'src/files/file.entity';
+import { AedEntity } from 'src/aed/aed.entity';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
 export class ConfigService {
-  constructor(private env: { [k: string]: string | undefined }) {}
+  constructor(private env: { [k: string]: string | undefined }) { }
 
   public getTypeORMConfig(): TypeOrmModuleOptions {
     return {
@@ -25,6 +26,7 @@ export class ConfigService {
         ParentEntity,
         DatabaseFileEntity,
         TicketEntity,
+        AedEntity
       ],
       synchronize: true,
     };

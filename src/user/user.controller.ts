@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { CreateUserDto } from './user.dto';
 import { UserService } from './user.service';
 
 @Controller()
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post('createUser')
   async createUser(@Body() request: CreateUserDto) {
@@ -18,7 +18,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  async deleteUser(@Query() id: string) {
-    return this.userService.deleteUser(id);
+  async deleteUser(@Query() id: any) {
+    return await this.userService.deleteUser(id.id);
   }
 }

@@ -23,7 +23,7 @@ export class ParentRepository {
   constructor(
     @InjectRepository(ParentEntity)
     private readonly parentRepository: Repository<ParentEntity>,
-  ) {}
+  ) { }
 
   async save(parent: Parent): Promise<Parent> {
     try {
@@ -42,6 +42,7 @@ export class ParentRepository {
       throw new Error('Cannot delete parent');
     }
   }
+
   async update(options: ChangeOptions, id: string): Promise<Parent> {
     await this.parentRepository.update({ id }, { ...options });
     const parent = await this.findBy(id);

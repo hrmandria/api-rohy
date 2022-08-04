@@ -6,7 +6,7 @@ import { AuthenticationToken, User } from './user.model';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) { }
 
   async createUser(dto: CreateUserDto) {
     const user = new User();
@@ -27,7 +27,7 @@ export class UserService {
   }
 
   async deleteUser(id: string) {
-    this.userRepository.delete(id);
+    return await this.userRepository.delete(id);
   }
 
   async generateIdNumber() {

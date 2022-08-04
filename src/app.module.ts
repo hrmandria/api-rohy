@@ -9,6 +9,7 @@ import { ParentModule } from './parent/parent.module';
 import { TicketModule } from './ticket/ticket.module';
 import { DatabaseFileModule } from './files/file.module';
 import { SmsModule } from './sms/sms.module';
+import { AedModule } from './aed/aed.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { SmsModule } from './sms/sms.module';
     ParentModule,
     SmsModule,
     DatabaseFileModule,
+    AedModule,
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
   ],
 })
-export class AppModule {}
+export class AppModule { }
