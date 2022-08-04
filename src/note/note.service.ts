@@ -24,6 +24,8 @@ export class NoteService {
     note.subject = dto.subjectId;
     note.value = dto.value;
     note.teacher = dto.teacherId;
+    note.coefficient = dto.coefficient;
+    note.semester = dto.semester;
     note.studentEntity = StudentMapper.toEntity(await this.studentRepository.findBy({ id: dto.studentId }));
     note.subjectEntity = SubjectMapper.toEntity(await this.subjectRepository.findBy({ id: dto.subjectId }));
     note.teacherEntity = TeacherMapper.toEntity(await this.teacherRepository.findBy({ id: dto.teacherId }));
@@ -32,5 +34,13 @@ export class NoteService {
 
   async getNotesByStudent(studentId: string) {
     return await this.noteRepository.findNotesByStudent(studentId);
+  }
+
+  async semesterNotes(studentId: string, semester: string) {
+    return await this.noteRepository.findStudentsSemesterNotes(studentId, semester);
+  }
+
+  async studentsSemesterAverage(studentId: string, semester: string) {
+    return await this.noteRepository.semesterAverage(studentId, semester);
   }
 }

@@ -8,7 +8,15 @@ export class Note extends AbstractModel {
   subject: string;
   value: number;
   teacher: string;
+  coefficient: number;
+  semester: Semester;
   studentEntity: StudentEntity;
   subjectEntity: SubjectEntity;
   teacherEntity: TeacherEntity;
+}
+
+export enum Semester {
+  SEMESTER_ONE = "SEMESTRE 1",
+  SEMESTER_TWO = "SEMESTRE 2",
+  SEMESTER_THREE = "SEMESTRE 3"
 }

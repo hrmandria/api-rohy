@@ -9,6 +9,8 @@ export class NoteMapper {
     note.subject = source.subject;
     note.value = source.value;
     note.teacher = source.teacher;
+    note.semester = source.semester;
+    note.coefficient = source.coefficient;
     note.studentEntity = source.studentEntity;
     note.subjectEntity = source.subjectEntity;
     note.teacherEntity = source.teacherEntity;
@@ -21,6 +23,8 @@ export class NoteMapper {
     noteEntity.subject = source.subject;
     noteEntity.value = source.value;
     noteEntity.teacher = source.teacher;
+    noteEntity.semester = source.semester;
+    noteEntity.coefficient = source.coefficient;
     noteEntity.studentEntity = source.studentEntity;
     noteEntity.subjectEntity = source.subjectEntity;
     noteEntity.teacherEntity = source.teacherEntity;

@@ -18,6 +18,12 @@ export class NoteEntity extends BaseEntity {
   @Column({ name: 'teacher_id', nullable: false, type: 'text' })
   public teacher: string;
 
+  @Column({ name: 'coefficient', nullable: false, type: 'integer' })
+  public coefficient: number;
+
+  @Column({ name: 'semester', nullable: false, type: 'text'})
+  public semester: Semester;
+
   @ManyToOne(() => StudentEntity)
   @JoinColumn()
   studentEntity: StudentEntity;
