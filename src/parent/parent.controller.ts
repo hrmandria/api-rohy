@@ -16,7 +16,7 @@ import { ParentService } from './parent.service';
 
 @Controller('parent')
 export class ParentController {
-  constructor(private readonly parentService: ParentService) {}
+  constructor(private readonly parentService: ParentService) { }
 
   @Post()
   async createParent(@Body() dto: CreateParentDto) {
@@ -49,6 +49,11 @@ export class ParentController {
   @Get()
   async findChildren(@Query() id: any) {
     return await this.parentService.findChildren(id.id);
+  }
+
+  @Get('byIdNumber')
+  async getParentByIdNumber(@Query() idNumber: any) {
+    return await this.parentService.getParentByIdNumber(idNumber.idNumber);
   }
 
   @Post('addChild')

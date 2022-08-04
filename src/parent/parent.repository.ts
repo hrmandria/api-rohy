@@ -23,7 +23,7 @@ export class ParentRepository {
   constructor(
     @InjectRepository(ParentEntity)
     private readonly parentRepository: Repository<ParentEntity>,
-  ) {}
+  ) { }
 
   async save(parent: Parent): Promise<Parent> {
     try {
@@ -73,6 +73,16 @@ export class ParentRepository {
     const parent = ParentMapper.toEntity(await this.findBy(parentId));
     parent.students = studentsArray;
     return await this.parentRepository.save(parent);
+  }
+
+  async getParentByIdNumber(idNumber: string) {
+    try {
+      return await this.parentRepository.find({
+        where: { idNumber: idNumber }
+      })
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async updateAvatar(options: avatar, id: string) {

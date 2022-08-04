@@ -19,7 +19,7 @@ export class ParentService {
     private readonly studentRepository: StudentRepository,
     private readonly userService: UserService,
     private readonly databaseFileService: DatabaseFileService,
-  ) {}
+  ) { }
 
   async toEntities(studentIds: string[], students: StudentEntity[]) {
     studentIds.forEach(async (element) => {
@@ -91,6 +91,10 @@ export class ParentService {
 
   async findChildren(id: string) {
     return await this.parentRepository.findChildren(id);
+  }
+
+  async getParentByIdNumber(idNumber: string) {
+    return await this.parentRepository.getParentByIdNumber(idNumber);
   }
 
   async addChild(studentId: string, parentId: string) {
