@@ -57,14 +57,30 @@ export class TicketRepository {
     }
   }
 
-  async findByStudent(id: string, type: string) {
+  async findByStudent(
+    id: string,
+    type: string,
+    criteria: PaginationCriteria,
+  ): Promise<Paginated<Ticket>> {
     try {
-      return await this.ticketRepository.findAndCount({
+      const { page, pageSize } = criteria;
+      const [entities, total] = await this.ticketRepository.findAndCount({
         where: {
           studentId: id,
           type: type,
         },
+        order: {
+          createdAt: 'DESC',
+          id: 'ASC',
+        },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
       });
+
+      return {
+        items: entities.map(TicketMapper.fromEntity),
+        total,
+      };
     } catch (e) {
       console.log(e);
     }

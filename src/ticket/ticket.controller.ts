@@ -21,8 +21,12 @@ export class TicketController {
   }
 
   @Get('student/type')
-  async findByStudent(@Query() id: any, @Query() type: any) {
-    return await this.ticketService.findByStudent(id.id, type.type);
+  async findByStudent(
+    @Query() id: any,
+    @Query() type: any,
+    @Query() query: PaginationCriteria,
+  ) {
+    return await this.ticketService.findByStudent(id.id, type.type, query);
   }
 
   @Delete()
