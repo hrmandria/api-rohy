@@ -16,6 +16,11 @@ export class GradeController {
         return await this.gradeService.findGrade(name.name);
     }
 
+    @Post('addStudent')
+    async addStudent(@Query() studentId: any, @Query() gradeName: any) {
+        return await this.gradeService.addStudent(studentId.studentId, gradeName.gradeName)
+    }
+
     @Get('students')
     async findStudents(@Query() name: any) {
         return await this.gradeService.getStudents(name.name);
@@ -24,5 +29,10 @@ export class GradeController {
     @Get('subjects')
     async findSubjects(@Query() name: any) {
         return await this.gradeService.getSubjects(name.name);
+    }
+
+    @Get('gradeEntity')
+    async getGradeEntity(@Query() name: any) {
+        return await this.gradeService.getGrade(name.name);
     }
 }

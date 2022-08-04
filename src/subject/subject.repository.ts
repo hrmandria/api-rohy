@@ -5,7 +5,6 @@ import {
   Paginated,
   PaginationCriteria,
 } from 'src/shared/models/paginated.model';
-import { StudentMapper } from 'src/student/student.mapper';
 import { Repository } from 'typeorm';
 import { SubjectEntity } from './subject.entity';
 import { SubjectMapper } from './subject.mapper';

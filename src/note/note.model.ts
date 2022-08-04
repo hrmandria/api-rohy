@@ -8,4 +8,7 @@ export class Note extends AbstractModel {
   subject: string;
   value: number;
   teacher: string;
+  studentEntity: StudentEntity;
+  subjectEntity: SubjectEntity;
+  teacherEntity: TeacherEntity;
 }

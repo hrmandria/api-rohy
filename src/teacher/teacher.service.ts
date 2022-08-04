@@ -52,8 +52,8 @@ export class TeacherService {
     return this.teacherRepository.save(teacher);
   }
 
-  async findTeacher(id: string, name?: string) {
-    const options = { id, name }
+  async findTeacher(id?: string, lastname?: string) {
+    const options = { id, lastname }
     return await this.teacherRepository.findBy(options);
   }
 }

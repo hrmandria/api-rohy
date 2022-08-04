@@ -13,6 +13,7 @@ import { ParentModule } from './parent/parent.module';
 import { DatabaseFileModule } from './files/file.module';
 import { SmsModule } from './sms/sms.module';
 import { TeacherModule } from './teacher/teacher.module';
+import { CourseModule } from './course/course.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { TeacherModule } from './teacher/teacher.module';
     NoteModule,
     GradeModule,
     TimetableModule,
+    CourseModule
   ],
 })
 export class AppModule { }

@@ -7,6 +7,7 @@ import { Teacher } from './teacher.model';
 
 export interface FindOptions {
   id?: string;
+  lastname?: string;
 }
 
 @Injectable()

@@ -12,6 +12,6 @@ export class TimetableEntity extends BaseEntity {
   @JoinColumn({ name: 'grade_id' })
   grade: GradeEntity;
 
-  @OneToMany(() => CourseEntity, (course) => course.id, { cascade: true })
+  @OneToMany(() => CourseEntity, (course) => course.timetable, { cascade: false })
   courses: CourseEntity[];
 }

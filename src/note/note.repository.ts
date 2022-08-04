@@ -25,7 +25,7 @@ export class NoteRepository {
 
   async findNotesByStudent(studentId: string) {
     const notes = await this.noteRepository.findAndCount({
-      relations: ["studentEntity"],
+      relations: ["studentEntity", "subjectEntity", "teacherEntity"],
     })
     let studentsNotes: NoteEntity[] = []
     notes[0].forEach(noteEntity => {

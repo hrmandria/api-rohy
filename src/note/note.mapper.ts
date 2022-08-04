@@ -1,3 +1,4 @@
+import { SubjectEntity } from 'src/subject/subject.entity';
 import { NoteEntity } from './note.entity';
 import { Note } from './note.model';
 
@@ -8,7 +9,9 @@ export class NoteMapper {
     note.subject = source.subject;
     note.value = source.value;
     note.teacher = source.teacher;
-
+    note.studentEntity = source.studentEntity;
+    note.subjectEntity = source.subjectEntity;
+    note.teacherEntity = source.teacherEntity;
     return note;
   }
 
@@ -18,7 +21,9 @@ export class NoteMapper {
     noteEntity.subject = source.subject;
     noteEntity.value = source.value;
     noteEntity.teacher = source.teacher;
-
+    noteEntity.studentEntity = source.studentEntity;
+    noteEntity.subjectEntity = source.subjectEntity;
+    noteEntity.teacherEntity = source.teacherEntity;
     return noteEntity;
   }
 }

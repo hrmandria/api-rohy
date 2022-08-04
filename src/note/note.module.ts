@@ -12,8 +12,8 @@ import { NoteRepository } from './note.repository';
 import { NoteService } from './note.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([NoteEntity, StudentEntity])],
+  imports: [TypeOrmModule.forFeature([NoteEntity, StudentEntity, StudentEntity, SubjectEntity, TeacherEntity])],
   controllers: [NoteController],
-  providers: [NoteRepository, NoteService],
+  providers: [NoteRepository, NoteService, StudentRepository, SubjectRepository, TeacherRepository],
 })
 export class NoteModule { }

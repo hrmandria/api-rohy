@@ -14,12 +14,13 @@ export class TimetableRepository {
   constructor(
     @InjectRepository(TimetableEntity)
     private readonly timetableRepository: Repository<TimetableEntity>,
-  ) {}
+  ) { }
 
   async findBy(options: FindOptions): Promise<Timetable | undefined> {
     try {
       const timetableEntity = await this.timetableRepository.findOne({
-        ...options,
+        relations: ["courses"],
+        where: { gradeName: options.gradeName }
       });
 
       if (!timetableEntity) {

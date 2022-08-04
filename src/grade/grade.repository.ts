@@ -4,6 +4,7 @@ import {
   Paginated,
   PaginationCriteria,
 } from 'src/shared/models/paginated.model';
+import { StudentEntity } from 'src/student/student.entity';
 import { Repository } from 'typeorm';
 import { GradeEntity } from './grade.entity';
 import { GradeMapper } from './grade.mapper';
@@ -11,7 +12,7 @@ import { Grade } from './grade.model';
 
 export interface FindOptions {
   id?: string;
-  name: string;
+  name?: string;
 }
 
 @Injectable()
@@ -56,23 +57,37 @@ export class GradeRepository {
     }
   }
 
-  async addStudents(studentId: string) {
-
-  }
-
-  async getStudentsList(name: string) {
-    const students = await this.gradeRepository.find({
-      relations: ["students"],
+  async getGradeEntity(name: string): Promise<GradeEntity | undefined> {
+    return await this.gradeRepository.findOne({
+      relations: ["students", "subjects"],
       where: { name }
     })
-    return students;
+  }
+
+  async addStudent(gradeName: string, studentsArray: StudentEntity[]) {
+    const grade = GradeMapper.toEntity(await this.findBy({ name: gradeName }));
+    grade.students = studentsArray;
+    return await this.gradeRepository.save(grade);
+  }
+
+  async getStudentsList(options: FindOptions) {
+    try {
+      const gradeEntity = await this.gradeRepository.find({
+        relations: ["students"],
+        where: { name: options.name }
+      })
+      return gradeEntity[0].students;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async getSubjectsList(name: string) {
-    const subjects = await this.gradeRepository.find({
+    const gradeEntity = await this.gradeRepository.find({
       relations: ["subjects"],
       where: { name }
     })
+    const subjects = gradeEntity[0].subjects;
     return subjects;
   }
 
