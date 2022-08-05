@@ -1,3 +1,5 @@
+import { Semester } from "./note.model";
+
 export interface CreateNoteDto {
   studentId: string;
   subjectId: string;

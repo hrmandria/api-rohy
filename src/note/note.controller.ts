@@ -18,6 +18,6 @@ export class NoteController {
 
   @Get('semester')
   async findStudentsSemesterNotes(@Query() studentId: any, @Query() semester: any) {
-    return await this.noteService.findStudentsSemesterNotes(studentId.studentId, semester.semester);
+    return await this.noteService.semesterNotes(studentId.studentId, semester.semester);
   }
 }

@@ -1,4 +1,3 @@
-import { SubjectEntity } from 'src/subject/subject.entity';
 import { NoteEntity } from './note.entity';
 import { Note } from './note.model';
 
