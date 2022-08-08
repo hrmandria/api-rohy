@@ -121,4 +121,8 @@ export class ParentService {
     })
     return parent;
   }
+
+  async findParentWithPhoneNumber(phone: string) {
+    return await this.parentRepository.findParentWithPhone(phone);
+  }
 }

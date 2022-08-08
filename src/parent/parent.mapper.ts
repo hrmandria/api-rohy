@@ -12,6 +12,7 @@ export class ParentMapper {
     parent.gender = source.gender;
     parent.avatar = source.avatar;
     parent.phone = source.phone;
+    parent.isPhoneNumberConfirmed = source.isPhoneNumberConfirmed;
     return parent;
   }
 
@@ -27,6 +28,7 @@ export class ParentMapper {
     parentEntity.gender = source.gender;
     parentEntity.phone = source.phone;
     parentEntity.avatar = source.avatar;
+    parentEntity.isPhoneNumberConfirmed = source.isPhoneNumberConfirmed;
     return parentEntity;
   }
 }

@@ -8,7 +8,6 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
-  OneToMany,
   OneToOne,
 } from 'typeorm';
 import { ParentGender, ParentStatus } from './parent.model';
@@ -35,7 +34,7 @@ export class ParentEntity extends BaseEntity {
   @Column({ name: 'id_number', nullable: false, type: 'text' })
   public idNumber: string;
 
-  @Column({ name: 'phone', nullable: true, type: 'text' })
+  @Column({ name: 'phone', nullable: false, type: 'text' })
   public phone: string;
 
   @Column({ name: 'gender', nullable: false, type: 'text', enum: ParentGender })

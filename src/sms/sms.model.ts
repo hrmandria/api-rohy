@@ -6,3 +6,8 @@ export class SendSMSDto {
 export class VerifyPhoneNumberDto {
     phone: string
 }
+
+export class confirmCodeDto {
+    phone: string
+    code: string
+}

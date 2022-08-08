@@ -4,6 +4,12 @@ import * as Joi from 'joi';
 import { SmsController } from "./sms.controller";
 import SmsService from "./sms.service";
 import { Twilio } from 'twilio'
+import { ParentService } from "src/parent/parent.service";
+import { ParentRepository } from "src/parent/parent.repository";
+import { ParentEntity } from "src/parent/parent.entity";
+import { ParentModule } from "src/parent/parent.module";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { DatabaseFileEntity } from "src/files/file.entity";
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -14,10 +20,12 @@ import { Twilio } from 'twilio'
                 TWILIO_SENDER_PHONE_NUMBER: Joi.string().required()
             })
         }),
-        Twilio
+        Twilio,
+        TypeOrmModule.forFeature([ParentEntity, DatabaseFileEntity]),
+        ParentModule
     ],
     controllers: [SmsController],
-    providers: [SmsService, Twilio]
+    providers: [SmsService, Twilio, ParentRepository]
 })
 
 export class SmsModule { }

@@ -22,4 +22,5 @@ export class Parent extends AbstractModel {
   idNumber: string;
   students: StudentEntity[];
   avatar: DatabaseFileEntity;
+  isPhoneNumberConfirmed: boolean
 }

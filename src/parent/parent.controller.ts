@@ -51,7 +51,7 @@ export class ParentController {
     return await this.parentService.findChildren(id.id);
   }
 
-  @Post('addChild')
+  @Post('add-child')
   async addChildren(@Query() parentId: any, @Query() studentId: any) {
     return await this.parentService.addChild(
       studentId.studentId,
@@ -62,5 +62,10 @@ export class ParentController {
   @Get('findParents')
   async findParents(@Query() studentId: any) {
     return await this.parentService.findParentsByStudent(studentId.studentId);
+  }
+
+  @Get('findParentByPhone')
+  async findParentByPhoneNumber(@Query() phone: any) {
+    return await this.parentService.findParentWithPhoneNumber(phone.phone);
   }
 }

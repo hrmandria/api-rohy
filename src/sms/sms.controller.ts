@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Query } from "@nestjs/common";
-import { SendSMSDto, VerifyPhoneNumberDto } from "./sms.model";
+import { confirmCodeDto, SendSMSDto, VerifyPhoneNumberDto } from "./sms.model";
 import SmsService from "./sms.service";
 
 @Controller('sms')
@@ -18,5 +18,10 @@ export class SmsController {
         } catch (e) {
             console.log(e.message);
         }
+    }
+
+    @Post('confirm')
+    async confirmPhoneNumber(@Body() request: confirmCodeDto) {
+        return await this.smsservice.confirmPhoneNumber(request.phone, request.code);
     }
 }

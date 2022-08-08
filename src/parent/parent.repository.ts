@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DatabaseFile } from 'src/files/file.model';
 import { StudentEntity } from 'src/student/student.entity';
-import { StudentService } from 'src/student/student.service';
 import { Repository } from 'typeorm';
 import { ParentEntity } from './parent.entity';
 import { ParentMapper } from './parent.mapper';
@@ -24,7 +23,6 @@ export class ParentRepository {
   constructor(
     @InjectRepository(ParentEntity)
     private readonly parentRepository: Repository<ParentEntity>,
-    private readonly studentService: StudentService
   ) { }
 
   async save(parent: Parent): Promise<Parent> {
@@ -88,5 +86,20 @@ export class ParentRepository {
     const avatarId = options.avatar.id;
     options.avatarId = avatarId;
     await this.parentRepository.update({ id }, { ...options });
+  }
+
+  async findParentWithPhone(phone: string) {
+    try {
+      const phoneNumber = `+${phone}`
+      const parent = await this.parentRepository.find({
+        where: { phone: phoneNumber }
+      })
+      if (!parent) {
+        return undefined
+      }
+      return parent;
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
