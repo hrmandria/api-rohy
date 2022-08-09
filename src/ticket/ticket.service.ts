@@ -45,8 +45,17 @@ export class TicketService {
     return await this.ticketRepository.listPaginatedTicket(criteria, type);
   }
 
-  async findByStudent(id: string, type: string) {
-    return await this.ticketRepository.findByStudent(id, type);
+  async findByStudent(id: string, type: string, criteria: PaginationCriteria) {
+    const { page, pageSize } = criteria;
+
+    if (page <= 0) {
+      return new InvalidPaginationInputException('page', page);
+    }
+
+    if (pageSize <= 0 || pageSize > maxPageSize) {
+      return new InvalidPaginationInputException('pageSize', pageSize);
+    }
+    return await this.ticketRepository.findByStudent(id, type, criteria);
   }
 
   async confirm(parentId: string, ticketId: string) {

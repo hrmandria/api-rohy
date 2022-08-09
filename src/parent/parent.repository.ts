@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DatabaseFile } from 'src/files/file.model';
+import {
+  Paginated,
+  PaginationCriteria,
+} from 'src/shared/models/paginated.model';
 import { StudentEntity } from 'src/student/student.entity';
 import { Repository } from 'typeorm';
 import { ParentEntity } from './parent.entity';
@@ -23,7 +27,7 @@ export class ParentRepository {
   constructor(
     @InjectRepository(ParentEntity)
     private readonly parentRepository: Repository<ParentEntity>,
-  ) {}
+  ) { }
 
   async save(parent: Parent): Promise<Parent> {
     try {
@@ -32,6 +36,28 @@ export class ParentRepository {
       return ParentMapper.fromEntity(savedParentEntity);
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  async listPaginatedParent(
+    criteria: PaginationCriteria,
+  ): Promise<Paginated<Parent>> {
+    try {
+      const { page, pageSize } = criteria;
+      const [entities, total] = await this.parentRepository.findAndCount({
+        order: {
+          createdAt: 'DESC',
+          id: 'ASC',
+        },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
+      return {
+        items: entities.map(ParentMapper.fromEntity),
+        total,
+      };
+    } catch (e) {
+      throw new Error('Cannot list paginated parent');
     }
   }
 
@@ -73,6 +99,16 @@ export class ParentRepository {
     const parent = ParentMapper.toEntity(await this.findBy(parentId));
     parent.students = studentsArray;
     return await this.parentRepository.save(parent);
+  }
+
+  async getParentByIdNumber(idNumber: string) {
+    try {
+      return await this.parentRepository.find({
+        where: { idNumber: idNumber }
+      })
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async updateAvatar(options: avatar, id: string) {

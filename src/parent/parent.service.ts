@@ -1,16 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseFile } from 'src/files/file.model';
 import { DatabaseFileService } from 'src/files/file.service';
+import { PaginationCriteria } from 'src/shared/models/paginated.model';
 import { StudentEntity } from 'src/student/student.entity';
+import { InvalidPaginationInputException } from 'src/student/student.exception';
 import { StudentMapper } from 'src/student/student.mapper';
 import { FindOptions, StudentRepository } from 'src/student/student.repository';
 import { CreateUserDto } from 'src/user/user.dto';
 import { UserMapper } from 'src/user/user.mapper';
 import { UserService } from 'src/user/user.service';
 import { CreateParentDto } from './parent.dto';
-import { ParentMapper } from './parent.mapper';
 import { Parent, ParentStatus } from './parent.model';
 import { ChangeOptions, ParentRepository } from './parent.repository';
+
+const maxPageSize = 250;
 
 @Injectable()
 export class ParentService {
@@ -19,7 +21,7 @@ export class ParentService {
     private readonly studentRepository: StudentRepository,
     private readonly userService: UserService,
     private readonly databaseFileService: DatabaseFileService,
-  ) {}
+  ) { }
 
   async toEntities(studentIds: string[], students: StudentEntity[]) {
     studentIds.forEach(async (element) => {
@@ -58,6 +60,19 @@ export class ParentService {
     return await this.parentRepository.save(parent);
   }
 
+  async listPaginatedParent(criteria: PaginationCriteria) {
+    const { page, pageSize } = criteria;
+
+    if (page <= 0) {
+      return new InvalidPaginationInputException('page', page);
+    }
+
+    if (pageSize <= 0 || pageSize > maxPageSize) {
+      return new InvalidPaginationInputException('pageSize', pageSize);
+    }
+    return this.parentRepository.listPaginatedParent(criteria);
+  }
+
   async modify(changeOpt: ChangeOptions, id: string): Promise<Parent> {
     const options = {
       firstname: changeOpt.firstname,
@@ -85,12 +100,20 @@ export class ParentService {
     return parent;
   }
 
+  async findParent(id: string) {
+    return await this.parentRepository.findBy(id);
+  }
+
   async deleteParent(id: string) {
     this.parentRepository.delete(id);
   }
 
   async findChildren(id: string) {
     return await this.parentRepository.findChildren(id);
+  }
+
+  async getParentByIdNumber(idNumber: string) {
+    return await this.parentRepository.getParentByIdNumber(idNumber);
   }
 
   async addChild(studentId: string, parentId: string) {

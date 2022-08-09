@@ -10,17 +10,28 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { PaginationCriteria } from 'src/shared/models/paginated.model';
 import { CreateParentDto } from './parent.dto';
 import { ChangeOptions } from './parent.repository';
 import { ParentService } from './parent.service';
 
 @Controller('parent')
 export class ParentController {
-  constructor(private readonly parentService: ParentService) {}
+  constructor(private readonly parentService: ParentService) { }
 
   @Post()
   async createParent(@Body() dto: CreateParentDto) {
     return this.parentService.createParent(dto);
+  }
+
+  @Get()
+  async listPaginatedParent(@Query() query: PaginationCriteria) {
+    return this.parentService.listPaginatedParent(query);
+  }
+
+  @Post('findParent')
+  async findStudent(@Body() id: any) {
+    return await this.parentService.findParent(id);
   }
 
   @Post('avatar')
@@ -46,9 +57,14 @@ export class ParentController {
     return this.parentService.deleteParent(id);
   }
 
-  @Get()
+  @Get('findChildren')
   async findChildren(@Query() id: any) {
     return await this.parentService.findChildren(id.id);
+  }
+
+  @Get('byIdNumber')
+  async getParentByIdNumber(@Query() idNumber: any) {
+    return await this.parentService.getParentByIdNumber(idNumber.idNumber);
   }
 
   @Post('addChild')

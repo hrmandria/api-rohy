@@ -1,5 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Post } from '@nestjs/common';
 import { GoogleCredential, UserCredential } from 'src/user/user.model';
 import { AuthenticationService } from './authentication.service';
 import { GoogleAuthenticationService } from './google-authentication.service';
