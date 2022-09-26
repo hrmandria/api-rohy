@@ -17,6 +17,10 @@ export class StudentEntity extends BaseEntity {
   @Column({ name: 'firstname', nullable: false, type: 'text' })
   public firstname: string;
 
+
+  @Column({ name: 'id_number', nullable: false, type: 'text' })
+  public idNumber: string;
+
   @Column({
     name: 'status',
     nullable: false,
