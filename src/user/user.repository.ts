@@ -22,7 +22,7 @@ export class UserRepository {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     private readonly jwtTokenService: JwtService,
-  ) {}
+  ) { }
 
   async findBy(options: FindOptions): Promise<User | undefined> {
     try {
@@ -63,7 +63,7 @@ export class UserRepository {
       return user;
     } catch (e) {
       console.log(e);
-      //throw new Error('Cannot get user');
+      throw new Error('Cannot get user');
     }
   }
 

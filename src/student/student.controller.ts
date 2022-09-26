@@ -36,6 +36,11 @@ export class StudentController {
     return this.studentService.createStudent(dto);
   }
 
+  @Get('byIdNumber')
+  async getStudentByIdNumber(@Query() idNumber: any) {
+    return await this.studentService.getStudentByIdNumber(idNumber.idNumber);
+  }
+
   @Delete(':id')
   async deleteStudent(@Param('id') id: string) {
     return this.studentService.deleteStudent(id);

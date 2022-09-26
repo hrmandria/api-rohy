@@ -4,7 +4,9 @@ import { CreateUserDto } from 'src/user/user.dto';
 import { UserMapper } from 'src/user/user.mapper';
 import { UserService } from 'src/user/user.service';
 import { CreateStudentDto } from './student.dto';
-import { InvalidPaginationInputException } from './student.exception';
+import {
+  InvalidPaginationInputException,
+} from './student.exception';
 import { Student, StudentStatus } from './student.model';
 import { FindOptions, StudentRepository } from './student.repository';
 
@@ -48,6 +50,7 @@ export class StudentService {
     const user = UserMapper.toEntity(
       await this.userService.createUser(createUserDto),
     );
+    student.idNumber = idNumber;
     student.userId = user.id;
     student.status = StudentStatus.ACTIVE;
     return this.studentRepository.save(student);
@@ -59,5 +62,9 @@ export class StudentService {
 
   async deleteStudent(id: string) {
     this.studentRepository.delete(id);
+  }
+
+  async getStudentByIdNumber(idNumber: string) {
+    return await this.studentRepository.getStudentByIdNumber(idNumber);
   }
 }

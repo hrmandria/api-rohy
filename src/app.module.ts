@@ -14,6 +14,7 @@ import { DatabaseFileModule } from './files/file.module';
 import { SmsModule } from './sms/sms.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { CourseModule } from './course/course.module';
+import { TicketModule } from './ticket/ticket.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CourseModule } from './course/course.module';
     ParentModule,
     SmsModule,
     TeacherModule,
+    TicketModule,
     DatabaseFileModule,
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
     SubjectModule,

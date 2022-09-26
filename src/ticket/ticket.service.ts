@@ -14,7 +14,28 @@ const maxPageSize = 250;
 export class TicketService {
   constructor(private readonly ticketRepository: TicketRepository) { }
 
-  async createTicket(dto: CreateTicketDto) {
+  async listPaginatedTicket(criteria: PaginationCriteria) {
+    const { page, pageSize } = criteria;
+
+    if (page <= 0) {
+      return new InvalidPaginationInputException('page', page);
+    }
+    if (pageSize <= 0 || pageSize > maxPageSize) {
+      return new InvalidPaginationInputException('pageSize', pageSize);
+    }
+
+    return this.ticketRepository.listPaginatedTicket(criteria);
+  }
+
+  async getTickets(id: string) {
+    return await this.ticketRepository.getTickets(id);
+  }
+
+  async findTicket(options: FindOptions) {
+    return await this.ticketRepository.findBy(options);
+  }
+
+  async createTicket(dto: CreateTicketDto): Promise<Ticket> {
     const ticket = new Ticket();
     ticket.from = dto.from;
     ticket.to = dto.to;

@@ -10,6 +10,7 @@ import { TimetableEntity } from 'src/timetable/timetable.entity';
 import { TicketEntity } from 'src/ticket/ticket.entity';
 import { ParentEntity } from 'src/parent/parent.entity';
 import { DatabaseFileEntity } from 'src/files/file.entity';
+import { TicketEntity } from 'src/ticket/ticket.entity';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();

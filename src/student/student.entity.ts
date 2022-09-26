@@ -25,7 +25,7 @@ export class StudentEntity extends BaseEntity {
   })
   public status: StudentStatus;
 
-  @Column({ name: 'user_id', nullable: false, type: 'text' })
+  @Column({ name: 'userId', nullable: false, type: 'text' })
   public userId: string;
 
   @ManyToMany(() => ParentEntity, (parent) => parent.id, { cascade: true })
@@ -33,7 +33,7 @@ export class StudentEntity extends BaseEntity {
   parents: ParentEntity[];
 
   @OneToOne(() => UserEntity)
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn()
   user: UserEntity;
 
   @ManyToOne(() => GradeEntity, grade => grade.students)
