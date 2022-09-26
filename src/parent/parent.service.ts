@@ -42,6 +42,7 @@ export class ParentService {
     parent.firstname = dto.firstname;
     parent.status = ParentStatus.ACTIVE;
     parent.gender = dto.gender;
+    parent.phone = dto.phone;
     const idNumber = await this.userService.generateIdNumber();
     parent.idNumber = idNumber;
     const createUserDto: CreateUserDto = {
@@ -126,5 +127,24 @@ export class ParentService {
     const childrenArray = await this.parentRepository.findChildren(parentId);
     childrenArray.push(childToAdd);
     return await this.parentRepository.addChild(parentId, childrenArray);
+  }
+
+  async findParentsByStudent(studentId: string) {
+    const parents = await this.parentRepository.findParents();
+    const array = parents;
+    let parent: ParentEntity[] = [];
+    array[0].forEach(parentEntity => {
+      const each = parentEntity.students;
+      each.forEach(student => {
+        if (student.id == studentId) {
+          parent.push(parentEntity)
+        }
+      })
+    })
+    return parent;
+  }
+
+  async findParentWithPhoneNumber(phone: string) {
+    return await this.parentRepository.findParentWithPhone(phone);
   }
 }

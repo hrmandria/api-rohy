@@ -4,7 +4,7 @@ import SmsService from './sms.service';
 
 @Controller('sms')
 export class SmsController {
-  constructor(private readonly smsservice: SmsService) {}
+  constructor(private readonly smsservice: SmsService) { }
 
   @Post('send')
   async sendSMS(@Body() request: SendSMSDto) {

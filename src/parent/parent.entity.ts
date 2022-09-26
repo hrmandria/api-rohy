@@ -8,7 +8,6 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
-  OneToMany,
   OneToOne,
 } from 'typeorm';
 import { ParentGender, ParentStatus } from './parent.model';
@@ -35,7 +34,7 @@ export class ParentEntity extends BaseEntity {
   @Column({ name: 'id_number', nullable: false, type: 'text' })
   public idNumber: string;
 
-  @Column({ name: 'phone', nullable: true, type: 'text' })
+  @Column({ name: 'phone', nullable: false, type: 'text' })
   public phone: string;
 
   @Column({ name: 'gender', nullable: false, type: 'text', enum: ParentGender })
@@ -43,6 +42,9 @@ export class ParentEntity extends BaseEntity {
 
   @Column({ name: 'avatar_id', nullable: true, type: 'text' })
   public avatarId?: string;
+
+  @Column({ name: 'is_phone_number_confirmed', default: false })
+  public isPhoneNumberConfirmed: boolean;
 
   @OneToOne(() => DatabaseFileEntity)
   @JoinColumn({ name: 'avatar' })
@@ -53,6 +55,6 @@ export class ParentEntity extends BaseEntity {
   user: UserEntity;
 
   @ManyToMany(() => StudentEntity, (student) => student.id, { cascade: true })
-  @JoinTable()
+  @JoinTable({ name: 'parent_student' })
   students: StudentEntity[];
 }

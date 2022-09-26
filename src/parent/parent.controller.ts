@@ -74,4 +74,14 @@ export class ParentController {
       parentId.parentId,
     );
   }
+
+  @Get('findParents')
+  async findParents(@Query() studentId: any) {
+    return await this.parentService.findParentsByStudent(studentId.studentId);
+  }
+
+  @Get('findParentByPhone')
+  async findParentByPhoneNumber(@Query() phone: any) {
+    return await this.parentService.findParentWithPhoneNumber(phone.phone);
+  }
 }

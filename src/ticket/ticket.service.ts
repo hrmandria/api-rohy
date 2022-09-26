@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { ParentService } from 'src/parent/parent.service';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
+import SmsService from 'src/sms/sms.service';
 import { InvalidPaginationInputException } from 'src/student/student.exception';
 import { FindOptions } from 'src/student/student.repository';
 import { CreateTicketDto } from './ticket.dto';
@@ -10,9 +12,9 @@ const maxPageSize = 250;
 
 @Injectable()
 export class TicketService {
-  constructor(private readonly ticketRepository: TicketRepository) {}
+  constructor(private readonly ticketRepository: TicketRepository) { }
 
-  async createTicket(dto: CreateTicketDto): Promise<Ticket> {
+  async createTicket(dto: CreateTicketDto) {
     const ticket = new Ticket();
     ticket.from = dto.from;
     ticket.to = dto.to;
@@ -25,7 +27,17 @@ export class TicketService {
     ticket.managerId = dto.managerId;
     ticket.parentId = dto.parentId;
     ticket.studentId = dto.studentId;
-    return this.ticketRepository.save(ticket);
+    await this.ticketRepository.save(ticket);
+
+    //SEND SMS
+    const listOfParents = await this.parentService.findParentsByStudent(ticket.studentId);
+    const message = `Nouveau ticket ${ticket.type}`
+    console.log(listOfParents)
+    if (listOfParents) {
+      listOfParents.forEach(parent => {
+        this.smsservice.sendMessage(parent.phone, message);
+      })
+    }
   }
 
   async deleteTicket(id: string) {

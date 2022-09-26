@@ -21,6 +21,11 @@ export class StudentController {
     return this.studentService.listPaginatedStudent(query);
   }
 
+  @Get('findParents')
+  async findParents(@Query() studentId: any) {
+    return await this.studentService.findParents(studentId.studentId);
+  }
+
   @Post('/find')
   async findStudent(@Body() dto: FindOptions) {
     return await this.studentService.findStudent(dto);
