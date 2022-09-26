@@ -1,13 +1,11 @@
-import { ParentEntity } from 'src/parent/parent.entity';
+import { GradeEntity } from 'src/grade/grade.entity';
 import { BaseEntity } from 'src/shared/entities/base.entity';
 import { UserEntity } from 'src/user/user.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { ParentEntity } from 'src/parent/parent.entity';
 import {
-  Column,
-  Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
-  OneToOne,
 } from 'typeorm';
 import { StudentStatus } from './student.model';
 
@@ -37,4 +35,8 @@ export class StudentEntity extends BaseEntity {
   @OneToOne(() => UserEntity)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
+
+  @ManyToOne(() => GradeEntity, grade => grade.students)
+  @JoinColumn({ name: 'grade_id' })
+  grade: GradeEntity;
 }
