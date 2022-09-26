@@ -14,19 +14,6 @@ const maxPageSize = 250;
 export class TicketService {
   constructor(private readonly ticketRepository: TicketRepository) { }
 
-  async listPaginatedTicket(criteria: PaginationCriteria) {
-    const { page, pageSize } = criteria;
-
-    if (page <= 0) {
-      return new InvalidPaginationInputException('page', page);
-    }
-    if (pageSize <= 0 || pageSize > maxPageSize) {
-      return new InvalidPaginationInputException('pageSize', pageSize);
-    }
-
-    return this.ticketRepository.listPaginatedTicket(criteria);
-  }
-
   async getTickets(id: string) {
     return await this.ticketRepository.getTickets(id);
   }
@@ -49,7 +36,7 @@ export class TicketService {
     ticket.managerId = dto.managerId;
     ticket.parentId = dto.parentId;
     ticket.studentId = dto.studentId;
-    await this.ticketRepository.save(ticket);
+    return await this.ticketRepository.save(ticket);
   }
 
   async deleteTicket(id: string) {

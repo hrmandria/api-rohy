@@ -15,6 +15,9 @@ export interface FindOptions {
 
 @Injectable()
 export class StudentRepository {
+  getStudentByIdNumber(idNumber: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
