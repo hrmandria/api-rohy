@@ -29,16 +29,6 @@ export class TicketService {
     ticket.parentId = dto.parentId;
     ticket.studentId = dto.studentId;
     await this.ticketRepository.save(ticket);
-
-    //SEND SMS
-    const listOfParents = await this.parentService.findParentsByStudent(ticket.studentId);
-    const message = `Nouveau ticket ${ticket.type}`
-    console.log(listOfParents)
-    if (listOfParents) {
-      listOfParents.forEach(parent => {
-        this.smsservice.sendMessage(parent.phone, message);
-      })
-    }
   }
 
   async deleteTicket(id: string) {

@@ -9,6 +9,7 @@ import { CreateUserDto } from 'src/user/user.dto';
 import { UserMapper } from 'src/user/user.mapper';
 import { UserService } from 'src/user/user.service';
 import { CreateParentDto } from './parent.dto';
+import { ParentEntity } from './parent.entity';
 import { Parent, ParentStatus } from './parent.model';
 import { ChangeOptions, ParentRepository } from './parent.repository';
 
