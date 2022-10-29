@@ -46,6 +46,7 @@ export class StudentService {
       idNumber: idNumber,
       email: dto.email,
       password: dto.password,
+      role: 0
     };
     const user = UserMapper.toEntity(
       await this.userService.createUser(createUserDto),

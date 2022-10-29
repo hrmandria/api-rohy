@@ -50,6 +50,7 @@ export class ParentService {
       idNumber: idNumber,
       email: dto.email,
       password: dto.password,
+      role: 1
     };
     const user = UserMapper.toEntity(
       await this.userService.createUser(createUserDto),
