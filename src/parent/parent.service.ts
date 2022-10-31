@@ -9,6 +9,7 @@ import { CreateUserDto } from 'src/user/user.dto';
 import { UserMapper } from 'src/user/user.mapper';
 import { UserService } from 'src/user/user.service';
 import { CreateParentDto } from './parent.dto';
+import { ParentEntity } from './parent.entity';
 import { Parent, ParentStatus } from './parent.model';
 import { ChangeOptions, ParentRepository } from './parent.repository';
 
@@ -42,12 +43,14 @@ export class ParentService {
     parent.firstname = dto.firstname;
     parent.status = ParentStatus.ACTIVE;
     parent.gender = dto.gender;
+    parent.phone = dto.phone;
     const idNumber = await this.userService.generateIdNumber();
     parent.idNumber = idNumber;
     const createUserDto: CreateUserDto = {
       idNumber: idNumber,
       email: dto.email,
       password: dto.password,
+      role: 1
     };
     const user = UserMapper.toEntity(
       await this.userService.createUser(createUserDto),
@@ -126,5 +129,24 @@ export class ParentService {
     const childrenArray = await this.parentRepository.findChildren(parentId);
     childrenArray.push(childToAdd);
     return await this.parentRepository.addChild(parentId, childrenArray);
+  }
+
+  async findParentsByStudent(studentId: string) {
+    const parents = await this.parentRepository.findParents();
+    const array = parents;
+    let parent: ParentEntity[] = [];
+    array[0].forEach(parentEntity => {
+      const each = parentEntity.students;
+      each.forEach(student => {
+        if (student.id == studentId) {
+          parent.push(parentEntity)
+        }
+      })
+    })
+    return parent;
+  }
+
+  async findParentWithPhoneNumber(phone: string) {
+    return await this.parentRepository.findParentWithPhone(phone);
   }
 }

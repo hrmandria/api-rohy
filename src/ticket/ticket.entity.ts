@@ -19,6 +19,9 @@ export class TicketEntity extends BaseEntity {
   @Column({ name: 'decision', nullable: true, type: 'text' })
   public decision: string;
 
+  @Column({ name: 'text', nullable: true, type: 'text' })
+  public text: string;
+
   @Column({ name: 'points_number', nullable: true, type: 'integer' })
   public pointsNumber: number;
 

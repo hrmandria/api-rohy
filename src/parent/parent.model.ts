@@ -18,7 +18,9 @@ export class Parent extends AbstractModel {
   status: ParentStatus;
   gender: ParentGender;
   userId: string;
+  phone: string;
   idNumber: string;
   students: StudentEntity[];
   avatar: DatabaseFileEntity;
+  isPhoneNumberConfirmed: boolean
 }

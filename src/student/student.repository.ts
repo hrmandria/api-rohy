@@ -15,10 +15,13 @@ export interface FindOptions {
 
 @Injectable()
 export class StudentRepository {
+  getStudentByIdNumber(idNumber: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
-  ) {}
+  ) { }
 
   async listPaginatedStudent(
     criteria: PaginationCriteria,
@@ -53,6 +56,14 @@ export class StudentRepository {
     } catch (e) {
       throw new Error('Cannot find student');
     }
+  }
+
+  async findParent(id: string) {
+    const parents = await this.studentRepository.findAndCount({
+      relations: ['parents'],
+      where: { id },
+    });
+    return parents[0][0].parents;
   }
 
   async save(student: Student): Promise<Student> {

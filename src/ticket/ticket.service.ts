@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { ParentService } from 'src/parent/parent.service';
 import { PaginationCriteria } from 'src/shared/models/paginated.model';
+import SmsService from 'src/sms/sms.service';
 import { InvalidPaginationInputException } from 'src/student/student.exception';
 import { FindOptions } from 'src/student/student.repository';
 import { CreateTicketDto } from './ticket.dto';
@@ -10,7 +12,15 @@ const maxPageSize = 250;
 
 @Injectable()
 export class TicketService {
-  constructor(private readonly ticketRepository: TicketRepository) {}
+  constructor(private readonly ticketRepository: TicketRepository) { }
+
+  async getTickets(id: string) {
+    return await this.ticketRepository.getTickets(id);
+  }
+
+  async findTicket(options: FindOptions) {
+    return await this.ticketRepository.findBy(options);
+  }
 
   async createTicket(dto: CreateTicketDto): Promise<Ticket> {
     const ticket = new Ticket();
@@ -18,7 +28,11 @@ export class TicketService {
     ticket.to = dto.to;
     ticket.reason = dto.reason;
     ticket.decision = dto.decision;
+<<<<<<< HEAD
     ticket.announcement = dto.announcement;
+=======
+    ticket.text = dto.text;
+>>>>>>> 473d26bc06638123762e099903a4c6afaf34edd8
     ticket.pointsNumber = dto.pointsNumber;
     ticket.managerSignature = dto.managerSignature;
     ticket.parentSignature = dto.parentSignature;
@@ -26,7 +40,7 @@ export class TicketService {
     ticket.managerId = dto.managerId;
     ticket.parentId = dto.parentId;
     ticket.studentId = dto.studentId;
-    return this.ticketRepository.save(ticket);
+    return await this.ticketRepository.save(ticket);
   }
 
   async deleteTicket(id: string) {

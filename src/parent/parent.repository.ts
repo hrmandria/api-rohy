@@ -95,6 +95,13 @@ export class ParentRepository {
     return children[0][0].students;
   }
 
+  async findParents() {
+    const parents = await this.parentRepository.findAndCount({
+      relations: ["students"]
+    })
+    return parents;
+  }
+
   async addChild(parentId: string, studentsArray: StudentEntity[]) {
     const parent = ParentMapper.toEntity(await this.findBy(parentId));
     parent.students = studentsArray;
@@ -115,5 +122,20 @@ export class ParentRepository {
     const avatarId = options.avatar.id;
     options.avatarId = avatarId;
     await this.parentRepository.update({ id }, { ...options });
+  }
+
+  async findParentWithPhone(phone: string) {
+    try {
+      const phoneNumber = `+${phone}`
+      const parent = await this.parentRepository.find({
+        where: { phone: phoneNumber }
+      })
+      if (!parent) {
+        return undefined
+      }
+      return parent;
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
