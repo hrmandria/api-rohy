@@ -27,7 +27,7 @@ export class ParentRepository {
   constructor(
     @InjectRepository(ParentEntity)
     private readonly parentRepository: Repository<ParentEntity>,
-  ) { }
+  ) {}
 
   async save(parent: Parent): Promise<Parent> {
     try {
@@ -104,8 +104,8 @@ export class ParentRepository {
   async getParentByIdNumber(idNumber: string) {
     try {
       return await this.parentRepository.find({
-        where: { idNumber: idNumber }
-      })
+        where: { idNumber: idNumber },
+      });
     } catch (e) {
       console.log(e);
     }

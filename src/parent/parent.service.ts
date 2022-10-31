@@ -21,7 +21,7 @@ export class ParentService {
     private readonly studentRepository: StudentRepository,
     private readonly userService: UserService,
     private readonly databaseFileService: DatabaseFileService,
-  ) { }
+  ) {}
 
   async toEntities(studentIds: string[], students: StudentEntity[]) {
     studentIds.forEach(async (element) => {

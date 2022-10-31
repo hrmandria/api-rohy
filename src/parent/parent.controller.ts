@@ -17,7 +17,7 @@ import { ParentService } from './parent.service';
 
 @Controller('parent')
 export class ParentController {
-  constructor(private readonly parentService: ParentService) { }
+  constructor(private readonly parentService: ParentService) {}
 
   @Post()
   async createParent(@Body() dto: CreateParentDto) {
