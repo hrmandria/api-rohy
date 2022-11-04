@@ -28,11 +28,7 @@ export class TicketService {
     ticket.to = dto.to;
     ticket.reason = dto.reason;
     ticket.decision = dto.decision;
-<<<<<<< HEAD
-    ticket.announcement = dto.announcement;
-=======
     ticket.text = dto.text;
->>>>>>> 473d26bc06638123762e099903a4c6afaf34edd8
     ticket.pointsNumber = dto.pointsNumber;
     ticket.managerSignature = dto.managerSignature;
     ticket.parentSignature = dto.parentSignature;
