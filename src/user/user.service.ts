@@ -12,6 +12,7 @@ export class UserService {
     const user = new User();
     user.idNumber = dto.idNumber;
     user.email = dto.email;
+    user.role = dto.role;
 
     if (dto.password) {
       const salt = bcrypt.genSaltSync(12);

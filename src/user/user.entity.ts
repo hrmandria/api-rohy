@@ -15,6 +15,6 @@ export class UserEntity extends BaseEntity {
   @Column({ name: 'password', nullable: false, type: 'text' })
   public password: string;
 
-  @Column({ name: 'password', nullable: false, type: 'text' })
+  @Column({ name: 'role', nullable: false, type: 'text' })
   public role: number;
 }
