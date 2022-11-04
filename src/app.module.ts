@@ -5,22 +5,34 @@ import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/config.service';
 import { StudentModule } from './student/student.module';
+import { SubjectModule } from './subject/subject.module';
+import { NoteModule } from './note/note.module';
+import { GradeModule } from './grade/grade.module';
+import { TimetableModule } from './timetable/timetable.module';
 import { ParentModule } from './parent/parent.module';
-import { TicketModule } from './ticket/ticket.module';
 import { DatabaseFileModule } from './files/file.module';
 import { SmsModule } from './sms/sms.module';
+import { TeacherModule } from './teacher/teacher.module';
+import { CourseModule } from './course/course.module';
+import { TicketModule } from './ticket/ticket.module';
 
 @Module({
   imports: [
     AuthenticationModule,
     UserModule,
     StudentModule,
-    TicketModule,
     SharedModule,
     ParentModule,
     SmsModule,
+    TeacherModule,
+    TicketModule,
     DatabaseFileModule,
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
+    SubjectModule,
+    NoteModule,
+    GradeModule,
+    TimetableModule,
+    CourseModule
   ],
 })
-export class AppModule {}
+export class AppModule { }

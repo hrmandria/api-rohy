@@ -18,4 +18,5 @@ export class User extends AbstractModel {
   idNumber: Nullable<string>;
   email: Nullable<string>;
   password?: string;
+  role: number;
 }

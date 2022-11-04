@@ -19,7 +19,7 @@ export class TicketRepository {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
-  ) {}
+  ) { }
 
   async save(ticket: Ticket): Promise<Ticket> {
     try {
@@ -55,6 +55,13 @@ export class TicketRepository {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  async getTickets(studentId: string) {
+    const tickets = await this.ticketRepository.findAndCount({
+      where: { studentId: studentId }
+    })
+    return tickets;
   }
 
   async findByStudent(

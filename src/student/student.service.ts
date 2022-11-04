@@ -4,7 +4,9 @@ import { CreateUserDto } from 'src/user/user.dto';
 import { UserMapper } from 'src/user/user.mapper';
 import { UserService } from 'src/user/user.service';
 import { CreateStudentDto } from './student.dto';
-import { InvalidPaginationInputException } from './student.exception';
+import {
+  InvalidPaginationInputException,
+} from './student.exception';
 import { Student, StudentStatus } from './student.model';
 import { FindOptions, StudentRepository } from './student.repository';
 
@@ -15,7 +17,7 @@ export class StudentService {
   constructor(
     private readonly studentRepository: StudentRepository,
     private readonly userService: UserService,
-  ) {}
+  ) { }
 
   async listPaginatedStudent(criteria: PaginationCriteria) {
     const { page, pageSize } = criteria;
@@ -30,7 +32,8 @@ export class StudentService {
     return this.studentRepository.listPaginatedStudent(criteria);
   }
 
-  async findStudent(options: FindOptions) {
+  async findStudent(studentId: string) {
+    const options = { id: studentId }
     return await this.studentRepository.findBy(options);
   }
 
@@ -43,16 +46,26 @@ export class StudentService {
       idNumber: idNumber,
       email: dto.email,
       password: dto.password,
+      role: 0
     };
     const user = UserMapper.toEntity(
       await this.userService.createUser(createUserDto),
     );
+    student.idNumber = idNumber;
     student.userId = user.id;
     student.status = StudentStatus.ACTIVE;
     return this.studentRepository.save(student);
   }
 
+  async findParents(id: string) {
+    return await this.studentRepository.findParent(id);
+  }
+
   async deleteStudent(id: string) {
     this.studentRepository.delete(id);
+  }
+
+  async getStudentByIdNumber(idNumber: string) {
+    return await this.studentRepository.getStudentByIdNumber(idNumber);
   }
 }

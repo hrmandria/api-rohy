@@ -27,7 +27,7 @@ export class ParentRepository {
   constructor(
     @InjectRepository(ParentEntity)
     private readonly parentRepository: Repository<ParentEntity>,
-  ) { }
+  ) {}
 
   async save(parent: Parent): Promise<Parent> {
     try {
@@ -95,6 +95,13 @@ export class ParentRepository {
     return children[0][0].students;
   }
 
+  async findParents() {
+    const parents = await this.parentRepository.findAndCount({
+      relations: ["students"]
+    })
+    return parents;
+  }
+
   async addChild(parentId: string, studentsArray: StudentEntity[]) {
     const parent = ParentMapper.toEntity(await this.findBy(parentId));
     parent.students = studentsArray;
@@ -104,8 +111,8 @@ export class ParentRepository {
   async getParentByIdNumber(idNumber: string) {
     try {
       return await this.parentRepository.find({
-        where: { idNumber: idNumber }
-      })
+        where: { idNumber: idNumber },
+      });
     } catch (e) {
       console.log(e);
     }
@@ -115,5 +122,20 @@ export class ParentRepository {
     const avatarId = options.avatar.id;
     options.avatarId = avatarId;
     await this.parentRepository.update({ id }, { ...options });
+  }
+
+  async findParentWithPhone(phone: string) {
+    try {
+      const phoneNumber = `+${phone}`
+      const parent = await this.parentRepository.find({
+        where: { phone: phoneNumber }
+      })
+      if (!parent) {
+        return undefined
+      }
+      return parent;
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

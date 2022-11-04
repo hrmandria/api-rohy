@@ -7,6 +7,7 @@ import { DatabaseFileService } from 'src/files/file.service';
 import { StudentEntity } from 'src/student/student.entity';
 import { StudentModule } from 'src/student/student.module';
 import { StudentRepository } from 'src/student/student.repository';
+import { StudentService } from 'src/student/student.service';
 import { UserModule } from 'src/user/user.module';
 import { UserService } from 'src/user/user.service';
 import { ParentController } from './parent.controller';
@@ -27,8 +28,9 @@ import { ParentService } from './parent.service';
     ParentRepository,
     StudentRepository,
     ParentService,
+    StudentService,
     UserService,
     DatabaseFileService,
   ],
 })
-export class ParentModule {}
+export class ParentModule { }

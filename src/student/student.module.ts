@@ -8,8 +8,10 @@ import { StudentRepository } from './student.repository';
 import { StudentService } from './student.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([StudentEntity]), UserModule],
+  imports: [
+    TypeOrmModule.forFeature([StudentEntity]),
+    UserModule],
   controllers: [StudentController],
   providers: [StudentRepository, StudentService, UserService],
 })
-export class StudentModule {}
+export class StudentModule { }

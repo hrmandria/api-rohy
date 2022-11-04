@@ -6,13 +6,13 @@ import { User } from './user.model';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) { }
 
   async createUser(dto: CreateUserDto) {
     const user = new User();
     user.idNumber = dto.idNumber;
     user.email = dto.email;
-
+    user.role = dto.role;
     if (dto.password) {
       const salt = bcrypt.genSaltSync(12);
       const hashedPassword = bcrypt.hashSync(dto.password, salt);

@@ -8,7 +8,7 @@ export class UserMapper {
     userEntity.idNumber = source.idNumber;
     userEntity.email = source.email;
     userEntity.password = source.password;
-
+    userEntity.role = source.role;
     return userEntity;
   }
 
@@ -17,7 +17,7 @@ export class UserMapper {
     user.idNumber = source.idNumber;
     user.email = source.email;
     user.password = source.password;
-
+    user.role = source.role;
     return user;
   }
 }

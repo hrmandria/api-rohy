@@ -5,6 +5,7 @@ export interface CreateTicketDto {
   to: Date;
   reason: string;
   decision: string;
+  text: string;
   pointsNumber: number;
   managerSignature: boolean;
   parentSignature: boolean;
