@@ -29,11 +29,12 @@ export class AuthenticationService {
       throw new PasswordMismatchException();
     }
 
-    const { id, idNumber } = user;
-    const payload = { username: idNumber, sub: id };
+    const { id, idNumber, role } = user;
+    const payload = { username: idNumber, sub: id, role:role };
 
     return {
       user: {
+        role,
         idNumber,
         email: null,
       },

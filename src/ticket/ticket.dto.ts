@@ -1,3 +1,4 @@
+import { Nullable } from 'src/shared/utils/type';
 import { TicketType } from './ticket.model';
 
 export interface CreateTicketDto {
@@ -10,7 +11,7 @@ export interface CreateTicketDto {
   managerSignature: boolean;
   parentSignature: boolean;
   type: TicketType;
-  managerId: string;
-  parentId: string;
+  managerId: Nullable<string>;
+  parentId: Nullable<string>;
   studentId: string;
 }

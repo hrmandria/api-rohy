@@ -34,13 +34,13 @@ export class TicketEntity extends BaseEntity {
   @Column({ name: 'type', nullable: false, type: 'text', enum: TicketType })
   public type: TicketType;
 
-  @Column({ name: 'student_id', nullable: false, type: 'text' })
+  @Column({ name: 'student_id', nullable: true, type: 'text' })
   public studentId: string;
 
-  @Column({ name: 'manager_id', nullable: false, type: 'text' })
+  @Column({ name: 'manager_id', nullable: true, type: 'text' })
   public managerId: string;
 
-  @Column({ name: 'parent_id', nullable: false, type: 'text' })
+  @Column({ name: 'parent_id', nullable: true, type: 'text' })
   public parentId: string;
 
   @ManyToOne(() => StudentEntity)

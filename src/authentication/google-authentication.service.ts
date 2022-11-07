@@ -28,11 +28,12 @@ export class GoogleAuthenticationService {
       throw new CannotFindTokenUserException(token);
     }
 
-    const { id, email } = user;
+    const { id, email, role } = user;
     const payload = { username: email, sub: id };
 
     return {
       user: {
+        role,
         email,
         idNumber: null,
       },

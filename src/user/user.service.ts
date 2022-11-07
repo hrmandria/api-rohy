@@ -26,6 +26,10 @@ export class UserService {
     return this.userRepository.getUser(authenticationToken);
   }
 
+  async findUser(id: any) {
+    return await this.userRepository.findUser(id);
+  }
+
   async deleteUser(id: string) {
     this.userRepository.delete(id);
   }

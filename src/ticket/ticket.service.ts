@@ -36,6 +36,8 @@ export class TicketService {
     ticket.managerId = dto.managerId;
     ticket.parentId = dto.parentId;
     ticket.studentId = dto.studentId;
+    console.log(dto);
+    
     return await this.ticketRepository.save(ticket);
   }
 
