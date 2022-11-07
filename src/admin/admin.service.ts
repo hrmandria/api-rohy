@@ -22,7 +22,6 @@ export class AdminService {
   async createAdmin(dto: CreateAdminDto) {
     const admin = new Admin();
     admin.name = dto.name;
-    admin.email = dto.email;
     admin.phone = dto.phone;
     const idNumber = await this.userService.generateIdNumber();
     admin.idNumber = idNumber;

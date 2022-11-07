@@ -15,9 +15,6 @@ export interface FindOptions {
 
 @Injectable()
 export class StudentRepository {
-  getStudentByIdNumber(idNumber: string) {
-    throw new Error('Method not implemented.');
-  }
   constructor(
     @InjectRepository(StudentEntity)
     private readonly studentRepository: Repository<StudentEntity>,
@@ -57,7 +54,19 @@ export class StudentRepository {
       throw new Error('Cannot find student');
     }
   }
-
+  async getStudentByIdNumber(idNumber: string) {
+    try {
+      const student = await this.studentRepository.findOne({
+        where: { idNumber: idNumber },
+      });
+      if (!student) {
+        return undefined
+      } const map = StudentMapper.fromEntity(student);
+      return map;
+    } catch (e) {
+      console.log(e);
+    }
+  }
   async findParent(id: string) {
     const parents = await this.studentRepository.findAndCount({
       relations: ['parents'],

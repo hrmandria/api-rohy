@@ -11,6 +11,10 @@ export interface FindOptions {
   email?: string;
 }
 
+export interface FindUserOptions{
+  id:string
+}
+
 export interface PayloadType {
   username: string;
   sub: string;
@@ -64,6 +68,20 @@ export class UserRepository {
     } catch (e) {
       console.log(e);
       throw new Error('Cannot get user');
+    }
+  }
+
+  async findUser(options: FindUserOptions): Promise<User | undefined> {
+    try {
+      const userEntity = await this.userRepository.findOne({ ...options });
+
+      if (!userEntity) {
+        return undefined;
+      }
+
+      return UserMapper.fromEntity(userEntity);
+    } catch (e) {
+      throw new Error('Cannot find user');
     }
   }
 

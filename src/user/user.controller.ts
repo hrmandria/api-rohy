@@ -16,7 +16,11 @@ export class UserController {
     const value = token.token;
     return this.userService.getUser(value);
   }
-
+  
+  @Get('findUser')
+  async findUser(@Query() id: any) {
+    return this.userService.findUser(id.id);
+  }
   @Delete(':id')
   async deleteUser(@Query() id: string) {
     return this.userService.deleteUser(id);
