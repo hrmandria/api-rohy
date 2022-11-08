@@ -31,6 +31,8 @@ export class ParentController {
 
   @Post('findParent')
   async findStudent(@Body() id: any) {
+    console.log(id);
+    
     return await this.parentService.findParent(id);
   }
 

@@ -1,13 +1,13 @@
 import { AbstractModel } from 'src/shared/models/abstract.model';
 
 export enum TicketType {
-  ENTRANCE = 'ENTRANCE',
-  EXIT = 'EXIT',
+  ENTRANCE = 'RETARD',
+  EXIT = 'SORTIE',
   ABSENCE = 'ABSENCE',
   CONVOCATION = 'CONVOCATION',
-  WARNING = 'WARNING',
-  PENALIZATION = 'PENALIZATION',
-  CORRESPONDENCE = 'CORRESPONDENCE',
+  WARNING = 'AVERTISSEMENT',
+  PENALIZATION = 'PENALISATION',
+  CORRESPONDENCE = 'DIVERS',
 }
 
 export class Ticket extends AbstractModel {

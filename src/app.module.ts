@@ -16,6 +16,7 @@ import { SmsModule } from './sms/sms.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { CourseModule } from './course/course.module';
 import { TicketModule } from './ticket/ticket.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -34,7 +35,8 @@ import { TicketModule } from './ticket/ticket.module';
     BulletinModule,
     GradeModule,
     TimetableModule,
-    CourseModule
+    CourseModule,
+    AdminModule
   ],
 })
 export class AppModule { }

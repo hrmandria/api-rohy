@@ -11,6 +11,7 @@ import { TimetableEntity } from 'src/timetable/timetable.entity';
 import { ParentEntity } from 'src/parent/parent.entity';
 import { DatabaseFileEntity } from 'src/files/file.entity';
 import { TicketEntity } from 'src/ticket/ticket.entity';
+import { AdminEntity } from 'src/admin/admin.entity';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -39,6 +40,7 @@ export class ConfigService {
         ParentEntity,
         DatabaseFileEntity,
         TicketEntity,
+        AdminEntity
       ],
       synchronize: true,
     };
