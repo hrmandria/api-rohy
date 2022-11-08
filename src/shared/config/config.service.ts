@@ -4,6 +4,7 @@ import { UserEntity } from 'src/user/user.entity';
 import { SubjectEntity } from 'src/subject/subject.entity';
 import { GradeEntity } from 'src/grade/grade.entity';
 import { NoteEntity } from 'src/note/note.entity';
+import { BulletinEntity } from 'src/bulletin/bulletin.entity';
 import { TeacherEntity } from 'src/teacher/teacher.entity';
 import { CourseEntity } from 'src/course/course.entity';
 import { TimetableEntity } from 'src/timetable/timetable.entity';
@@ -31,6 +32,7 @@ export class ConfigService {
         SubjectEntity,
         GradeEntity,
         NoteEntity,
+        BulletinEntity,
         TeacherEntity,
         CourseEntity,
         TimetableEntity,

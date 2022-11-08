@@ -34,7 +34,7 @@ export class TicketEntity extends BaseEntity {
   @Column({ name: 'type', nullable: false, type: 'text', enum: TicketType })
   public type: TicketType;
 
-  @Column({ name: 'student_id', nullable: true, type: 'text' })
+  @Column({ name: 'student_id', nullable: false, type: 'text' })
   public studentId: string;
 
   @Column({ name: 'manager_id', nullable: true, type: 'text' })

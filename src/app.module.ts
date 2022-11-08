@@ -7,6 +7,7 @@ import { configService } from './shared/config/config.service';
 import { StudentModule } from './student/student.module';
 import { SubjectModule } from './subject/subject.module';
 import { NoteModule } from './note/note.module';
+import { BulletinModule } from './bulletin/bulletin.module';
 import { GradeModule } from './grade/grade.module';
 import { TimetableModule } from './timetable/timetable.module';
 import { ParentModule } from './parent/parent.module';
@@ -30,6 +31,7 @@ import { TicketModule } from './ticket/ticket.module';
     TypeOrmModule.forRoot(configService.getTypeORMConfig()),
     SubjectModule,
     NoteModule,
+    BulletinModule,
     GradeModule,
     TimetableModule,
     CourseModule
