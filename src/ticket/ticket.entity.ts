@@ -13,7 +13,7 @@ export class TicketEntity extends BaseEntity {
   @Column({ name: 'to', nullable: true, type: 'date' })
   public to: Date;
 
-  @Column({ name: 'cause', nullable: false, type: 'text' })
+  @Column({ name: 'cause', nullable: true, type: 'text' })
   public reason: string;
 
   @Column({ name: 'decision', nullable: true, type: 'text' })

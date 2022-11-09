@@ -66,4 +66,23 @@ export class BulletinRepository {
     average = numerator / coeffSum;
     return average.toFixed(3);
   }
+
+  async findBulletin(studentId: string, type: string) {
+    try {
+      const bulletin = await this.bulletinRepository.findAndCount({
+        where: {
+          student: studentId,
+          semester: type,
+        },
+      });
+      if (!bulletin) {
+        return undefined
+      } const map = BulletinMapper.fromEntity(bulletin);
+
+      return map;
+
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

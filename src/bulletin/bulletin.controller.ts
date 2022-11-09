@@ -8,8 +8,6 @@ export class BulletinController {
 
   @Post()
   async createBulletin(@Body() dto: CreateBulletinDto) {
-    console.log(dto);
-    
     return await this.bulletinService.createBulletin(dto);
   }
 

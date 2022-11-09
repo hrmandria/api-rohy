@@ -31,7 +31,7 @@ export class BulletinService {
   }
 
   async semesterBulletin(studentId: string, semester: string) {
-    return await this.bulletinRepository.findStudentsSemesterBulletin(studentId, semester);
+    return await this.bulletinRepository.findBulletin(studentId, semester);
   }
 
   async studentsSemesterAverage(studentId: string, semester: string) {
